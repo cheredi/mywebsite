@@ -1,881 +1,617 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tatyana Amugo - AI/ML Developer</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background-color: #ffffff;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Header */
-        header {
-            background: linear-gradient(135deg, #ffffff 0%, #ffebee 100%);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .logo-icon {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, #ffab91, #ff8a65, #ff7043);
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 18px;
-            position: relative;
-            box-shadow: 0 4px 15px rgba(255, 138, 101, 0.3);
-            transform: rotate(-5deg);
-            transition: all 0.3s ease;
-            font-family: 'Courier New', monospace;
-        }
-
-        .logo-icon:hover {
-            transform: rotate(0deg) scale(1.1);
-            box-shadow: 0 6px 20px rgba(255, 138, 101, 0.4);
-        }
-
-        .logo-icon::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(135deg, #ff8a65, #ffab91, #ff7043, #ff5722);
-            border-radius: 17px;
-            z-index: -1;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .logo-icon:hover::before {
-            opacity: 1;
-        }
-
-        .logo-icon::after {
-            content: '';
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            top: 8px;
-            right: 8px;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            transition: color 0.3s ease;
-            cursor: pointer;
-        }
-
-        .nav-links a:hover, .nav-links a.active {
-            color: #ff8a65;
-        }
-
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-        }
-
-        .hamburger span {
-            width: 25px;
-            height: 3px;
-            background: #333;
-            margin: 3px 0;
-            transition: 0.3s;
-        }
-
-        /* Main Content */
-        main {
-            margin-top: 80px;
-        }
-
-        .section {
-            padding: 4rem 0;
-            display: none;
-        }
-
-        .section.active {
-            display: block;
-        }
-
-        .section h2 {
-            color: #ff8a65;
-            margin-bottom: 2rem;
-            font-size: 2.5rem;
-            text-align: center;
-        }
-
-        /* Home Section */
-        .hero {
-            text-align: center;
-            padding: 6rem 0;
-            background: linear-gradient(135deg, #ffffff 0%, #fff3f0 100%);
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            color: #333;
-        }
-
-        .hero .subtitle {
-            font-size: 1.5rem;
-            color: #ff8a65;
-            margin-bottom: 2rem;
-        }
-
-        .hero-description {
-            max-width: 800px;
-            margin: 0 auto 3rem;
-            font-size: 1.2rem;
-            line-height: 1.8;
-        }
-
-        .quirky-fact {
-            background: #fff5f5;
-            border-left: 4px solid #ff8a65;
-            padding: 1.5rem;
-            margin: 2rem auto;
-            max-width: 600px;
-            border-radius: 0 10px 10px 0;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 12px 30px;
-            border: none;
-            border-radius: 25px;
-            font-size: 1rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #ff8a65, #ffab91);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 138, 101, 0.4);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: #ff8a65;
-            border: 2px solid #ff8a65;
-        }
-
-        .btn-secondary:hover {
-            background: #ff8a65;
-            color: white;
-        }
-
-        /* Profile Section */
-        .profile-grid {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 3rem;
-            margin-bottom: 3rem;
-        }
-
-        .profile-card {
-            background: #fff5f5;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .contact-info {
-            list-style: none;
-        }
-
-        .contact-info li {
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .contact-info .icon {
-            width: 20px;
-            height: 20px;
-            background: #ff8a65;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 12px;
-        }
-
-        /* Timeline */
-        .timeline {
-            position: relative;
-            margin: 3rem 0;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 50%;
-            top: 0;
-            bottom: 0;
-            width: 3px;
-            background: #ff8a65;
-            transform: translateX(-50%);
-        }
-
-        .timeline-item {
-            display: flex;
-            margin-bottom: 3rem;
-            position: relative;
-        }
-
-        .timeline-item:nth-child(odd) {
-            flex-direction: row;
-        }
-
-        .timeline-item:nth-child(even) {
-            flex-direction: row-reverse;
-        }
-
-        .timeline-content {
-            background: #fff5f5;
-            padding: 1.5rem;
-            border-radius: 10px;
-            width: 45%;
-            position: relative;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-        }
-
-        .timeline-date {
-            position: absolute;
-            left: 50%;
-            top: 20px;
-            transform: translateX(-50%);
-            background: #ff8a65;
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-
-        /* Skills Grid */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
-        }
-
-        .skill-category {
-            background: #fff5f5;
-            padding: 2rem;
-            border-radius: 15px;
-            text-align: center;
-        }
-
-        .skill-category h3 {
-            color: #ff8a65;
-            margin-bottom: 1rem;
-        }
-
-        .skill-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            justify-content: center;
-        }
-
-        .skill-tag {
-            background: #ffebe9;
-            color: #333;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-        }
-
-        /* Contact Form */
-        .contact-form {
-            max-width: 600px;
-            margin: 0 auto;
-            background: #fff5f5;
-            padding: 2rem;
-            border-radius: 15px;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: #333;
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 1rem;
-            border: 2px solid #ffe0dd;
-            border-radius: 10px;
-            font-size: 1rem;
-            transition: border-color 0.3s ease;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #ff8a65;
-        }
-
-        /* Social Links */
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin: 3rem 0;
-        }
-
-        .social-link {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 1rem 2rem;
-            background: #fff5f5;
-            border-radius: 25px;
-            text-decoration: none;
-            color: #333;
-            transition: all 0.3s ease;
-        }
-
-        .social-link:hover {
-            background: #ff8a65;
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        .social-icon {
-            width: 24px;
-            height: 24px;
-            background: #ff8a65;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 12px;
-        }
-
-        .social-link:hover .social-icon {
-            background: white;
-            color: #ff8a65;
-        }
-
-        /* Projects Section */
-        .project-card {
-            background: #fff5f5;
-            padding: 2rem;
-            border-radius: 15px;
-            margin-bottom: 2rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .project-card h3 {
-            color: #ff8a65;
-            margin-bottom: 1rem;
-        }
-
-        /* Footer */
-        footer {
-            background: linear-gradient(135deg, #333 0%, #555 100%);
-            color: white;
-            text-align: center;
-            padding: 2rem 0;
-            margin-top: 4rem;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hamburger {
-                display: flex;
-            }
-
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background: white;
-                flex-direction: column;
-                padding: 1rem;
-                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            }
-
-            .nav-links.show {
-                display: flex;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .profile-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .timeline::before {
-                left: 20px;
-            }
-
-            .timeline-item {
-                flex-direction: row !important;
-                padding-left: 40px;
-            }
-
-            .timeline-content {
-                width: 100%;
-            }
-
-            .timeline-date {
-                left: 20px;
-                transform: none;
-            }
-
-            .cta-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .social-links {
-                flex-direction: column;
-                align-items: center;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tatyana Amugo – ML Developer</title>
+  <style>
+    * {
+      margin: 0; padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #333;
+      background-color: #fff;
+      overflow-x: hidden;
+    }
+
+    header {
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.6);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      position: fixed;
+      width: 100%;
+      z-index: 1000;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+    }
+
+    .logo {
+      font-weight: 600;
+      font-size: 1.3rem;
+      color: #ff7043;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover, .nav-links a.active {
+      color: #ff7043;
+    }
+
+    /* Hero Section */
+    .hero {
+      height: 100vh;
+      background-image: url('images/background.jpg');
+      background-size: cover;
+      background-attachment: fixed;
+      background-position: center;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+    }
+
+    .hero-content h1 {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero-content p {
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .btn {
+      padding: 0.8rem 1.8rem;
+      border-radius: 25px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #ff8a65, #ff7043);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 20px rgba(255, 138, 101, 0.3);
+    }
+
+    .btn-secondary {
+      background: linear-gradient(135deg, #e0e0e0, #bdbdbd);
+      color: #333;
+      transition: all 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Floating bubbles */
+    .bubble {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+      animation: float 10s infinite ease-in-out;
+    }
+
+    .bubble:nth-child(1) {
+      width: 100px; height: 100px;
+      left: 10%; top: 20%;
+      animation-delay: 0s;
+    }
+
+    .bubble:nth-child(2) {
+      width: 80px; height: 80px;
+      left: 80%; top: 40%;
+      animation-delay: 2s;
+    }
+
+    .bubble:nth-child(3) {
+      width: 60px; height: 60px;
+      left: 50%; top: 70%;
+      animation-delay: 4s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) }
+      50% { transform: translateY(-30px) }
+    }
+
+    /* Section Animations */
+    .animate {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s ease;
+    }
+
+    .visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* About Section */
+    .about {
+      padding: 6rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .about h2 {
+      color: #ff7043;
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .about-content {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 3rem;
+      margin-top: 3rem;
+      align-items: center;
+    }
+
+    .profile-pic {
+      width: 250px;
+      height: 250px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 5px solid #ff7043;
+      margin: 0 auto;
+    }
+
+    .bio {
+      text-align: left;
+    }
+
+    .bio p {
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.7;
+    }
+
+    .quirky-fact {
+      background: linear-gradient(135deg, #ffebe9, #ffe0dd);
+      padding: 1rem;
+      border-radius: 10px;
+      margin: 1.5rem 0;
+      border-left: 4px solid #ff7043;
+    }
+
+    /* Timeline */
+    .timeline {
+      padding: 4rem 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .timeline h2 {
+      text-align: center;
+      color: #ff7043;
+      font-size: 2.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .timeline-item {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      border-left: 4px solid #ff7043;
+    }
+
+    .timeline-item h3 {
+      color: #ff7043;
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-item .date {
+      color: #666;
+      font-style: italic;
+      margin-bottom: 1rem;
+    }
+
+    /* Project Cards */
+    .project-card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .skill-tag {
+      background: #ffebe9;
+      color: #333;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+    }
+
+    /* Contact Form */
+    .contact-form {
+      max-width: 600px;
+      margin: 0 auto;
+      background: #fff5f5;
+      padding: 2rem;
+      border-radius: 15px;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid #ffe0dd;
+      border-radius: 10px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: #ff8a65;
+      outline: none;
+    }
+
+    footer {
+      background: #f5f5f5;
+      color: #999;
+      text-align: center;
+      padding: 2rem 0;
+      margin-top: 4rem;
+    }
+
+    /* Core Competencies */
+    .competencies {
+      padding: 4rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .competencies h2 {
+      color: #ff7043;
+      font-size: 2.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .competency-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .competency-card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .competency-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .competency-card h3 {
+      color: #ff7043;
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+    }
+
+    .competency-card ul {
+      list-style: none;
+      text-align: left;
+    }
+
+    .competency-card li {
+      padding: 0.3rem 0;
+      color: #555;
+    }
+
+    .competency-card li:before {
+      content: "▸ ";
+      color: #ff7043;
+      font-weight: bold;
+    }
+
+    @media (max-width: 768px) {
+      .about-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .bio {
+        text-align: center;
+      }
+
+      .hero-content h1 {
+        font-size: 2.5rem;
+      }
+
+      .hero-content p {
+        font-size: 1.2rem;
+      }
+
+      .competency-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <nav class="container">
-            <div class="logo">
-                <div class="logo-icon">
-                    <span style="font-size: 14px; letter-spacing: 1px;">T<span style="font-size: 12px;">C</span>A</span>
-                </div>
-                <span style="font-weight: 600; color: #333;">Tatyana Amugo</span>
-            </div>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#" onclick="showSection('home')" class="nav-link active">Home</a></li>
-                <li><a href="#" onclick="showSection('profile')" class="nav-link">Profile</a></li>
-                <li><a href="#" onclick="showSection('projects')" class="nav-link">Projects</a></li>
-                <li><a href="#" onclick="showSection('contact')" class="nav-link">Contact</a></li>
-            </ul>
-            <div class="hamburger" onclick="toggleMenu()">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </nav>
-    </header>
+  <header>
+    <nav>
+      <div class="logo">Tatyana Amugo</div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home" class="active">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
 
-    <main>
-        <!-- Home Section -->
-        <section id="home" class="section active">
-            <div class="hero">
-                <div class="container">
-                    <h1>Hi, I'm Tatyana! 👋</h1>
-                    <p class="subtitle">AI/ML Developer & Data Enthusiast</p>
-                    <div class="hero-description">
-                        <p>I'm passionate about solving complex problems with simple, elegant solutions. Currently pursuing my Graduate Certificate in AI & Machine Learning at Fanshawe College, I love turning data into actionable insights and building intelligent systems that make a real difference.</p>
-                        
-                        <div class="quirky-fact">
-                            <strong>Fun fact:</strong> I believe in solving problems the easiest way possible while still being efficient and effective. Why make it complicated when simple works better? ✨
-                        </div>
-                        
-                        <p>From predicting customer churn to detecting video anomalies, I enjoy the challenge of making machines understand patterns that help businesses thrive. When I'm not coding, you'll find me exploring the latest in AI research or mentoring fellow students.</p>
-                    </div>
-                    <div class="cta-buttons">
-                        <a href="#" onclick="showSection('projects')" class="btn btn-primary">View My Work</a>
-                        <a href="#" onclick="showSection('contact')" class="btn btn-secondary">Get In Touch</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Profile Section -->
-        <section id="profile" class="section">
-            <div class="container">
-                <h2>About Me</h2>
-                
-                <div class="profile-grid">
-                    <div class="profile-card">
-                        <h3 style="color: #ff8a65; margin-bottom: 1rem;">Contact Info</h3>
-                        <ul class="contact-info">
-                            <li>
-                                <span class="icon">📍</span>
-                                <span>London, ON, Canada</span>
-                            </li>
-                            <li>
-                                <span class="icon">📞</span>
-                                <span>519-280-0207</span>
-                            </li>
-                            <li>
-                                <span class="icon">✉️</span>
-                                <span>t_amugo@fanshaweonline.ca</span>
-                            </li>
-                            <li>
-                                <span class="icon">🎓</span>
-                                <span>GPA: 4.1</span>
-                            </li>
-                        </ul>
-                    </div>
-                    
-                    <div class="profile-card">
-                        <h3 style="color: #ff8a65; margin-bottom: 1rem;">Current Focus</h3>
-                        <p>I'm currently diving deep into advanced machine learning techniques, working on real-world projects that combine my passion for data science with practical business applications. My recent work includes customer churn prediction models and video anomaly detection systems using cutting-edge deep learning approaches.</p>
-                        <br>
-                        <p><strong>What drives me:</strong> The intersection of technology and human impact. I love building solutions that not only work technically but also create meaningful value for users and businesses.</p>
-                    </div>
-                </div>
-
-                <!-- Timeline -->
-                <h3 style="text-align: center; color: #ff8a65; margin: 3rem 0 2rem;">My Journey</h3>
-                <div class="timeline">
-                    <div class="timeline-date">Jan 2025 - Present</div>
-                    <div class="timeline-item">
-                        <div class="timeline-content">
-                            <h4>Graduate Certificate - AI & Machine Learning</h4>
-                            <p><strong>Fanshawe College</strong></p>
-                            <p>Developing advanced ML models including customer churn prediction using logistic regression, decision trees, and random forests. Working with NLP and deep learning frameworks like TensorFlow and PyTorch.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="timeline-item">
-                        <div class="timeline-content">
-                            <h4>ERP Developer</h4>
-                            <p><strong>Upande - Nairobi, Kenya</strong></p>
-                            <p>Led ERPNext implementations and data migration initiatives. Contributed to IoT integrations that improved workflow automation by 30%.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="timeline-item">
-                        <div class="timeline-content">
-                            <h4>Consumer Insights & Data Analytics Extern</h4>
-                            <p><strong>Beats by Dre - Nairobi, Kenya</strong></p>
-                            <p>Conducted deep data analysis on customer behavior, driving 15% improvement in marketing strategies through dynamic dashboards and visualizations.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="timeline-item">
-                        <div class="timeline-content">
-                            <h4>Bachelor's Degree - Informatics & Computer Science</h4>
-                            <p><strong>Strathmore University - Nairobi, Kenya</strong></p>
-                            <p>Built 3D CNN with spatio-temporal autoencoders for video anomaly detection. Optimized unsupervised learning models for real-time processing.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Core Competencies -->
-                <h3 style="text-align: center; color: #ff8a65; margin: 3rem 0 2rem;">Core Competencies</h3>
-                <div class="skills-grid">
-                    <div class="skill-category">
-                        <h3>Data Analysis & AI/ML</h3>
-                        <div class="skill-tags">
-                            <span class="skill-tag">Python</span>
-                            <span class="skill-tag">Scikit-learn</span>
-                            <span class="skill-tag">TensorFlow</span>
-                            <span class="skill-tag">PyTorch</span>
-                            <span class="skill-tag">Pandas</span>
-                            <span class="skill-tag">SQL</span>
-                            <span class="skill-tag">OpenCV</span>
-                            <span class="skill-tag">Keras</span>
-                        </div>
-                    </div>
-                    
-                    <div class="skill-category">
-                        <h3>Full-Stack Development</h3>
-                        <div class="skill-tags">
-                            <span class="skill-tag">Django</span>
-                            <span class="skill-tag">REST APIs</span>
-                            <span class="skill-tag">ERPNext</span>
-                            <span class="skill-tag">Frappe</span>
-                            <span class="skill-tag">IoT Integration</span>
-                            <span class="skill-tag">Automation</span>
-                        </div>
-                    </div>
-                    
-                    <div class="skill-category">
-                        <h3>Data Visualization</h3>
-                        <div class="skill-tags">
-                            <span class="skill-tag">PowerBi</span>
-                            <span class="skill-tag">Matplotlib</span>
-                            <span class="skill-tag">Dashboard Design</span>
-                            <span class="skill-tag">KPI Analysis</span>
-                            <span class="skill-tag">SHAP</span>
-                            <span class="skill-tag">Streamlit</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Projects Section -->
-<section id="projects" class="section">
-    <div class="container">
-        <h2>Featured Projects</h2>
-        
-        <div class="project-card">
-            <h3>🎯 Customer Churn Prediction Model</h3>
-            <p>Built and deployed predictive models using logistic regression, decision trees, and random forests to identify customers at risk of churning. Implemented comprehensive data preprocessing and feature engineering pipeline using Python and scikit-learn.</p>
-            <div class="skill-tags" style="margin-top: 1rem;">
-                <span class="skill-tag">Python</span>
-                <span class="skill-tag">Scikit-learn</span>
-                <span class="skill-tag">Pandas</span>
-                <span class="skill-tag">Machine Learning</span>
-            </div>
-        </div>
-
-        <div class="project-card">
-            <h3>🎥 Anomaly Detection System</h3>
-            <p>Developed a Comparative Study using PaDim, SPADE and CLIP. Optimized using Python, PyTorch and OpenCV.</p>
-            <div class="skill-tags" style="margin-top: 1rem;">
-                <span class="skill-tag">Deep Learning</span>
-                <span class="skill-tag">OpenCV</span>
-                <span class="skill-tag">PyTorch</span>
-                <span class="skill-tag">Computer Vision</span>
-            </div>
-            <div style="margin-top: 1rem;">
-                <a href="https://anomal-y-detection.streamlit.app" class="btn btn-primary">🚀 View Live Demo</a>
-            </div>
-        </div>
-
-        <div class="project-card">
-            <h3>📊 Consumer Insights Dashboard</h3>
-            <p>Created dynamic dashboards and visualizations for Beats by Dre to analyze customer behavior and market segmentation. Resulted in 15% improvement in targeted marketing strategies through data-driven insights.</p>
-            <div class="skill-tags" style="margin-top: 1rem;">
-                <span class="skill-tag">Tableau</span>
-                <span class="skill-tag">Data Analysis</span>
-                <span class="skill-tag">Market Research</span>
-                <span class="skill-tag">Python</span>
-            </div>
-        </div>
-
-        <div class="project-card">
-            <h3>📱 Teen Phone Addiction Dashboard</h3>
-            <p>Collaborated with a team to analyze teen smartphone usage patterns and build a machine learning dashboard. Used Ridge, MLPRegressor, and Gradient Boosting to predict addiction levels. Designed an interactive Streamlit app with SHAP-based model interpretability and engaging visual analytics.</p>
-            <div class="skill-tags" style="margin-top: 1rem;">
-                <span class="skill-tag">Python</span>
-                <span class="skill-tag">Streamlit</span>
-                <span class="skill-tag">Scikit-learn</span>
-                <span class="skill-tag">Plotly</span>
-                <span class="skill-tag">SHAP</span>
-                <span class="skill-tag">Data Visualization</span>
-                <span class="skill-tag">Machine Learning</span>
-            </div>
-            <div style="margin-top: 1rem;">
-                <a href="https://phoneaddiction.streamlit.app" class="btn btn-primary">🚀 View Live Demo</a>
-            </div>
-        </div>
-
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <h1>Hi, I'm Tatyana!</h1>
+      <p>ML Developer & Data Enthusiast</p>
+      <a href="#projects" class="btn btn-primary"> See My Work</a>
     </div>
-</section>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+  </section>
 
-        <!-- Contact Section -->
-        <section id="contact" class="section">
-            <div class="container">
-                <h2>Let's Connect!</h2>
-                
-                <div class="social-links">
-                    <a href="https://github.com/cheredi" target="_blank" class="social-link">
-                        <span class="social-icon">🐱</span>
-                        <span>GitHub</span>
-                    </a>
-                    <a href="http://www.linkedin.com/in/tatyana-amugo02" target="_blank" class="social-link">
-                        <span class="social-icon">💼</span>
-                        <span>LinkedIn</span>
-                    </a>
-                </div>
+  <section class="about animate" id="about">
+    <h2> About Me</h2>
+    <div class="about-content">
+      <div>
+        <img src="images/Tatyana-profile.jpg" alt="Tatyana Amugo" class="profile-pic">
 
-                <form class="contact-form" onsubmit="sendEmail(event)">
-                    <h3 style="text-align: center; color: #ff8a65; margin-bottom: 2rem;">Send me a message</h3>
-                    
-                    <div class="form-group">
-                        <label for="name">Your Name</label>
-                        <input type="text" id="name" name="name" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="email">Your Email</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="subject">Subject</label>
-                        <input type="text" id="subject" name="subject" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea id="message" name="message" rows="5" required></textarea>
-                    </div>
-                    
-                    <div style="text-align: center;">
-                        <button type="submit" class="btn btn-primary">Send Message 📧</button>
-                    </div>
-                </form>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 Tatyana Amugo. Built with passion for clean, effective solutions. 🚀</p>
+      </div>
+      <div class="bio">
+        <p>Hi, I'm Tatyana! I'm passionate about turning data into intelligent systems. Whether it's predicting churn or detecting anomalies in video, I bring a human-centered focus to AI solutions. My work bridges engineering, design, and business strategy to deliver results that matter.</p>
+        <div class="quirky-fact">
+          <strong>Fun fact:</strong> I love simplifying the complex – because elegant code is the best kind of magic. ✨
         </div>
-    </footer>
+        <p>Outside the terminal, you'll find me mentoring peers, learning about generative AI, or visualizing insights for smarter decision-making.</p>
+      </div>
+    </div>
+  </section>
 
-    <script>
-        // Navigation functionality
-        function showSection(sectionName) {
-            // Hide all sections
-            const sections = document.querySelectorAll('.section');
-            sections.forEach(section => section.classList.remove('active'));
-            
-            // Show selected section
-            document.getElementById(sectionName).classList.add('active');
-            
-            // Update active nav link
-            const navLinks = document.querySelectorAll('.nav-link');
-            navLinks.forEach(link => link.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            // Close mobile menu if open
-            document.getElementById('navLinks').classList.remove('show');
+  <section class="timeline animate">
+    <h2> My Journey</h2>
+    <div class="timeline-item">
+      <h3>Graduate Certificate - AI & Machine Learning</h3>
+      <div class="date">Jan 2025 - Present</div>
+      <p>Developing advanced ML models including customer churn prediction using logistic regression, decision trees, and random forests. Working with NLP and deep learning frameworks like TensorFlow and PyTorch.</p>
+    </div>
+    <div class="timeline-item">
+      <h3>ERP Developer</h3>
+      <div class="date">Sep 2024 - Dec 2024</div>
+      <p>Led ERPNext implementations and data migration initiatives. Contributed to IoT integrations that improved workflow automation by 30%.</p>
+    </div>
+    <div class="timeline-item">
+      <h3>Consumer Insights & Data Analytics Extern</h3>
+      <div class="date">Sep 2024 - Oct 2024</div>
+      <p>Conducted deep data analysis on customer behavior, driving 15% improvement in marketing strategies through dynamic dashboards and visualizations.</p>
+    </div>
+    <div class="timeline-item">
+        <h3>Bachelor's Degree - Informatics & Computer Science</h3>
+        <div class="date">2020 - 2023</div>
+        <p>Built 3D CNN with spatio-temporal autoencoders for video anomaly detection. Optimized unsupervised learning models for real-time processing.</p>
+      </div>
+  </section>
+
+  <section class="competencies animate">
+    <h2>Core Competencies</h2>
+    <div class="competency-grid">
+      <div class="competency-card">
+        <h3>Machine Learning & AI</h3>
+        <ul>
+          <li>Predictive Modeling</li>
+          <li>Deep Learning (PyTorch)</li>
+          <li>Computer Vision</li>
+          <li>Natural Language Processing</li>
+          <li>Model Optimization</li>
+        </ul>
+      </div>
+      <div class="competency-card">
+        <h3>Data Science & Analytics</h3>
+        <ul>
+          <li>Statistical Analysis</li>
+          <li>Data Preprocessing</li>
+          <li>Feature Engineering</li>
+          <li>A/B Testing</li>
+          <li>Business Intelligence</li>
+        </ul>
+      </div>
+      <div class="competency-card">
+        <h3>Technical Skills</h3>
+        <ul>
+          <li>Python (Pandas, NumPy, Scikit-learn)</li>
+          <li>SQL & Database Management</li>
+          <li>Git Version Control</li>
+          <li>Cloud Platforms (AWS, Azure)</li>
+          <li>API Development</li>
+        </ul>
+      </div>
+      <div class="competency-card">
+        <h3>Visualization & Tools</h3>
+        <ul>
+          <li>Tableau & Power BI</li>
+          <li>Streamlit & Dash</li>
+          <li>Plotly & Matplotlib</li>
+          <li>Jupyter Notebooks</li>
+          <li>Excel Advanced Analytics</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" class="animate">
+    <div class="container" style="max-width: 1100px; margin: 0 auto; padding: 4rem 1rem;">
+      <h2 style="text-align: center; color: #ff7043; margin-bottom: 3rem; font-size: 2.5rem;"> Featured Projects</h2>
+      <div class="project-card">
+        <h3>Customer Churn Prediction Model</h3>
+        <p>Built and deployed predictive models using logistic regression, decision trees, and random forests to identify customers at risk of churning. Implemented comprehensive data preprocessing and feature engineering pipeline using Python and scikit-learn.</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">Scikit-learn</span>
+          <span class="skill-tag">Pandas</span>
+          <span class="skill-tag">Machine Learning</span>
+        </div>
+      </div>
+      <div class="project-card">
+        <h3> Anomaly Detection System</h3>
+        <p>Developed a Comparative Study using PaDim, SPADE and CLIP. Optimized using Python, PyTorch and OpenCV.</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Deep Learning</span>
+          <span class="skill-tag">OpenCV</span>
+          <span class="skill-tag">PyTorch</span>
+          <span class="skill-tag">Computer Vision</span>
+        </div>
+        <a href="https://anomal-y-detection.streamlit.app" class="btn btn-primary" style="margin-top: 1rem;"> View Live Demo</a>
+      </div>
+      <div class="project-card">
+        <h3>Consumer Insights Dashboard</h3>
+        <p>Created dynamic dashboards and visualizations for Beats by Dre to analyze customer behavior and market segmentation. Resulted in 15% improvement in targeted marketing strategies through data-driven insights.</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Tableau</span>
+          <span class="skill-tag">Data Analysis</span>
+          <span class="skill-tag">Market Research</span>
+          <span class="skill-tag">Python</span>
+        </div>
+      </div>
+      <div class="project-card">
+        <h3> Teen Phone Addiction Dashboard</h3>
+        <p>Collaborated with a team to analyze teen smartphone usage patterns and build a machine learning dashboard. Used Ridge, MLPRegressor, and Gradient Boosting to predict addiction levels. Designed an interactive Streamlit app with SHAP-based model interpretability and engaging visual analytics.</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">Streamlit</span>
+          <span class="skill-tag">Scikit-learn</span>
+          <span class="skill-tag">Plotly</span>
+          <span class="skill-tag">SHAP</span>
+          <span class="skill-tag">Data Visualization</span>
+          <span class="skill-tag">Machine Learning</span>
+        </div>
+        <a href="https://phoneaddiction.streamlit.app" class="btn btn-primary" style="margin-top: 1rem;">View Live Demo</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="animate">
+    <div class="container" style="max-width: 600px; margin: 0 auto; padding: 4rem 1rem;">
+      <h2 style="text-align: center; color: #ff7043; margin-bottom: 2rem;"> Let's Connect</h2>
+      <div style="text-align: center; margin-bottom: 2rem;">
+        <a href="https://github.com/cheredi" class="btn btn-secondary" style="margin: 0.5rem;"> GitHub</a>
+        <a href="https://linkedin.com/in/tatyana-amugo02" class="btn btn-secondary" style="margin: 0.5rem;"> LinkedIn</a>
+      </div>
+      <form onsubmit="sendEmail(event)">
+        <input type="text" placeholder="Your Name" name="name" required style="width: 100%; margin-bottom: 1rem; padding: 1rem; border-radius: 10px; border: 1px solid #ddd;">
+        <input type="email" placeholder="Your Email" name="email" required style="width: 100%; margin-bottom: 1rem; padding: 1rem; border-radius: 10px; border: 1px solid #ddd;">
+        <textarea placeholder="Your Message" name="message" rows="5" required style="width: 100%; margin-bottom: 1rem; padding: 1rem; border-radius: 10px; border: 1px solid #ddd;"></textarea>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message 📩</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2025 Tatyana Amugo. Built with clean code & coffee ☕
+  </footer>
+
+  <script>
+    // Scroll-triggered animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
         }
-
-        // Mobile menu toggle
-        function toggleMenu() {
-            document.getElementById('navLinks').classList.toggle('show');
-        }
-
-        // Email form submission
-        function sendEmail(event) {
-            event.preventDefault();
-            
-            const formData = new FormData(event.target);
-            const name = formData.get('name');
-            const email = formData.get('email');
-            const subject = formData.get('subject');
-            const message = formData.get('message');
-            
-            // Create mailto link
-            const mailtoLink = `mailto:t_amugo@fanshaweonline.ca?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`From: ${name} (${email})\n\n${message}`)}`;
-            
-            // Open email client
-            window.location.href = mailtoLink;
-            
-            // Reset form
-            event.target.reset();
-            
-            alert('Email client opened! Your message is ready to send.');
-        }
-
-        // Smooth scrolling for better UX
-        document.addEventListener('DOMContentLoaded', function() {
-            // Add smooth scrolling behavior
-            document.documentElement.style.scrollBehavior = 'smooth';
-            
-            // Initialize timeline animations on scroll
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            };
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                    }
-                });
-            }, observerOptions);
-            
-            // Observe timeline items
-            document.querySelectorAll('.timeline-item').forEach(item => {
-                item.style.opacity = '0';
-                item.style.transform = 'translateY(20px)';
-                item.style.transition = 'all 0.6s ease-out';
-                observer.observe(item);
-            });
-        });
-
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', function(event) {
-            const nav = document.querySelector('nav');
-            const navLinks = document.getElementById('navLinks');
-            
-            if (!nav.contains(event.target) && navLinks.classList.contains('show')) {
-                navLinks.classList.remove('show');
-            }
-        });
-    </script>
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.animate').forEach(el => observer.observe(el));
+    // Send email
+    function sendEmail(e) {
+      e.preventDefault();
+      const form = e.target;
+      const name = form.name.value;
+      const email = form.email.value;
+      const message = form.message.value;
+      const mailto = `mailto:t_amugo@fanshaweonline.ca?subject=Message from ${encodeURIComponent(name)}&body=${encodeURIComponent(message)}%0A%0AReply to: ${email}`;
+      window.location.href = mailto;
+    }
+  </script>
 </body>
 </html>
