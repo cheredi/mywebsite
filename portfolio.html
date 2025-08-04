@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tatyana Amugo - AI/ML Developer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #ffffff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #ffffff 0%, #ffebee 100%);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #ffab91, #ff8a65, #ff7043);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(255, 138, 101, 0.3);
+            transform: rotate(-5deg);
+            transition: all 0.3s ease;
+            font-family: 'Courier New', monospace;
+        }
+
+        .logo-icon:hover {
+            transform: rotate(0deg) scale(1.1);
+            box-shadow: 0 6px 20px rgba(255, 138, 101, 0.4);
+        }
+
+        .logo-icon::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg, #ff8a65, #ffab91, #ff7043, #ff5722);
+            border-radius: 17px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .logo-icon:hover::before {
+            opacity: 1;
+        }
+
+        .logo-icon::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            top: 8px;
+            right: 8px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #ff8a65;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #333;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 80px;
+        }
+
+        .section {
+            padding: 4rem 0;
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .section h2 {
+            color: #ff8a65;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            text-align: center;
+        }
+
+        /* Home Section */
+        .hero {
+            text-align: center;
+            padding: 6rem 0;
+            background: linear-gradient(135deg, #ffffff 0%, #fff3f0 100%);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            color: #ff8a65;
+            margin-bottom: 2rem;
+        }
+
+        .hero-description {
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            font-size: 1.2rem;
+            line-height: 1.8;
+        }
+
+        .quirky-fact {
+            background: #fff5f5;
+            border-left: 4px solid #ff8a65;
+            padding: 1.5rem;
+            margin: 2rem auto;
+            max-width: 600px;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ff8a65, #ffab91);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 138, 101, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #ff8a65;
+            border: 2px solid #ff8a65;
+        }
+
+        .btn-secondary:hover {
+            background: #ff8a65;
+            color: white;
+        }
+
+        /* Profile Section */
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .profile-card {
+            background: #fff5f5;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .contact-info {
+            list-style: none;
+        }
+
+        .contact-info li {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .contact-info .icon {
+            width: 20px;
+            height: 20px;
+            background: #ff8a65;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            margin: 3rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: #ff8a65;
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) {
+            flex-direction: row;
+        }
+
+        .timeline-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-content {
+            background: #fff5f5;
+            padding: 1.5rem;
+            border-radius: 10px;
+            width: 45%;
+            position: relative;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .timeline-date {
+            position: absolute;
+            left: 50%;
+            top: 20px;
+            transform: translateX(-50%);
+            background: #ff8a65;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .skill-category {
+            background: #fff5f5;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .skill-category h3 {
+            color: #ff8a65;
+            margin-bottom: 1rem;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+
+        .skill-tag {
+            background: #ffebe9;
+            color: #333;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        /* Contact Form */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff5f5;
+            padding: 2rem;
+            border-radius: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #ffe0dd;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #ff8a65;
+        }
+
+        /* Social Links */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 1rem 2rem;
+            background: #fff5f5;
+            border-radius: 25px;
+            text-decoration: none;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: #ff8a65;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .social-icon {
+            width: 24px;
+            height: 24px;
+            background: #ff8a65;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+        }
+
+        .social-link:hover .social-icon {
+            background: white;
+            color: #ff8a65;
+        }
+
+        /* Projects Section */
+        .project-card {
+            background: #fff5f5;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .project-card h3 {
+            color: #ff8a65;
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #333 0%, #555 100%);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: white;
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            }
+
+            .nav-links.show {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                flex-direction: row !important;
+                padding-left: 40px;
+            }
+
+            .timeline-content {
+                width: 100%;
+            }
+
+            .timeline-date {
+                left: 20px;
+                transform: none;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .social-links {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <span style="font-size: 14px; letter-spacing: 1px;">T<span style="font-size: 12px;">C</span>A</span>
+                </div>
+                <span style="font-weight: 600; color: #333;">Tatyana Amugo</span>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#" onclick="showSection('home')" class="nav-link active">Home</a></li>
+                <li><a href="#" onclick="showSection('profile')" class="nav-link">Profile</a></li>
+                <li><a href="#" onclick="showSection('projects')" class="nav-link">Projects</a></li>
+                <li><a href="#" onclick="showSection('contact')" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Home Section -->
+        <section id="home" class="section active">
+            <div class="hero">
+                <div class="container">
+                    <h1>Hi, I'm Tatyana! 👋</h1>
+                    <p class="subtitle">AI/ML Developer & Data Enthusiast</p>
+                    <div class="hero-description">
+                        <p>I'm passionate about solving complex problems with simple, elegant solutions. Currently pursuing my Graduate Certificate in AI & Machine Learning at Fanshawe College, I love turning data into actionable insights and building intelligent systems that make a real difference.</p>
+                        
+                        <div class="quirky-fact">
+                            <strong>Fun fact:</strong> I believe in solving problems the easiest way possible while still being efficient and effective. Why make it complicated when simple works better? ✨
+                        </div>
+                        
+                        <p>From predicting customer churn to detecting video anomalies, I enjoy the challenge of making machines understand patterns that help businesses thrive. When I'm not coding, you'll find me exploring the latest in AI research or mentoring fellow students.</p>
+                    </div>
+                    <div class="cta-buttons">
+                        <a href="#" onclick="showSection('projects')" class="btn btn-primary">View My Work</a>
+                        <a href="#" onclick="showSection('contact')" class="btn btn-secondary">Get In Touch</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Profile Section -->
+        <section id="profile" class="section">
+            <div class="container">
+                <h2>About Me</h2>
+                
+                <div class="profile-grid">
+                    <div class="profile-card">
+                        <h3 style="color: #ff8a65; margin-bottom: 1rem;">Contact Info</h3>
+                        <ul class="contact-info">
+                            <li>
+                                <span class="icon">📍</span>
+                                <span>London, ON, Canada</span>
+                            </li>
+                            <li>
+                                <span class="icon">📞</span>
+                                <span>519-280-0207</span>
+                            </li>
+                            <li>
+                                <span class="icon">✉️</span>
+                                <span>t_amugo@fanshaweonline.ca</span>
+                            </li>
+                            <li>
+                                <span class="icon">🎓</span>
+                                <span>GPA: 4.1</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="profile-card">
+                        <h3 style="color: #ff8a65; margin-bottom: 1rem;">Current Focus</h3>
+                        <p>I'm currently diving deep into advanced machine learning techniques, working on real-world projects that combine my passion for data science with practical business applications. My recent work includes customer churn prediction models and video anomaly detection systems using cutting-edge deep learning approaches.</p>
+                        <br>
+                        <p><strong>What drives me:</strong> The intersection of technology and human impact. I love building solutions that not only work technically but also create meaningful value for users and businesses.</p>
+                    </div>
+                </div>
+
+                <!-- Timeline -->
+                <h3 style="text-align: center; color: #ff8a65; margin: 3rem 0 2rem;">My Journey</h3>
+                <div class="timeline">
+                    <div class="timeline-date">Jan 2025 - Present</div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h4>Graduate Certificate - AI & Machine Learning</h4>
+                            <p><strong>Fanshawe College</strong></p>
+                            <p>Developing advanced ML models including customer churn prediction using logistic regression, decision trees, and random forests. Working with NLP and deep learning frameworks like TensorFlow and PyTorch.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h4>ERP Developer</h4>
+                            <p><strong>Upande - Nairobi, Kenya</strong></p>
+                            <p>Led ERPNext implementations and data migration initiatives. Contributed to IoT integrations that improved workflow automation by 30%.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h4>Consumer Insights & Data Analytics Extern</h4>
+                            <p><strong>Beats by Dre - Nairobi, Kenya</strong></p>
+                            <p>Conducted deep data analysis on customer behavior, driving 15% improvement in marketing strategies through dynamic dashboards and visualizations.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h4>Bachelor's Degree - Informatics & Computer Science</h4>
+                            <p><strong>Strathmore University - Nairobi, Kenya</strong></p>
+                            <p>Built 3D CNN with spatio-temporal autoencoders for video anomaly detection. Optimized unsupervised learning models for real-time processing.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Core Competencies -->
+                <h3 style="text-align: center; color: #ff8a65; margin: 3rem 0 2rem;">Core Competencies</h3>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h3>Data Analysis & AI/ML</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">Scikit-learn</span>
+                            <span class="skill-tag">TensorFlow</span>
+                            <span class="skill-tag">PyTorch</span>
+                            <span class="skill-tag">Pandas</span>
+                            <span class="skill-tag">SQL</span>
+                            <span class="skill-tag">OpenCV</span>
+                            <span class="skill-tag">Keras</span>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3>Full-Stack Development</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Django</span>
+                            <span class="skill-tag">REST APIs</span>
+                            <span class="skill-tag">ERPNext</span>
+                            <span class="skill-tag">Frappe</span>
+                            <span class="skill-tag">IoT Integration</span>
+                            <span class="skill-tag">Automation</span>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3>Data Visualization</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Tableau</span>
+                            <span class="skill-tag">Matplotlib</span>
+                            <span class="skill-tag">Dashboard Design</span>
+                            <span class="skill-tag">KPI Analysis</span>
+                            <span class="skill-tag">Streamlit</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="section">
+            <div class="container">
+                <h2>Featured Projects</h2>
+                
+                <div class="project-card">
+                    <h3>🎯 Customer Churn Prediction Model</h3>
+                    <p>Built and deployed predictive models using logistic regression, decision trees, and random forests to identify customers at risk of churning. Implemented comprehensive data preprocessing and feature engineering pipeline using Python and scikit-learn.</p>
+                    <div class="skill-tags" style="margin-top: 1rem;">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">Scikit-learn</span>
+                        <span class="skill-tag">Pandas</span>
+                        <span class="skill-tag">Machine Learning</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <h3>🎥 Video Anomaly Detection System</h3>
+                    <p>Developed a sophisticated 3D CNN with spatio-temporal autoencoders for real-time video anomaly detection. Optimized unsupervised learning models for efficient processing using Python, OpenCV, and Keras.</p>
+                    <div class="skill-tags" style="margin-top: 1rem;">
+                        <span class="skill-tag">Deep Learning</span>
+                        <span class="skill-tag">OpenCV</span>
+                        <span class="skill-tag">Keras</span>
+                        <span class="skill-tag">Computer Vision</span>
+                    </div>
+                    <div style="margin-top: 1rem;">
+                        <a href="#" class="btn btn-primary" onclick="alert('Add your Streamlit app URL here!')">🚀 View Live Demo</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <h3>📊 Consumer Insights Dashboard</h3>
+                    <p>Created dynamic dashboards and visualizations for Beats by Dre to analyze customer behavior and market segmentation. Resulted in 15% improvement in targeted marketing strategies through data-driven insights.</p>
+                    <div class="skill-tags" style="margin-top: 1rem;">
+                        <span class="skill-tag">Tableau</span>
+                        <span class="skill-tag">Data Analysis</span>
+                        <span class="skill-tag">Market Research</span>
+                        <span class="skill-tag">Python</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <div class="container">
+                <h2>Let's Connect!</h2>
+                
+                <div class="social-links">
+                    <a href="https://github.com/cheredi" target="_blank" class="social-link">
+                        <span class="social-icon">🐱</span>
+                        <span>GitHub</span>
+                    </a>
+                    <a href="http://www.linkedin.com/in/tatyana-amugo02" target="_blank" class="social-link">
+                        <span class="social-icon">💼</span>
+                        <span>LinkedIn</span>
+                    </a>
+                </div>
+
+                <form class="contact-form" onsubmit="sendEmail(event)">
+                    <h3 style="text-align: center; color: #ff8a65; margin-bottom: 2rem;">Send me a message</h3>
+                    
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Your Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" name="subject" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    
+                    <div style="text-align: center;">
+                        <button type="submit" class="btn btn-primary">Send Message 📧</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Tatyana Amugo. Built with passion for clean, effective solutions. 🚀</p>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation functionality
+        function showSection(sectionName) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => section.classList.remove('active'));
+            
+            // Show selected section
+            document.getElementById(sectionName).classList.add('active');
+            
+            // Update active nav link
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => link.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Close mobile menu if open
+            document.getElementById('navLinks').classList.remove('show');
+        }
+
+        // Mobile menu toggle
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('show');
+        }
+
+        // Email form submission
+        function sendEmail(event) {
+            event.preventDefault();
+            
+            const formData = new FormData(event.target);
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const subject = formData.get('subject');
+            const message = formData.get('message');
+            
+            // Create mailto link
+            const mailtoLink = `mailto:t_amugo@fanshaweonline.ca?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`From: ${name} (${email})\n\n${message}`)}`;
+            
+            // Open email client
+            window.location.href = mailtoLink;
+            
+            // Reset form
+            event.target.reset();
+            
+            alert('Email client opened! Your message is ready to send.');
+        }
+
+        // Smooth scrolling for better UX
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add smooth scrolling behavior
+            document.documentElement.style.scrollBehavior = 'smooth';
+            
+            // Initialize timeline animations on scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe timeline items
+            document.querySelectorAll('.timeline-item').forEach(item => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(20px)';
+                item.style.transition = 'all 0.6s ease-out';
+                observer.observe(item);
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const nav = document.querySelector('nav');
+            const navLinks = document.getElementById('navLinks');
+            
+            if (!nav.contains(event.target) && navLinks.classList.contains('show')) {
+                navLinks.classList.remove('show');
+            }
+        });
+    </script>
+</body>
+</html>
