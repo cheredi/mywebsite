@@ -612,6 +612,21 @@
       line-height: 1.6;
     }
 
+    .substack-intro {
+      text-align: center;
+      max-width: 760px;
+      margin: 0 auto 1.2rem;
+      color: #4a4a4a;
+      line-height: 1.7;
+    }
+
+    .substack-status {
+      text-align: center;
+      color: #666;
+      font-size: 0.92rem;
+      margin: 0.2rem 0 1.1rem;
+    }
+
     .contact-panel {
       max-width: 700px;
       margin: 0 auto;
@@ -754,10 +769,11 @@
 
   <section class="hero" id="home">
     <div class="hero-content">
-      <h1>Hi, I'm Tatyana - Building Swali-AI</h1>
+      <h1>Hi, I'm Tatyana</h1>
       <p>
-        I build practical ML products with clear product impact. Right now I am building a RAG-powered
-        interview coach designed to make technical prep smarter, clearer, and more human.
+        I am an ML developer focused on applied AI systems with measurable business outcomes.
+        Career wise, I am targeting consulting, forward deployment engineering, applied AI,
+        and machine learning engineering roles where I can solve real client and product problems.
       </p>
       <div class="hero-actions">
         <a href="#projects" class="btn btn-primary">See My Work</a>
@@ -916,6 +932,7 @@
           retrieval, progressive hints, and role-aware coaching to help candidates go beyond memorized
           answers and build deeper understanding.
         </p>
+        <div class="meta"><strong>Business impact:</strong> Converts interview prep into a structured coaching workflow with faster guidance and clearer feedback loops.</div>
         <div class="meta">Features from repo: Smart Q&A, Progressive Hints, Adaptive Difficulty, Similar Problems, and Follow-up Questions.</div>
         <div class="skill-tags">
           <span class="skill-tag">RAG</span>
@@ -945,6 +962,7 @@
       <article class="project-card tilt-card" data-tags="ml">
         <h3>Customer Churn Prediction Model</h3>
         <p>Built and deployed predictive models with logistic regression, decision trees, and random forests to identify customers at risk of churn.</p>
+        <div class="meta"><strong>Business impact:</strong> Helps retention teams prioritize high-risk customers and target interventions before revenue is lost.</div>
         <div class="skill-tags">
           <span class="skill-tag">Python</span>
           <span class="skill-tag">Scikit-learn</span>
@@ -963,6 +981,7 @@
       <article class="project-card tilt-card" data-tags="cv,ml">
         <h3>Anomaly Detection System</h3>
         <p>Developed a comparative study with PaDiM, SPADE, and CLIP, then optimized inference using Python, PyTorch, and OpenCV.</p>
+        <div class="meta"><strong>Business impact:</strong> Improves inspection speed and consistency by surfacing defects early in quality-control workflows.</div>
         <div class="skill-tags">
           <span class="skill-tag">Deep Learning</span>
           <span class="skill-tag">OpenCV</span>
@@ -982,6 +1001,7 @@
       <article class="project-card tilt-card" data-tags="dashboard,ml">
         <h3>Consumer Insights Dashboard</h3>
         <p>Built dynamic dashboards for Beats by Dre to analyze behavior and segmentation, helping improve targeted marketing by 15%.</p>
+        <div class="meta"><strong>Business impact:</strong> Enabled sharper campaign targeting and better budget allocation through segment-level insights.</div>
         <div class="skill-tags">
           <span class="skill-tag">Tableau</span>
           <span class="skill-tag">Data Analysis</span>
@@ -1000,6 +1020,7 @@
       <article class="project-card tilt-card" data-tags="dashboard,ml">
         <h3>Teen Phone Addiction Dashboard</h3>
         <p>Built a team project predicting smartphone addiction levels using Ridge, MLPRegressor, and Gradient Boosting in an interactive Streamlit app.</p>
+        <div class="meta"><strong>Business impact:</strong> Turns behavioral model outputs into interpretable risk signals for educators, researchers, and care programs.</div>
         <div class="skill-tags">
           <span class="skill-tag">Python</span>
           <span class="skill-tag">Streamlit</span>
@@ -1072,33 +1093,12 @@
   </section>
 
   <section id="writing" class="section-wrap animate">
-    <h2>Lipgloss & LLMs (Substack)</h2>
-    <div class="writing-grid">
-      <article class="writing-card tilt-card">
-        <h3>Building Swali-AI in Public</h3>
-        <div class="meta">Engineering journal</div>
-        <p>Architecture decisions, feature iterations, and practical lessons from building a production-grade RAG interview coach.</p>
-        <a href="https://lipgloss2llms.substack.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Read on Substack</a>
-      </article>
-      <article class="writing-card tilt-card">
-        <h3>Prompting + Retrieval Notes</h3>
-        <div class="meta">Applied AI notes</div>
-        <p>What improved answer quality, where retrieval failed, and how prompt constraints shaped better coaching responses.</p>
-        <a href="https://lipgloss2llms.substack.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Read on Substack</a>
-      </article>
-      <article class="writing-card tilt-card">
-        <h3>From Accuracy to Trust</h3>
-        <div class="meta">Product + UX reflection</div>
-        <p>Why grounded answers, explainability, and practical rubric design matter in user-facing AI products.</p>
-        <a href="https://lipgloss2llms.substack.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Read on Substack</a>
-      </article>
-      <article class="writing-card tilt-card">
-        <h3>Data Stories for Real Decisions</h3>
-        <div class="meta">Analytics + storytelling</div>
-        <p>How I turn experiments, dashboards, and model outputs into decisions stakeholders can act on confidently.</p>
-        <a href="https://lipgloss2llms.substack.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Read on Substack</a>
-      </article>
-    </div>
+    <h2 id="substackHeading">Substack</h2>
+    <p class="substack-intro" id="substackDescription">
+      Loading latest posts from Substack.
+    </p>
+    <div class="substack-status" id="substackStatus">Fetching latest posts...</div>
+    <div class="writing-grid" id="substackPosts"></div>
     <div style="text-align: center; margin-top: 1.2rem;">
       <a href="https://lipgloss2llms.substack.com" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Visit Lipgloss & LLMs</a>
     </div>
@@ -1193,6 +1193,77 @@
     if (proofSection) {
       proofObserver.observe(proofSection);
     }
+
+    async function loadSubstackPosts() {
+      const feedUrl = 'https://lipgloss2llms.substack.com/feed';
+      const heading = document.getElementById('substackHeading');
+      const description = document.getElementById('substackDescription');
+      const status = document.getElementById('substackStatus');
+      const container = document.getElementById('substackPosts');
+
+      const parseFeed = (xmlText) => {
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+
+        const channelTitle = xmlDoc.querySelector('channel > title')?.textContent?.trim() || 'Substack';
+        const channelDesc = xmlDoc.querySelector('channel > description')?.textContent?.replace(/\s+/g, ' ').trim() || '';
+        const items = [...xmlDoc.querySelectorAll('item')].slice(0, 4).map(item => {
+          const title = item.querySelector('title')?.textContent?.trim() || 'Untitled Post';
+          const link = item.querySelector('link')?.textContent?.trim() || 'https://lipgloss2llms.substack.com';
+          const pubDateRaw = item.querySelector('pubDate')?.textContent?.trim() || '';
+          const pubDate = pubDateRaw ? new Date(pubDateRaw).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) : 'Recent post';
+          const excerptRaw = item.querySelector('description')?.textContent?.trim() || '';
+          const excerpt = excerptRaw.replace(/\s+/g, ' ').slice(0, 170);
+          return {
+            title,
+            link,
+            pubDate,
+            excerpt: excerpt.length >= 170 ? `${excerpt}...` : excerpt
+          };
+        });
+
+        return {
+          channelTitle,
+          channelDesc,
+          items,
+          lastUpdated: xmlDoc.querySelector('lastBuildDate')?.textContent?.trim() || ''
+        };
+      };
+
+      try {
+        let response = await fetch(feedUrl);
+
+        if (!response.ok) {
+          response = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(feedUrl)}`);
+        }
+
+        const xmlText = await response.text();
+        const feedData = parseFeed(xmlText);
+
+        heading.textContent = `${feedData.channelTitle} (Substack)`;
+        description.textContent = feedData.channelDesc || 'Latest posts from my Substack.';
+        status.textContent = feedData.lastUpdated ? `Auto-updated from RSS. Last updated: ${new Date(feedData.lastUpdated).toLocaleString()}` : 'Auto-updated from RSS.';
+
+        container.innerHTML = '';
+        feedData.items.forEach(post => {
+          const article = document.createElement('article');
+          article.className = 'writing-card tilt-card';
+          article.innerHTML = `
+            <h3>${post.title}</h3>
+            <div class="meta">${post.pubDate}</div>
+            <p>${post.excerpt}</p>
+            <a href="${post.link}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Read on Substack</a>
+          `;
+          container.appendChild(article);
+        });
+      } catch (error) {
+        description.textContent = 'I write about applied AI, career pivots, and real-world tech lessons.';
+        status.textContent = 'Could not fetch live posts right now. Use the button below to open Substack directly.';
+        container.innerHTML = '';
+      }
+    }
+
+    loadSubstackPosts();
 
     const filterButtons = document.querySelectorAll('.filter-btn');
     const projectCards = document.querySelectorAll('#projectList .project-card');
