@@ -687,6 +687,53 @@
       .section-wrap {
         padding: 3.8rem 1rem;
       }
+
+      .simulator {
+        padding: 1rem;
+      }
+
+      .sim-meta {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .sim-stat {
+        font-size: 0.85rem;
+        padding: 0.55rem 0.6rem;
+      }
+
+      .sim-stat strong {
+        font-size: 1rem;
+      }
+
+      .role-buttons,
+      .difficulty-buttons,
+      .sim-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .role-btn,
+      .difficulty-btn,
+      .sim-action-btn,
+      #newQuestionBtn {
+        width: 100%;
+        text-align: center;
+      }
+
+      .sim-output {
+        padding: 0.9rem;
+      }
+
+      #simQuestion {
+        font-size: 0.96rem;
+        line-height: 1.6;
+      }
+
+      #simRubric li,
+      .sim-feedback {
+        font-size: 0.9rem;
+        line-height: 1.55;
+      }
     }
   </style>
 </head>
@@ -707,10 +754,10 @@
 
   <section class="hero" id="home">
     <div class="hero-content">
-      <h1>Hi, I'm Tatyana — Building Swali-AI</h1>
+      <h1>Hi, I'm Tatyana - Building Swali-AI</h1>
       <p>
-        I build practical ML products with personality. Right now: a RAG-powered interview coach
-        designed to make technical prep smarter, clearer, and more human.
+        I build practical ML products with clear product impact. Right now I am building a RAG-powered
+        interview coach designed to make technical prep smarter, clearer, and more human.
       </p>
       <div class="hero-actions">
         <a href="#projects" class="btn btn-primary">See My Work</a>
@@ -736,8 +783,12 @@
           that are technically strong and genuinely useful.
         </p>
         <div class="quirky-fact">
-          <strong>Fun fact:</strong> I love simplifying the complex — because elegant code is the best kind of magic. ✨
+          <strong>Fun fact:</strong> I love simplifying the complex because elegant code is the best kind of magic.
         </div>
+        <p>
+          Long term, I am targeting roles in consulting, forward deployment engineering, applied AI,
+          or machine learning engineering where I can ship solutions directly with clients and product teams.
+        </p>
         <p>
           Outside the terminal, you'll find me mentoring peers, learning generative AI patterns,
           writing on Substack, and sharing practical lessons from real projects.
@@ -859,7 +910,7 @@
     <div class="projects-list" id="projectList">
       <article class="project-card project-highlight tilt-card" data-tags="rag,nlp,ml">
         <span class="badge">Flagship Project</span>
-        <h3>Swali-AI — RAG Interview Coach</h3>
+        <h3>Swali-AI - RAG Interview Coach</h3>
         <p>
           Swali-AI is a production-grade RAG system for technical interview preparation. It combines
           retrieval, progressive hints, and role-aware coaching to help candidates go beyond memorized
@@ -878,7 +929,7 @@
         <div class="project-actions">
           <a href="https://github.com/cheredi/swali-ai#readme" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View README</a>
           <a href="https://github.com/cheredi/swali-ai" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">GitHub Repo</a>
-          <a href="https://lipglossandllms.substack.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Case Study</a>
+          <a href="https://lipgloss2llms.substack.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Case Study</a>
         </div>
         <details class="architecture">
           <summary>See architecture</summary>
@@ -1015,7 +1066,7 @@
           <button class="sim-action-btn" id="skipBtn">Skip</button>
           <button class="btn btn-primary" id="newQuestionBtn">New Challenge</button>
         </div>
-        <div class="sim-feedback" id="simFeedback">Let’s play: answer aloud, then score yourself honestly.</div>
+        <div class="sim-feedback" id="simFeedback">Start the round, answer aloud, then score yourself honestly.</div>
       </div>
     </div>
   </section>
@@ -1027,29 +1078,29 @@
         <h3>Building Swali-AI in Public</h3>
         <div class="meta">Engineering journal</div>
         <p>Architecture decisions, feature iterations, and practical lessons from building a production-grade RAG interview coach.</p>
-        <a href="https://lipglossandllms.substack.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Read on Substack</a>
+        <a href="https://lipgloss2llms.substack.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Read on Substack</a>
       </article>
       <article class="writing-card tilt-card">
         <h3>Prompting + Retrieval Notes</h3>
         <div class="meta">Applied AI notes</div>
         <p>What improved answer quality, where retrieval failed, and how prompt constraints shaped better coaching responses.</p>
-        <a href="https://lipglossandllms.substack.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Read on Substack</a>
+        <a href="https://lipgloss2llms.substack.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Read on Substack</a>
       </article>
       <article class="writing-card tilt-card">
         <h3>From Accuracy to Trust</h3>
         <div class="meta">Product + UX reflection</div>
         <p>Why grounded answers, explainability, and practical rubric design matter in user-facing AI products.</p>
-        <a href="https://lipglossandllms.substack.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Read on Substack</a>
+        <a href="https://lipgloss2llms.substack.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Read on Substack</a>
       </article>
       <article class="writing-card tilt-card">
         <h3>Data Stories for Real Decisions</h3>
         <div class="meta">Analytics + storytelling</div>
         <p>How I turn experiments, dashboards, and model outputs into decisions stakeholders can act on confidently.</p>
-        <a href="https://lipglossandllms.substack.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Read on Substack</a>
+        <a href="https://lipgloss2llms.substack.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Read on Substack</a>
       </article>
     </div>
     <div style="text-align: center; margin-top: 1.2rem;">
-      <a href="https://lipglossandllms.substack.com" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Visit Lipgloss & LLMs</a>
+      <a href="https://lipgloss2llms.substack.com" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Visit Lipgloss & LLMs</a>
     </div>
   </section>
 
@@ -1059,19 +1110,19 @@
       <div class="social-actions">
         <a href="https://github.com/cheredi" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">GitHub</a>
         <a href="https://linkedin.com/in/tatyana-amugo02" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">LinkedIn</a>
-        <a href="https://lipglossandllms.substack.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Substack</a>
+        <a href="https://lipgloss2llms.substack.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Substack</a>
       </div>
       <form onsubmit="sendEmail(event)">
         <input type="text" placeholder="Your Name" name="name" required>
         <input type="email" placeholder="Your Email" name="email" required>
         <textarea placeholder="Your Message" name="message" rows="5" required></textarea>
-        <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message 📩</button>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
       </form>
     </div>
   </section>
 
   <footer>
-    &copy; 2026 Tatyana Amugo. Built with curiosity, clear thinking, and strong coffee ☕
+    &copy; 2026 Tatyana Amugo. Built with curiosity, clear thinking, and strong coffee.
   </footer>
 
   <script>
@@ -1283,7 +1334,7 @@
         if (timeLeft <= 0) {
           clearInterval(countdown);
           streak = 0;
-          simFeedback.textContent = '⏰ Time up! Grab a hint, then try another challenge.';
+          simFeedback.textContent = 'Time up. Grab a hint, then try another challenge.';
           updateScoreboard();
         }
       }, 1000);
@@ -1340,7 +1391,7 @@
 
         const hint = currentPrompt.hints[Math.min(hintIndex, currentPrompt.hints.length - 1)];
         hintIndex += 1;
-        simFeedback.textContent = `💡 Hint: ${hint}`;
+        simFeedback.textContent = `Hint: ${hint}`;
       });
     }
 
@@ -1352,7 +1403,7 @@
         const earned = basePoints + speedBonus + streakBonus;
         xp += earned;
         streak += 1;
-        simFeedback.textContent = `🔥 Nice run! +${earned} XP (${basePoints} base, ${speedBonus} speed, ${streakBonus} streak).`;
+        simFeedback.textContent = `Strong run. +${earned} XP (${basePoints} base, ${speedBonus} speed, ${streakBonus} streak).`;
         updateScoreboard();
       });
     }
@@ -1360,7 +1411,7 @@
     if (skipBtn) {
       skipBtn.addEventListener('click', () => {
         streak = 0;
-        simFeedback.textContent = '⏭️ Skipped. Streak reset—new challenge loaded.';
+        simFeedback.textContent = 'Skipped. Streak reset. New challenge loaded.';
         renderInterviewPrompt(currentRole);
       });
     }
