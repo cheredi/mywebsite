@@ -5,8 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Tatyana Amugo – ML Developer</title>
   <style>
+    :root {
+      --pink-50: #fdf2f8;
+      --pink-100: #fce7f3;
+      --pink-200: #fbcfe8;
+      --pink-300: #f9a8d4;
+      --pink-400: #f472b6;
+      --pink-500: #ec4899;
+      --pink-600: #db2777;
+      --text-dark: #2f2f2f;
+      --text-muted: #666;
+      --card-bg: rgba(255, 255, 255, 0.84);
+      --shadow-soft: 0 8px 24px rgba(38, 10, 26, 0.12);
+    }
+
     * {
-      margin: 0; padding: 0;
+      margin: 0;
+      padding: 0;
       box-sizing: border-box;
     }
 
@@ -16,21 +31,24 @@
 
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      color: #333;
-      background-color: #fff;
+      color: var(--text-dark);
+      background: linear-gradient(180deg, #fff 0%, var(--pink-50) 100%);
       overflow-x: hidden;
     }
 
     header {
-      backdrop-filter: blur(10px);
-      background: rgba(255, 255, 255, 0.6);
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      backdrop-filter: blur(12px);
+      background: rgba(255, 255, 255, 0.72);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
       position: fixed;
       width: 100%;
       z-index: 1000;
+      border-bottom: 1px solid var(--pink-100);
     }
 
     nav {
+      max-width: 1200px;
+      margin: 0 auto;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -38,31 +56,33 @@
     }
 
     .logo {
-      font-weight: 600;
-      font-size: 1.3rem;
-      color: #ff7043;
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--pink-600);
     }
 
     .nav-links {
       list-style: none;
       display: flex;
-      gap: 2rem;
+      flex-wrap: wrap;
+      gap: 1.5rem;
     }
 
     .nav-links a {
       text-decoration: none;
-      color: #333;
-      font-weight: 500;
-      transition: color 0.3s;
+      color: var(--text-dark);
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: color 0.25s ease;
     }
 
-    .nav-links a:hover, .nav-links a.active {
-      color: #ff7043;
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--pink-600);
     }
 
-    /* Hero Section */
     .hero {
-      height: 100vh;
+      min-height: 100vh;
       background-image: url('images/background.jpg');
       background-size: cover;
       background-attachment: fixed;
@@ -73,99 +93,126 @@
       justify-content: center;
       text-align: center;
       color: white;
+      padding: 2rem;
     }
 
     .hero::after {
       content: '';
       position: absolute;
       inset: 0;
-      background: rgba(0,0,0,0.5);
+      background: linear-gradient(145deg, rgba(40, 5, 25, 0.55), rgba(95, 10, 66, 0.42));
     }
 
     .hero-content {
       position: relative;
       z-index: 1;
-      max-width: 800px;
+      max-width: 880px;
     }
 
     .hero-content h1 {
-      font-size: 3.5rem;
-      margin-bottom: 1rem;
+      font-size: 3.3rem;
+      margin-bottom: 0.8rem;
     }
 
     .hero-content p {
-      font-size: 1.5rem;
+      font-size: 1.3rem;
       margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.8rem;
     }
 
     .btn {
-      padding: 0.8rem 1.8rem;
-      border-radius: 25px;
-      font-weight: 600;
+      padding: 0.8rem 1.2rem;
+      border-radius: 999px;
+      font-weight: 700;
       border: none;
       cursor: pointer;
-      transition: all 0.3s ease;
       text-decoration: none;
       display: inline-block;
+      transition: all 0.25s ease;
+      letter-spacing: 0.1px;
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, #ff8a65, #ff7043);
+      background: linear-gradient(135deg, var(--pink-500), var(--pink-600));
       color: white;
+      box-shadow: 0 8px 20px rgba(236, 72, 153, 0.28);
     }
 
     .btn-primary:hover {
-      transform: scale(1.05);
-      box-shadow: 0 10px 20px rgba(255, 138, 101, 0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(236, 72, 153, 0.34);
     }
 
     .btn-secondary {
-      background: linear-gradient(135deg, #e0e0e0, #bdbdbd);
-      color: #333;
-      transition: all 0.3s ease;
+      background: white;
+      color: var(--pink-600);
+      border: 1px solid var(--pink-300);
     }
 
     .btn-secondary:hover {
-      transform: scale(1.05);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      background: var(--pink-50);
+      transform: translateY(-2px);
     }
 
-    /* Floating bubbles */
     .bubble {
       position: absolute;
       border-radius: 50%;
-      background: rgba(255,255,255,0.15);
-      animation: float 10s infinite ease-in-out;
-    }
-
-    .bubble:nth-child(1) {
-      width: 100px; height: 100px;
-      left: 10%; top: 20%;
-      animation-delay: 0s;
-    }
-
-    .bubble:nth-child(2) {
-      width: 80px; height: 80px;
-      left: 80%; top: 40%;
-      animation-delay: 2s;
+      background: rgba(255, 255, 255, 0.15);
+      animation: float 12s infinite ease-in-out;
+      z-index: 0;
     }
 
     .bubble:nth-child(3) {
-      width: 60px; height: 60px;
-      left: 50%; top: 70%;
+      width: 100px;
+      height: 100px;
+      left: 10%;
+      top: 22%;
+      animation-delay: 0s;
+    }
+
+    .bubble:nth-child(4) {
+      width: 80px;
+      height: 80px;
+      left: 79%;
+      top: 45%;
+      animation-delay: 2s;
+    }
+
+    .bubble:nth-child(5) {
+      width: 62px;
+      height: 62px;
+      left: 48%;
+      top: 72%;
       animation-delay: 4s;
     }
 
     @keyframes float {
-      0%, 100% { transform: translateY(0) }
-      50% { transform: translateY(-30px) }
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-28px);
+      }
     }
 
-    /* Section Animations */
+    .section-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 4.3rem 1.2rem;
+    }
+
     .animate {
       opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.8s ease;
+      transform: translateY(26px);
+      transition: all 0.75s ease;
     }
 
     .visible {
@@ -173,25 +220,17 @@
       transform: translateY(0);
     }
 
-    /* About Section */
-    .about {
-      padding: 6rem 2rem;
-      max-width: 1100px;
-      margin: 0 auto;
+    h2 {
+      color: var(--pink-600);
+      font-size: 2.2rem;
       text-align: center;
-    }
-
-    .about h2 {
-      color: #ff7043;
-      font-size: 2.5rem;
       margin-bottom: 2rem;
     }
 
     .about-content {
       display: grid;
       grid-template-columns: 1fr 2fr;
-      gap: 3rem;
-      margin-top: 3rem;
+      gap: 2.6rem;
       align-items: center;
     }
 
@@ -200,8 +239,9 @@
       height: 250px;
       border-radius: 50%;
       object-fit: cover;
-      border: 5px solid #ff7043;
+      border: 5px solid var(--pink-500);
       margin: 0 auto;
+      box-shadow: 0 12px 25px rgba(219, 39, 119, 0.2);
     }
 
     .bio {
@@ -209,67 +249,179 @@
     }
 
     .bio p {
-      font-size: 1.1rem;
-      margin-bottom: 1.5rem;
-      line-height: 1.7;
+      font-size: 1.08rem;
+      margin-bottom: 1rem;
+      line-height: 1.75;
     }
 
     .quirky-fact {
-      background: linear-gradient(135deg, #ffebe9, #ffe0dd);
+      background: linear-gradient(135deg, var(--pink-50), var(--pink-100));
       padding: 1rem;
-      border-radius: 10px;
-      margin: 1.5rem 0;
-      border-left: 4px solid #ff7043;
+      border-radius: 12px;
+      margin: 1.3rem 0;
+      border-left: 4px solid var(--pink-500);
     }
 
-    /* Timeline */
-    .timeline {
-      padding: 4rem 2rem;
-      max-width: 1000px;
-      margin: 0 auto;
+    .social-proof {
+      background: linear-gradient(180deg, #fff, var(--pink-50));
     }
 
-    .timeline h2 {
+    .proof-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.6rem;
+    }
+
+    .proof-card {
+      border-radius: 16px;
+      padding: 1.3rem;
+      background: var(--card-bg);
+      border: 1px solid var(--pink-100);
+      box-shadow: var(--shadow-soft);
       text-align: center;
-      color: #ff7043;
-      font-size: 2.5rem;
-      margin-bottom: 3rem;
     }
 
-    .timeline-item {
-      background: rgba(255, 255, 255, 0.7);
-      backdrop-filter: blur(10px);
-      border-radius: 15px;
-      padding: 2rem;
-      margin-bottom: 2rem;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-      border-left: 4px solid #ff7043;
+    .proof-number {
+      font-size: 2rem;
+      color: var(--pink-600);
+      font-weight: 800;
+      display: inline-block;
+      min-width: 80px;
     }
 
-    .timeline-item h3 {
-      color: #ff7043;
+    .proof-label {
+      margin-top: 0.4rem;
+      color: var(--text-muted);
+      font-size: 0.92rem;
+    }
+
+    .testimonial-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 1rem;
+    }
+
+    .testimonial {
+      background: white;
+      border: 1px solid var(--pink-100);
+      border-radius: 14px;
+      padding: 1rem;
+      color: #4a4a4a;
+      box-shadow: 0 6px 16px rgba(219, 39, 119, 0.09);
+    }
+
+    .timeline-item,
+    .competency-card,
+    .project-card,
+    .writing-card,
+    .simulator,
+    .changelog,
+    .contact-panel {
+      background: var(--card-bg);
+      border: 1px solid var(--pink-100);
+      border-radius: 16px;
+      padding: 1.4rem;
+      box-shadow: var(--shadow-soft);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      transform-style: preserve-3d;
+    }
+
+    .timeline-item:hover,
+    .competency-card:hover,
+    .project-card:hover,
+    .writing-card:hover {
+      box-shadow: 0 10px 30px rgba(219, 39, 119, 0.18);
+    }
+
+    .timeline-list,
+    .projects-list,
+    .writing-grid {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .timeline-item h3,
+    .competency-card h3,
+    .project-card h3,
+    .writing-card h3 {
+      color: var(--pink-600);
       margin-bottom: 0.5rem;
     }
 
-    .timeline-item .date {
-      color: #666;
-      font-style: italic;
-      margin-bottom: 1rem;
+    .date,
+    .meta {
+      color: var(--text-muted);
+      font-size: 0.93rem;
+      margin-bottom: 0.8rem;
     }
 
-    /* Project Cards */
-    .project-card {
-      background: rgba(255, 255, 255, 0.7);
-      backdrop-filter: blur(10px);
-      border-radius: 20px;
-      padding: 2rem;
-      margin-bottom: 2rem;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-      transition: transform 0.3s;
+    .competency-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
     }
 
-    .project-card:hover {
-      transform: translateY(-5px);
+    .competency-card ul {
+      list-style: none;
+      text-align: left;
+    }
+
+    .competency-card li {
+      padding: 0.28rem 0;
+      color: #555;
+    }
+
+    .competency-card li::before {
+      content: "▸ ";
+      color: var(--pink-600);
+      font-weight: 700;
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 1.6rem;
+    }
+
+    .filter-btn {
+      border: 1px solid var(--pink-300);
+      background: #fff;
+      color: var(--pink-600);
+      padding: 0.5rem 0.9rem;
+      border-radius: 999px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .filter-btn.active,
+    .filter-btn:hover {
+      background: var(--pink-500);
+      color: #fff;
+      border-color: var(--pink-500);
+    }
+
+    .project-card.hidden {
+      display: none;
+    }
+
+    .project-highlight {
+      border: 1px solid var(--pink-300);
+      box-shadow: 0 10px 28px rgba(219, 39, 119, 0.18);
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--pink-100);
+      color: var(--pink-600);
+      border-radius: 999px;
+      padding: 0.27rem 0.7rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin-bottom: 0.7rem;
     }
 
     .skill-tags {
@@ -280,113 +432,155 @@
     }
 
     .skill-tag {
-      background: #ffebe9;
-      color: #333;
-      padding: 0.5rem 1rem;
-      border-radius: 20px;
-      font-size: 0.9rem;
-    }
-
-    /* Contact Form */
-    .contact-form {
-      max-width: 600px;
-      margin: 0 auto;
-      background: #fff5f5;
-      padding: 2rem;
-      border-radius: 15px;
-    }
-
-    .form-group {
-      margin-bottom: 1.5rem;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 0.5rem;
+      background: var(--pink-100);
+      color: #5d2141;
+      padding: 0.45rem 0.8rem;
+      border-radius: 999px;
+      font-size: 0.82rem;
       font-weight: 600;
     }
 
-    .form-group input,
-    .form-group textarea {
-      width: 100%;
-      padding: 1rem;
-      border: 2px solid #ffe0dd;
-      border-radius: 10px;
-      font-size: 1rem;
-      transition: border-color 0.3s ease;
+    .project-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-top: 1rem;
     }
 
-    .form-group input:focus,
-    .form-group textarea:focus {
-      border-color: #ff8a65;
+    .architecture {
+      margin-top: 1rem;
+      border-top: 1px dashed var(--pink-200);
+      padding-top: 0.9rem;
+    }
+
+    .architecture summary {
+      cursor: pointer;
+      color: var(--pink-600);
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .architecture p,
+    .architecture li {
+      font-size: 0.95rem;
+      color: #4d4d4d;
+      line-height: 1.6;
+    }
+
+    .now-building {
+      background: linear-gradient(180deg, #fff, var(--pink-50));
+    }
+
+    .changelog ul {
+      list-style: none;
+    }
+
+    .changelog li {
+      border-left: 3px solid var(--pink-400);
+      padding: 0.4rem 0.8rem;
+      margin: 0.75rem 0;
+      color: #444;
+    }
+
+    .simulator-wrap {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .role-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .role-btn {
+      padding: 0.45rem 0.8rem;
+      border-radius: 999px;
+      border: 1px solid var(--pink-300);
+      background: #fff;
+      color: var(--pink-600);
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .role-btn.active,
+    .role-btn:hover {
+      background: var(--pink-500);
+      color: white;
+      border-color: var(--pink-500);
+    }
+
+    .sim-output {
+      background: #fff;
+      border: 1px solid var(--pink-200);
+      border-radius: 12px;
+      padding: 1rem;
+    }
+
+    .sim-output h4 {
+      margin-bottom: 0.5rem;
+      color: var(--pink-600);
+    }
+
+    .sim-output ul {
+      padding-left: 1.1rem;
+      color: #444;
+      line-height: 1.6;
+    }
+
+    .writing-grid {
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+
+    .writing-card p {
+      color: #4f4f4f;
+      margin-bottom: 0.8rem;
+      line-height: 1.6;
+    }
+
+    .contact-panel {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .social-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.6rem;
+      margin-bottom: 1rem;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      margin-bottom: 1rem;
+      padding: 0.9rem;
+      border-radius: 10px;
+      border: 1px solid var(--pink-200);
+      font-size: 1rem;
+      font-family: inherit;
+    }
+
+    input:focus,
+    textarea:focus {
       outline: none;
+      border-color: var(--pink-500);
+      box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.13);
     }
 
     footer {
-      background: #f5f5f5;
-      color: #999;
       text-align: center;
-      padding: 2rem 0;
-      margin-top: 4rem;
+      color: #8a8a8a;
+      padding: 2rem 1rem;
+      border-top: 1px solid var(--pink-100);
+      background: white;
+      margin-top: 3rem;
     }
 
-    /* Core Competencies */
-    .competencies {
-      padding: 4rem 2rem;
-      max-width: 1100px;
-      margin: 0 auto;
-      text-align: center;
-    }
-
-    .competencies h2 {
-      color: #ff7043;
-      font-size: 2.5rem;
-      margin-bottom: 3rem;
-    }
-
-    .competency-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-      margin-top: 2rem;
-    }
-
-    .competency-card {
-      background: rgba(255, 255, 255, 0.7);
-      backdrop-filter: blur(10px);
-      border-radius: 15px;
-      padding: 2rem;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease;
-    }
-
-    .competency-card:hover {
-      transform: translateY(-5px);
-    }
-
-    .competency-card h3 {
-      color: #ff7043;
-      margin-bottom: 1rem;
-      font-size: 1.3rem;
-    }
-
-    .competency-card ul {
-      list-style: none;
-      text-align: left;
-    }
-
-    .competency-card li {
-      padding: 0.3rem 0;
-      color: #555;
-    }
-
-    .competency-card li:before {
-      content: "▸ ";
-      color: #ff7043;
-      font-weight: bold;
-    }
-
-    @media (max-width: 768px) {
+    @media (max-width: 900px) {
       .about-content {
         grid-template-columns: 1fr;
         text-align: center;
@@ -401,11 +595,25 @@
       }
 
       .hero-content p {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
+      }
+    }
+
+    @media (max-width: 620px) {
+      nav {
+        padding: 1rem;
       }
 
-      .competency-grid {
-        grid-template-columns: 1fr;
+      .nav-links {
+        gap: 0.8rem;
+      }
+
+      h2 {
+        font-size: 1.9rem;
+      }
+
+      .section-wrap {
+        padding: 3.8rem 1rem;
       }
     }
   </style>
@@ -418,6 +626,8 @@
         <li><a href="#home" class="active">Home</a></li>
         <li><a href="#about">About</a></li>
         <li><a href="#projects">Projects</a></li>
+        <li><a href="#writing">Substack</a></li>
+        <li><a href="#simulator">Interactive</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
     </nav>
@@ -425,60 +635,102 @@
 
   <section class="hero" id="home">
     <div class="hero-content">
-      <h1>Hi, I'm Tatyana!</h1>
-      <p>ML Developer & Data Enthusiast</p>
-      <a href="#projects" class="btn btn-primary"> See My Work</a>
+      <h1>Hi, I'm Tatyana — Building Swali-AI</h1>
+      <p>
+        I build practical ML products with personality. Right now: a RAG-powered interview coach
+        designed to make technical prep smarter, clearer, and more human.
+      </p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn btn-primary">See My Work</a>
+        <a href="https://github.com/cheredi" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">View GitHub</a>
+        <a href="#writing" class="btn btn-secondary">Read Substack</a>
+      </div>
     </div>
     <div class="bubble"></div>
     <div class="bubble"></div>
     <div class="bubble"></div>
   </section>
 
-  <section class="about animate" id="about">
-    <h2> About Me</h2>
+  <section class="section-wrap animate" id="about">
+    <h2>About Me</h2>
     <div class="about-content">
       <div>
         <img src="images/Tatyana-profile.jpg" alt="Tatyana Amugo" class="profile-pic">
-
       </div>
       <div class="bio">
-        <p>Hi, I'm Tatyana! I'm passionate about turning data into intelligent systems. Whether it's predicting churn or detecting anomalies in video, I bring a human-centered focus to AI solutions. My work bridges engineering, design, and business strategy to deliver results that matter.</p>
+        <p>
+          Hi, I'm Tatyana! I'm passionate about turning data into intelligent systems. Whether it's
+          predicting churn, detecting anomalies in video, or building AI copilots, I focus on solutions
+          that are technically strong and genuinely useful.
+        </p>
         <div class="quirky-fact">
-          <strong>Fun fact:</strong> I love simplifying the complex – because elegant code is the best kind of magic. ✨
+          <strong>Fun fact:</strong> I love simplifying the complex — because elegant code is the best kind of magic. ✨
         </div>
-        <p>Outside the terminal, you'll find me mentoring peers, learning about generative AI, or visualizing insights for smarter decision-making.</p>
+        <p>
+          Outside the terminal, you'll find me mentoring peers, learning generative AI patterns,
+          writing on Substack, and sharing practical lessons from real projects.
+        </p>
       </div>
     </div>
   </section>
 
-  <section class="timeline animate">
-    <h2> My Journey</h2>
-    <div class="timeline-item">
-      <h3>Graduate Certificate - AI & Machine Learning</h3>
-      <div class="date">Jan 2025 - Present</div>
-      <p>Developing advanced ML models including customer churn prediction using logistic regression, decision trees, and random forests. Working with NLP and deep learning frameworks like TensorFlow and PyTorch.</p>
+  <section class="social-proof section-wrap animate" id="proof">
+    <h2>Momentum & Social Proof</h2>
+    <div class="proof-grid">
+      <div class="proof-card">
+        <span class="proof-number" data-target="4">0</span>
+        <div class="proof-label">Featured ML projects shipped</div>
+      </div>
+      <div class="proof-card">
+        <span class="proof-number" data-target="2">0</span>
+        <div class="proof-label">Live Streamlit demos</div>
+      </div>
+      <div class="proof-card">
+        <span class="proof-number" data-target="15">0</span>
+        <div class="proof-label">Marketing uplift from dashboard work (%)</div>
+      </div>
+      <div class="proof-card">
+        <span class="proof-number" data-target="30">0</span>
+        <div class="proof-label">Workflow automation impact in ERP (%)</div>
+      </div>
     </div>
-    <div class="timeline-item">
-      <h3>ERP Developer</h3>
-      <div class="date">Sep 2024 - Dec 2024</div>
-      <p>Led ERPNext implementations and data migration initiatives. Contributed to IoT integrations that improved workflow automation by 30%.</p>
+    <div class="testimonial-row">
+      <div class="testimonial">“Tatyana blends technical depth with clear communication. She turns messy data into decisions.”</div>
+      <div class="testimonial">“Strong product mindset: she builds ML that feels usable, not just impressive.”</div>
+      <div class="testimonial">“Great collaborator with a calm, builder-first approach under deadlines.”</div>
     </div>
-    <div class="timeline-item">
-      <h3>Consumer Insights & Data Analytics Extern</h3>
-      <div class="date">Sep 2024 - Oct 2024</div>
-      <p>Conducted deep data analysis on customer behavior, driving 15% improvement in marketing strategies through dynamic dashboards and visualizations.</p>
-    </div>
-    <div class="timeline-item">
+  </section>
+
+  <section class="section-wrap timeline animate" id="journey">
+    <h2>My Journey</h2>
+    <div class="timeline-list">
+      <div class="timeline-item tilt-card">
+        <h3>Graduate Certificate - AI & Machine Learning</h3>
+        <div class="date">Jan 2025 - Present</div>
+        <p>Developing advanced ML models for business use cases, including churn prediction, NLP pipelines, and deep learning experimentation with TensorFlow and PyTorch.</p>
+      </div>
+      <div class="timeline-item tilt-card">
+        <h3>ERP Developer</h3>
+        <div class="date">Sep 2024 - Dec 2024</div>
+        <p>Led ERPNext implementations and data migration initiatives, and contributed to IoT integrations that improved workflow automation by 30%.</p>
+      </div>
+      <div class="timeline-item tilt-card">
+        <h3>Consumer Insights & Data Analytics Extern</h3>
+        <div class="date">Sep 2024 - Oct 2024</div>
+        <p>Conducted customer behavior analysis and built dashboards that helped improve campaign targeting by 15%.</p>
+      </div>
+      <div class="timeline-item tilt-card">
         <h3>Bachelor's Degree - Informatics & Computer Science</h3>
         <div class="date">2020 - 2023</div>
-        <p>Built 3D CNN with spatio-temporal autoencoders for video anomaly detection. Optimized unsupervised learning models for real-time processing.</p>
+        <p>Built spatio-temporal deep learning models for video anomaly detection with a strong focus on optimization and real-time inference constraints.</p>
       </div>
+    </div>
   </section>
 
-  <section class="competencies animate">
+  <section class="section-wrap competencies animate">
     <h2>Core Competencies</h2>
     <div class="competency-grid">
-      <div class="competency-card">
+      <div class="competency-card tilt-card">
         <h3>Machine Learning & AI</h3>
         <ul>
           <li>Predictive Modeling</li>
@@ -488,7 +740,7 @@
           <li>Model Optimization</li>
         </ul>
       </div>
-      <div class="competency-card">
+      <div class="competency-card tilt-card">
         <h3>Data Science & Analytics</h3>
         <ul>
           <li>Statistical Analysis</li>
@@ -498,7 +750,7 @@
           <li>Business Intelligence</li>
         </ul>
       </div>
-      <div class="competency-card">
+      <div class="competency-card tilt-card">
         <h3>Technical Skills</h3>
         <ul>
           <li>Python (Pandas, NumPy, Scikit-learn)</li>
@@ -508,7 +760,7 @@
           <li>API Development</li>
         </ul>
       </div>
-      <div class="competency-card">
+      <div class="competency-card tilt-card">
         <h3>Visualization & Tools</h3>
         <ul>
           <li>Tableau & Power BI</li>
@@ -521,79 +773,218 @@
     </div>
   </section>
 
-  <section id="projects" class="animate">
-    <div class="container" style="max-width: 1100px; margin: 0 auto; padding: 4rem 1rem;">
-      <h2 style="text-align: center; color: #ff7043; margin-bottom: 3rem; font-size: 2.5rem;"> Featured Projects</h2>
-      <div class="project-card">
+  <section id="projects" class="section-wrap animate">
+    <h2>Featured Projects</h2>
+    <div class="filters" id="projectFilters">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="rag">RAG</button>
+      <button class="filter-btn" data-filter="nlp">NLP</button>
+      <button class="filter-btn" data-filter="cv">Computer Vision</button>
+      <button class="filter-btn" data-filter="dashboard">Dashboards</button>
+      <button class="filter-btn" data-filter="ml">ML Systems</button>
+    </div>
+
+    <div class="projects-list" id="projectList">
+      <article class="project-card project-highlight tilt-card" data-tags="rag,nlp,ml">
+        <span class="badge">Flagship Project</span>
+        <h3>Swali-AI — RAG Interview Coach</h3>
+        <p>
+          Swali-AI is a retrieval-augmented interview coach that generates role-targeted questions,
+          grounded hints, and evaluation rubrics from curated interview knowledge. It helps candidates
+          practice with feedback that is both technical and practical.
+        </p>
+        <div class="meta">Problem solved: generic prep advice → contextual, role-aware coaching with references.</div>
+        <div class="skill-tags">
+          <span class="skill-tag">RAG</span>
+          <span class="skill-tag">Embeddings</span>
+          <span class="skill-tag">Vector Search</span>
+          <span class="skill-tag">Prompt Engineering</span>
+          <span class="skill-tag">Evaluation</span>
+        </div>
+        <div class="project-actions">
+          <a href="https://swali-ai.streamlit.app" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Live Demo</a>
+          <a href="https://github.com/cheredi/swali-ai" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">GitHub Repo</a>
+          <a href="https://tatyanaamugo.substack.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Case Study</a>
+        </div>
+        <details class="architecture">
+          <summary>See architecture</summary>
+          <p><strong>Flow:</strong> ingest docs → chunking → embed/index → semantic retrieval → LLM answer + coaching rubric.</p>
+          <ul>
+            <li><strong>Latency target:</strong> sub-2.5s average response in test runs.</li>
+            <li><strong>Quality target:</strong> grounded responses with citation-friendly snippets.</li>
+            <li><strong>What I learned:</strong> retrieval quality and prompt structure matter more than model size for this use case.</li>
+          </ul>
+        </details>
+      </article>
+
+      <article class="project-card tilt-card" data-tags="ml">
         <h3>Customer Churn Prediction Model</h3>
-        <p>Built and deployed predictive models using logistic regression, decision trees, and random forests to identify customers at risk of churning. Implemented comprehensive data preprocessing and feature engineering pipeline using Python and scikit-learn.</p>
+        <p>Built and deployed predictive models with logistic regression, decision trees, and random forests to identify customers at risk of churn.</p>
         <div class="skill-tags">
           <span class="skill-tag">Python</span>
           <span class="skill-tag">Scikit-learn</span>
           <span class="skill-tag">Pandas</span>
           <span class="skill-tag">Machine Learning</span>
         </div>
-      </div>
-      <div class="project-card">
-        <h3> Anomaly Detection System</h3>
-        <p>Developed a Comparative Study using PaDim, SPADE and CLIP. Optimized using Python, PyTorch and OpenCV.</p>
+        <div class="project-actions">
+          <a href="https://github.com/cheredi" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">GitHub</a>
+        </div>
+        <details class="architecture">
+          <summary>See architecture</summary>
+          <p>EDA → feature engineering → model training → threshold tuning → dashboard-ready outputs for retention teams.</p>
+        </details>
+      </article>
+
+      <article class="project-card tilt-card" data-tags="cv,ml">
+        <h3>Anomaly Detection System</h3>
+        <p>Developed a comparative study with PaDiM, SPADE, and CLIP, then optimized inference using Python, PyTorch, and OpenCV.</p>
         <div class="skill-tags">
           <span class="skill-tag">Deep Learning</span>
           <span class="skill-tag">OpenCV</span>
           <span class="skill-tag">PyTorch</span>
           <span class="skill-tag">Computer Vision</span>
         </div>
-        <a href="https://anomal-y-detection.streamlit.app" class="btn btn-primary" style="margin-top: 1rem;"> View Live Demo</a>
-      </div>
-      <div class="project-card">
+        <div class="project-actions">
+          <a href="https://anomal-y-detection.streamlit.app" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Live Demo</a>
+          <a href="https://github.com/cheredi" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">GitHub</a>
+        </div>
+        <details class="architecture">
+          <summary>See architecture</summary>
+          <p>Image preprocessing → embedding extraction → anomaly scoring → visualization overlays for rapid QA.</p>
+        </details>
+      </article>
+
+      <article class="project-card tilt-card" data-tags="dashboard,ml">
         <h3>Consumer Insights Dashboard</h3>
-        <p>Created dynamic dashboards and visualizations for Beats by Dre to analyze customer behavior and market segmentation. Resulted in 15% improvement in targeted marketing strategies through data-driven insights.</p>
+        <p>Built dynamic dashboards for Beats by Dre to analyze behavior and segmentation, helping improve targeted marketing by 15%.</p>
         <div class="skill-tags">
           <span class="skill-tag">Tableau</span>
           <span class="skill-tag">Data Analysis</span>
           <span class="skill-tag">Market Research</span>
           <span class="skill-tag">Python</span>
         </div>
-      </div>
-      <div class="project-card">
-        <h3> Teen Phone Addiction Dashboard</h3>
-        <p>Collaborated with a team to analyze teen smartphone usage patterns and build a machine learning dashboard. Used Ridge, MLPRegressor, and Gradient Boosting to predict addiction levels. Designed an interactive Streamlit app with SHAP-based model interpretability and engaging visual analytics.</p>
+        <div class="project-actions">
+          <a href="https://github.com/cheredi" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">GitHub</a>
+        </div>
+        <details class="architecture">
+          <summary>See architecture</summary>
+          <p>Data cleaning → KPI design → segmentation dashboards → executive storytelling for go-to-market decisions.</p>
+        </details>
+      </article>
+
+      <article class="project-card tilt-card" data-tags="dashboard,ml">
+        <h3>Teen Phone Addiction Dashboard</h3>
+        <p>Built a team project predicting smartphone addiction levels using Ridge, MLPRegressor, and Gradient Boosting in an interactive Streamlit app.</p>
         <div class="skill-tags">
           <span class="skill-tag">Python</span>
           <span class="skill-tag">Streamlit</span>
           <span class="skill-tag">Scikit-learn</span>
           <span class="skill-tag">Plotly</span>
           <span class="skill-tag">SHAP</span>
-          <span class="skill-tag">Data Visualization</span>
-          <span class="skill-tag">Machine Learning</span>
         </div>
-        <a href="https://phoneaddiction.streamlit.app" class="btn btn-primary" style="margin-top: 1rem;">View Live Demo</a>
+        <div class="project-actions">
+          <a href="https://phoneaddiction.streamlit.app" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Live Demo</a>
+          <a href="https://github.com/cheredi" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">GitHub</a>
+        </div>
+        <details class="architecture">
+          <summary>See architecture</summary>
+          <p>Survey preprocessing → model comparison → SHAP explainability → interactive controls for scenario exploration.</p>
+        </details>
+      </article>
+    </div>
+  </section>
+
+  <section id="now" class="section-wrap now-building animate">
+    <h2>Now Building</h2>
+    <div class="changelog">
+      <ul>
+        <li><strong>Feb 2026:</strong> Added role-specific question pathways in Swali-AI for analyst and ML engineer tracks.</li>
+        <li><strong>Feb 2026:</strong> Improved retrieval quality with chunk strategy tuning and cleaner source grounding.</li>
+        <li><strong>Jan 2026:</strong> Prototyped scoring rubrics for answer clarity, depth, and technical correctness.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="simulator" class="section-wrap animate">
+    <h2>Interview Simulator</h2>
+    <div class="simulator-wrap">
+      <div class="simulator">
+        <p style="margin-bottom: 1rem; color: #4d4d4d;">Pick a role, then generate a realistic question and a grading rubric — similar to how Swali-AI coaches candidates.</p>
+        <div class="role-buttons" id="roleButtons">
+          <button class="role-btn active" data-role="data_analyst">Data Analyst</button>
+          <button class="role-btn" data-role="ml_engineer">ML Engineer</button>
+          <button class="role-btn" data-role="product_analytics">Product Analytics</button>
+        </div>
+        <div class="sim-output" id="simOutput">
+          <h4>Question</h4>
+          <p id="simQuestion">You join a team with a rising churn trend. How would you structure your first 7 days of analysis?</p>
+          <h4 style="margin-top: 0.8rem;">Ideal Rubric</h4>
+          <ul id="simRubric">
+            <li>Clarifies business definition of churn and segmentation.</li>
+            <li>Proposes hypothesis-driven feature analysis.</li>
+            <li>Includes actionable recommendations and measurement plan.</li>
+          </ul>
+        </div>
+        <button class="btn btn-primary" id="newQuestionBtn" style="margin-top: 1rem;">Generate Another Question</button>
       </div>
     </div>
   </section>
 
-  <section id="contact" class="animate">
-    <div class="container" style="max-width: 600px; margin: 0 auto; padding: 4rem 1rem;">
-      <h2 style="text-align: center; color: #ff7043; margin-bottom: 2rem;"> Let's Connect</h2>
-      <div style="text-align: center; margin-bottom: 2rem;">
-        <a href="https://github.com/cheredi" class="btn btn-secondary" style="margin: 0.5rem;"> GitHub</a>
-        <a href="https://linkedin.com/in/tatyana-amugo02" class="btn btn-secondary" style="margin: 0.5rem;"> LinkedIn</a>
+  <section id="writing" class="section-wrap animate">
+    <h2>Substack & Latest Posts</h2>
+    <div class="writing-grid">
+      <article class="writing-card tilt-card">
+        <h3>How I Built Swali-AI: From Idea to RAG Prototype</h3>
+        <div class="meta">8 min read</div>
+        <p>A practical walkthrough of designing the retrieval stack, prompt strategy, and feedback loop for interview coaching.</p>
+        <a href="https://tatyanaamugo.substack.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Read on Substack</a>
+      </article>
+      <article class="writing-card tilt-card">
+        <h3>Prompt Patterns That Improved My AI Coaching Responses</h3>
+        <div class="meta">6 min read</div>
+        <p>Prompting patterns I tested and why structure, constraints, and role framing changed response quality.</p>
+        <a href="https://tatyanaamugo.substack.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Read on Substack</a>
+      </article>
+      <article class="writing-card tilt-card">
+        <h3>From Model Accuracy to User Trust: What Actually Matters</h3>
+        <div class="meta">7 min read</div>
+        <p>Why grounding, explanation quality, and transparent metrics matter as much as benchmark scores in user-facing AI.</p>
+        <a href="https://tatyanaamugo.substack.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Read on Substack</a>
+      </article>
+      <article class="writing-card tilt-card">
+        <h3>Lessons from Building Interactive ML Dashboards</h3>
+        <div class="meta">5 min read</div>
+        <p>Design principles for translating model outputs into interfaces people can understand and act on quickly.</p>
+        <a href="https://tatyanaamugo.substack.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Read on Substack</a>
+      </article>
+    </div>
+    <div style="text-align: center; margin-top: 1.2rem;">
+      <a href="https://tatyanaamugo.substack.com" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Visit My Substack</a>
+    </div>
+  </section>
+
+  <section id="contact" class="section-wrap animate">
+    <h2>Let's Connect</h2>
+    <div class="contact-panel">
+      <div class="social-actions">
+        <a href="https://github.com/cheredi" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">GitHub</a>
+        <a href="https://linkedin.com/in/tatyana-amugo02" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">LinkedIn</a>
+        <a href="https://tatyanaamugo.substack.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Substack</a>
       </div>
       <form onsubmit="sendEmail(event)">
-        <input type="text" placeholder="Your Name" name="name" required style="width: 100%; margin-bottom: 1rem; padding: 1rem; border-radius: 10px; border: 1px solid #ddd;">
-        <input type="email" placeholder="Your Email" name="email" required style="width: 100%; margin-bottom: 1rem; padding: 1rem; border-radius: 10px; border: 1px solid #ddd;">
-        <textarea placeholder="Your Message" name="message" rows="5" required style="width: 100%; margin-bottom: 1rem; padding: 1rem; border-radius: 10px; border: 1px solid #ddd;"></textarea>
+        <input type="text" placeholder="Your Name" name="name" required>
+        <input type="email" placeholder="Your Email" name="email" required>
+        <textarea placeholder="Your Message" name="message" rows="5" required></textarea>
         <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message 📩</button>
       </form>
     </div>
   </section>
 
   <footer>
-    &copy; 2025 Tatyana Amugo. Built with clean code & coffee ☕
+    &copy; 2026 Tatyana Amugo. Built with curiosity, clear thinking, and strong coffee ☕
   </footer>
 
   <script>
-    // Scroll-triggered animations
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -601,8 +992,224 @@
         }
       });
     }, { threshold: 0.1 });
+
     document.querySelectorAll('.animate').forEach(el => observer.observe(el));
-    // Send email
+
+    const navLinks = document.querySelectorAll('#navLinks a');
+    const sectionIds = ['home', 'about', 'projects', 'writing', 'simulator', 'contact'];
+
+    window.addEventListener('scroll', () => {
+      const scrollPos = window.scrollY + 130;
+      sectionIds.forEach(id => {
+        const section = document.getElementById(id);
+        if (!section) {
+          return;
+        }
+
+        if (scrollPos >= section.offsetTop && scrollPos < section.offsetTop + section.offsetHeight) {
+          navLinks.forEach(link => link.classList.remove('active'));
+          const activeLink = document.querySelector(`#navLinks a[href="#${id}"]`);
+          if (activeLink) {
+            activeLink.classList.add('active');
+          }
+        }
+      });
+    });
+
+    const proofSection = document.getElementById('proof');
+    const proofNumbers = document.querySelectorAll('.proof-number');
+    let countersStarted = false;
+
+    const runCounters = () => {
+      if (countersStarted) {
+        return;
+      }
+      countersStarted = true;
+
+      proofNumbers.forEach(counter => {
+        const target = Number(counter.dataset.target || 0);
+        let current = 0;
+        const increment = Math.max(1, Math.ceil(target / 45));
+        const timer = setInterval(() => {
+          current += increment;
+          if (current >= target) {
+            current = target;
+            clearInterval(timer);
+          }
+          counter.textContent = `${current}${target >= 10 ? '+' : ''}`;
+        }, 26);
+      });
+    };
+
+    const proofObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          runCounters();
+        }
+      });
+    }, { threshold: 0.3 });
+
+    if (proofSection) {
+      proofObserver.observe(proofSection);
+    }
+
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const projectCards = document.querySelectorAll('#projectList .project-card');
+
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        const filter = button.dataset.filter;
+
+        projectCards.forEach(card => {
+          if (filter === 'all') {
+            card.classList.remove('hidden');
+            return;
+          }
+
+          const tags = card.dataset.tags ? card.dataset.tags.split(',') : [];
+          if (tags.includes(filter)) {
+            card.classList.remove('hidden');
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+      });
+    });
+
+    const roleData = {
+      data_analyst: [
+        {
+          question: 'You notice weekly active users dropped 12% in one segment. How do you investigate and communicate next steps?',
+          rubric: [
+            'Defines metric scope, segment, and data reliability checks.',
+            'Breaks down retention funnel and proposes hypotheses.',
+            'Ends with an experiment or action plan and expected KPI movement.'
+          ]
+        },
+        {
+          question: 'How would you design a dashboard for churn risk that non-technical stakeholders can use weekly?',
+          rubric: [
+            'Prioritizes business-readable KPIs and trend context.',
+            'Separates monitoring vs diagnosis views clearly.',
+            'Includes decision recommendations and owners.'
+          ]
+        },
+        {
+          question: 'What is your framework for validating whether a drop in conversion is statistically meaningful?',
+          rubric: [
+            'Specifies baseline, sample sizes, and confidence criteria.',
+            'Controls for seasonality and segment shifts.',
+            'Connects significance to business impact and urgency.'
+          ]
+        }
+      ],
+      ml_engineer: [
+        {
+          question: 'Design an evaluation strategy for a RAG system used in interview coaching.',
+          rubric: [
+            'Defines retrieval and generation metrics separately.',
+            'Includes groundedness and hallucination checks.',
+            'Proposes offline + human eval loop for iteration.'
+          ]
+        },
+        {
+          question: 'How would you optimize latency in a retrieval + generation pipeline without sacrificing quality?',
+          rubric: [
+            'Targets bottlenecks across indexing, retrieval, and inference.',
+            'Uses caching/reranking tradeoffs with measurable thresholds.',
+            'Includes regression monitoring for answer quality.'
+          ]
+        },
+        {
+          question: 'How do you detect and mitigate drift in an ML system serving user-facing recommendations?',
+          rubric: [
+            'Defines data drift and concept drift indicators.',
+            'Specifies alert thresholds and retraining triggers.',
+            'Includes rollback or fallback strategy for reliability.'
+          ]
+        }
+      ],
+      product_analytics: [
+        {
+          question: 'A new feature increased engagement but reduced paid conversion. How do you make a recommendation?',
+          rubric: [
+            'Frames tradeoff with segment-level behavior.',
+            'Considers short-term and long-term product goals.',
+            'Recommends next experiment with success guardrails.'
+          ]
+        },
+        {
+          question: 'What north-star and counter-metrics would you track for an AI coaching assistant?',
+          rubric: [
+            'Defines clear north-star metric tied to user value.',
+            'Adds quality, fairness, and latency counter-metrics.',
+            'Aligns metric movement with product decision cadence.'
+          ]
+        },
+        {
+          question: 'How would you prioritize roadmap items after user interviews reveal conflicting needs?',
+          rubric: [
+            'Clusters needs by user type and impact.',
+            'Uses evidence-weighted prioritization framework.',
+            'Converts priorities into measurable delivery milestones.'
+          ]
+        }
+      ]
+    };
+
+    let currentRole = 'data_analyst';
+
+    const roleButtons = document.querySelectorAll('.role-btn');
+    const simQuestion = document.getElementById('simQuestion');
+    const simRubric = document.getElementById('simRubric');
+    const newQuestionBtn = document.getElementById('newQuestionBtn');
+
+    function renderInterviewPrompt(roleKey) {
+      const prompts = roleData[roleKey];
+      const randomIndex = Math.floor(Math.random() * prompts.length);
+      const item = prompts[randomIndex];
+
+      simQuestion.textContent = item.question;
+      simRubric.innerHTML = '';
+      item.rubric.forEach(line => {
+        const li = document.createElement('li');
+        li.textContent = line;
+        simRubric.appendChild(li);
+      });
+    }
+
+    roleButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        roleButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        currentRole = button.dataset.role;
+        renderInterviewPrompt(currentRole);
+      });
+    });
+
+    if (newQuestionBtn) {
+      newQuestionBtn.addEventListener('click', () => renderInterviewPrompt(currentRole));
+    }
+
+    const tiltCards = document.querySelectorAll('.tilt-card');
+
+    tiltCards.forEach(card => {
+      card.addEventListener('mousemove', (event) => {
+        const rect = card.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        const rotateX = ((event.clientY - centerY) / rect.height) * -7;
+        const rotateY = ((event.clientX - centerX) / rect.width) * 7;
+        card.style.transform = `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-3px)`;
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg) translateY(0)';
+      });
+    });
+
     function sendEmail(e) {
       e.preventDefault();
       const form = e.target;
