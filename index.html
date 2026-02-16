@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Tatyana Amugo – ML Developer</title>
+  <title>Tatyana Amugo ML Developer</title>
   <style>
     :root {
       --pink-50: #fdf2f8;
@@ -530,6 +530,78 @@
       line-height: 1.6;
     }
 
+    .sim-meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 0.55rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .sim-stat {
+      background: #fff;
+      border: 1px solid var(--pink-200);
+      border-radius: 10px;
+      padding: 0.65rem 0.8rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #4a4a4a;
+    }
+
+    .sim-stat strong {
+      display: block;
+      color: var(--pink-600);
+      font-size: 1.15rem;
+    }
+
+    .difficulty-buttons,
+    .sim-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.8rem;
+    }
+
+    .difficulty-btn,
+    .sim-action-btn {
+      padding: 0.45rem 0.8rem;
+      border-radius: 999px;
+      border: 1px solid var(--pink-300);
+      background: #fff;
+      color: var(--pink-600);
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .difficulty-btn.active,
+    .difficulty-btn:hover,
+    .sim-action-btn:hover {
+      background: var(--pink-500);
+      color: white;
+      border-color: var(--pink-500);
+    }
+
+    .sim-feedback {
+      margin-top: 0.8rem;
+      border-radius: 10px;
+      border: 1px dashed var(--pink-300);
+      background: #fff;
+      padding: 0.8rem;
+      font-size: 0.92rem;
+      color: #4f4f4f;
+      min-height: 54px;
+    }
+
+    .xp-burst {
+      animation: xpPop 550ms ease;
+    }
+
+    @keyframes xpPop {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.18); }
+      100% { transform: scale(1); }
+    }
+
     .writing-grid {
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     }
@@ -789,30 +861,32 @@
         <span class="badge">Flagship Project</span>
         <h3>Swali-AI — RAG Interview Coach</h3>
         <p>
-          Swali-AI is a retrieval-augmented interview coach that generates role-targeted questions,
-          grounded hints, and evaluation rubrics from curated interview knowledge. It helps candidates
-          practice with feedback that is both technical and practical.
+          Swali-AI is a production-grade RAG system for technical interview preparation. It combines
+          retrieval, progressive hints, and role-aware coaching to help candidates go beyond memorized
+          answers and build deeper understanding.
         </p>
-        <div class="meta">Problem solved: generic prep advice → contextual, role-aware coaching with references.</div>
+        <div class="meta">Features from repo: Smart Q&A, Progressive Hints, Adaptive Difficulty, Similar Problems, and Follow-up Questions.</div>
         <div class="skill-tags">
           <span class="skill-tag">RAG</span>
           <span class="skill-tag">Embeddings</span>
-          <span class="skill-tag">Vector Search</span>
-          <span class="skill-tag">Prompt Engineering</span>
-          <span class="skill-tag">Evaluation</span>
+          <span class="skill-tag">ChromaDB</span>
+          <span class="skill-tag">FastAPI</span>
+          <span class="skill-tag">React + Vite</span>
+          <span class="skill-tag">Gemini API</span>
+          <span class="skill-tag">sentence-transformers</span>
         </div>
         <div class="project-actions">
-          <a href="https://swali-ai.streamlit.app" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Live Demo</a>
+          <a href="https://github.com/cheredi/swali-ai#readme" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View README</a>
           <a href="https://github.com/cheredi/swali-ai" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">GitHub Repo</a>
-          <a href="https://tatyanaamugo.substack.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Case Study</a>
+          <a href="https://lipglossandllms.substack.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Case Study</a>
         </div>
         <details class="architecture">
           <summary>See architecture</summary>
-          <p><strong>Flow:</strong> ingest docs → chunking → embed/index → semantic retrieval → LLM answer + coaching rubric.</p>
+          <p><strong>Flow:</strong> ingest technical problem corpus → chunking + embeddings → Chroma retrieval → Gemini answer + coaching layer.</p>
           <ul>
-            <li><strong>Latency target:</strong> sub-2.5s average response in test runs.</li>
-            <li><strong>Quality target:</strong> grounded responses with citation-friendly snippets.</li>
-            <li><strong>What I learned:</strong> retrieval quality and prompt structure matter more than model size for this use case.</li>
+            <li><strong>Backend:</strong> Python + FastAPI service with modular RAG components.</li>
+            <li><strong>Frontend:</strong> React + Vite interface for interview prep workflows.</li>
+            <li><strong>Data layer:</strong> ChromaDB vector store + sentence-transformer embeddings.</li>
           </ul>
         </details>
       </article>
@@ -906,14 +980,24 @@
   </section>
 
   <section id="simulator" class="section-wrap animate">
-    <h2>Interview Simulator</h2>
+    <h2>Interview Arcade</h2>
     <div class="simulator-wrap">
       <div class="simulator">
-        <p style="margin-bottom: 1rem; color: #4d4d4d;">Pick a role, then generate a realistic question and a grading rubric — similar to how Swali-AI coaches candidates.</p>
+        <p style="margin-bottom: 1rem; color: #4d4d4d;">Pick role + difficulty, beat the timer, stack a streak, and train like an interview game.</p>
+        <div class="sim-meta">
+          <div class="sim-stat">XP<strong id="xpValue">0</strong></div>
+          <div class="sim-stat">Streak<strong id="streakValue">0</strong></div>
+          <div class="sim-stat">Timer<strong id="timerValue">35s</strong></div>
+        </div>
         <div class="role-buttons" id="roleButtons">
           <button class="role-btn active" data-role="data_analyst">Data Analyst</button>
           <button class="role-btn" data-role="ml_engineer">ML Engineer</button>
           <button class="role-btn" data-role="product_analytics">Product Analytics</button>
+        </div>
+        <div class="difficulty-buttons" id="difficultyButtons">
+          <button class="difficulty-btn" data-difficulty="easy">Easy</button>
+          <button class="difficulty-btn active" data-difficulty="medium">Medium</button>
+          <button class="difficulty-btn" data-difficulty="hard">Hard</button>
         </div>
         <div class="sim-output" id="simOutput">
           <h4>Question</h4>
@@ -925,41 +1009,47 @@
             <li>Includes actionable recommendations and measurement plan.</li>
           </ul>
         </div>
-        <button class="btn btn-primary" id="newQuestionBtn" style="margin-top: 1rem;">Generate Another Question</button>
+        <div class="sim-actions">
+          <button class="sim-action-btn" id="hintBtn">Need Hint</button>
+          <button class="sim-action-btn" id="nailedBtn">I Nailed It</button>
+          <button class="sim-action-btn" id="skipBtn">Skip</button>
+          <button class="btn btn-primary" id="newQuestionBtn">New Challenge</button>
+        </div>
+        <div class="sim-feedback" id="simFeedback">Let’s play: answer aloud, then score yourself honestly.</div>
       </div>
     </div>
   </section>
 
   <section id="writing" class="section-wrap animate">
-    <h2>Substack & Latest Posts</h2>
+    <h2>Lipgloss & LLMs (Substack)</h2>
     <div class="writing-grid">
       <article class="writing-card tilt-card">
-        <h3>How I Built Swali-AI: From Idea to RAG Prototype</h3>
-        <div class="meta">8 min read</div>
-        <p>A practical walkthrough of designing the retrieval stack, prompt strategy, and feedback loop for interview coaching.</p>
-        <a href="https://tatyanaamugo.substack.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Read on Substack</a>
+        <h3>Building Swali-AI in Public</h3>
+        <div class="meta">Engineering journal</div>
+        <p>Architecture decisions, feature iterations, and practical lessons from building a production-grade RAG interview coach.</p>
+        <a href="https://lipglossandllms.substack.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Read on Substack</a>
       </article>
       <article class="writing-card tilt-card">
-        <h3>Prompt Patterns That Improved My AI Coaching Responses</h3>
-        <div class="meta">6 min read</div>
-        <p>Prompting patterns I tested and why structure, constraints, and role framing changed response quality.</p>
-        <a href="https://tatyanaamugo.substack.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Read on Substack</a>
+        <h3>Prompting + Retrieval Notes</h3>
+        <div class="meta">Applied AI notes</div>
+        <p>What improved answer quality, where retrieval failed, and how prompt constraints shaped better coaching responses.</p>
+        <a href="https://lipglossandllms.substack.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Read on Substack</a>
       </article>
       <article class="writing-card tilt-card">
-        <h3>From Model Accuracy to User Trust: What Actually Matters</h3>
-        <div class="meta">7 min read</div>
-        <p>Why grounding, explanation quality, and transparent metrics matter as much as benchmark scores in user-facing AI.</p>
-        <a href="https://tatyanaamugo.substack.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Read on Substack</a>
+        <h3>From Accuracy to Trust</h3>
+        <div class="meta">Product + UX reflection</div>
+        <p>Why grounded answers, explainability, and practical rubric design matter in user-facing AI products.</p>
+        <a href="https://lipglossandllms.substack.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Read on Substack</a>
       </article>
       <article class="writing-card tilt-card">
-        <h3>Lessons from Building Interactive ML Dashboards</h3>
-        <div class="meta">5 min read</div>
-        <p>Design principles for translating model outputs into interfaces people can understand and act on quickly.</p>
-        <a href="https://tatyanaamugo.substack.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Read on Substack</a>
+        <h3>Data Stories for Real Decisions</h3>
+        <div class="meta">Analytics + storytelling</div>
+        <p>How I turn experiments, dashboards, and model outputs into decisions stakeholders can act on confidently.</p>
+        <a href="https://lipglossandllms.substack.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Read on Substack</a>
       </article>
     </div>
     <div style="text-align: center; margin-top: 1.2rem;">
-      <a href="https://tatyanaamugo.substack.com" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Visit My Substack</a>
+      <a href="https://lipglossandllms.substack.com" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Visit Lipgloss & LLMs</a>
     </div>
   </section>
 
@@ -969,7 +1059,7 @@
       <div class="social-actions">
         <a href="https://github.com/cheredi" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">GitHub</a>
         <a href="https://linkedin.com/in/tatyana-amugo02" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">LinkedIn</a>
-        <a href="https://tatyanaamugo.substack.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Substack</a>
+        <a href="https://lipglossandllms.substack.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Substack</a>
       </div>
       <form onsubmit="sendEmail(event)">
         <input type="text" placeholder="Your Name" name="name" required>
@@ -1081,103 +1171,141 @@
     const roleData = {
       data_analyst: [
         {
-          question: 'You notice weekly active users dropped 12% in one segment. How do you investigate and communicate next steps?',
+          question: 'A churn dashboard spikes for one cohort. What is your first 30-minute investigation plan?',
           rubric: [
-            'Defines metric scope, segment, and data reliability checks.',
-            'Breaks down retention funnel and proposes hypotheses.',
-            'Ends with an experiment or action plan and expected KPI movement.'
-          ]
+            'Confirms metric definition and data freshness.',
+            'Splits issue by segment and funnel stage.',
+            'Proposes one concrete next action for stakeholders.'
+          ],
+          hints: ['Start with data reliability checks.', 'Compare against prior weekly baseline.', 'Isolate by acquisition channel first.']
         },
         {
-          question: 'How would you design a dashboard for churn risk that non-technical stakeholders can use weekly?',
+          question: 'Design a KPI view a non-technical manager can use in 60 seconds.',
           rubric: [
-            'Prioritizes business-readable KPIs and trend context.',
-            'Separates monitoring vs diagnosis views clearly.',
-            'Includes decision recommendations and owners.'
-          ]
-        },
-        {
-          question: 'What is your framework for validating whether a drop in conversion is statistically meaningful?',
-          rubric: [
-            'Specifies baseline, sample sizes, and confidence criteria.',
-            'Controls for seasonality and segment shifts.',
-            'Connects significance to business impact and urgency.'
-          ]
+            'Chooses a clear primary KPI and supporting trend.',
+            'Uses thresholds or alerts for fast decisions.',
+            'Adds one recommended action based on the signal.'
+          ],
+          hints: ['Clarity beats dashboard complexity.', 'Use plain language labels.', 'One KPI, one decision.']
         }
       ],
       ml_engineer: [
         {
-          question: 'Design an evaluation strategy for a RAG system used in interview coaching.',
+          question: 'How would you evaluate a RAG interview coach beyond model accuracy?',
           rubric: [
-            'Defines retrieval and generation metrics separately.',
-            'Includes groundedness and hallucination checks.',
-            'Proposes offline + human eval loop for iteration.'
-          ]
+            'Separates retrieval quality from generation quality.',
+            'Defines groundedness and hallucination checks.',
+            'Includes human review loop and failure taxonomy.'
+          ],
+          hints: ['Measure retrieval and response separately.', 'Use a rubric, not just one score.', 'Track failure types over time.']
         },
         {
-          question: 'How would you optimize latency in a retrieval + generation pipeline without sacrificing quality?',
+          question: 'Your RAG latency regresses after adding features. What do you optimize first?',
           rubric: [
-            'Targets bottlenecks across indexing, retrieval, and inference.',
-            'Uses caching/reranking tradeoffs with measurable thresholds.',
-            'Includes regression monitoring for answer quality.'
-          ]
-        },
-        {
-          question: 'How do you detect and mitigate drift in an ML system serving user-facing recommendations?',
-          rubric: [
-            'Defines data drift and concept drift indicators.',
-            'Specifies alert thresholds and retraining triggers.',
-            'Includes rollback or fallback strategy for reliability.'
-          ]
+            'Profiles the pipeline to find true bottleneck.',
+            'Balances caching and retrieval depth tradeoffs.',
+            'Protects response quality with regression checks.'
+          ],
+          hints: ['Profile before optimizing.', 'Check embedding/retrieval path first.', 'Guard quality while reducing latency.']
         }
       ],
       product_analytics: [
         {
-          question: 'A new feature increased engagement but reduced paid conversion. How do you make a recommendation?',
+          question: 'A feature increases engagement but lowers conversion. What recommendation do you ship?',
           rubric: [
-            'Frames tradeoff with segment-level behavior.',
-            'Considers short-term and long-term product goals.',
-            'Recommends next experiment with success guardrails.'
-          ]
+            'Frames tradeoffs by user segment and funnel impact.',
+            'Connects recommendation to product goals.',
+            'Defines a measurable follow-up experiment.'
+          ],
+          hints: ['Who gained? Who lost?', 'Tie metrics to business goal.', 'Ship with guardrails and test plan.']
         },
         {
-          question: 'What north-star and counter-metrics would you track for an AI coaching assistant?',
+          question: 'How do you prioritize roadmap items when interview feedback is conflicting?',
           rubric: [
-            'Defines clear north-star metric tied to user value.',
-            'Adds quality, fairness, and latency counter-metrics.',
-            'Aligns metric movement with product decision cadence.'
-          ]
-        },
-        {
-          question: 'How would you prioritize roadmap items after user interviews reveal conflicting needs?',
-          rubric: [
-            'Clusters needs by user type and impact.',
-            'Uses evidence-weighted prioritization framework.',
-            'Converts priorities into measurable delivery milestones.'
-          ]
+            'Clusters feedback by persona and impact.',
+            'Uses effort/impact reasoning transparently.',
+            'Converts priorities into milestone-based plan.'
+          ],
+          hints: ['Group feedback before ranking.', 'Impact first, then effort.', 'Define what success looks like.']
         }
       ]
     };
 
+    const difficultyConfig = {
+      easy: { time: 45, points: 8 },
+      medium: { time: 35, points: 12 },
+      hard: { time: 25, points: 18 }
+    };
+
     let currentRole = 'data_analyst';
+    let currentDifficulty = 'medium';
+    let currentPrompt = null;
+    let hintIndex = 0;
+    let xp = 0;
+    let streak = 0;
+    let countdown = null;
+    let timeLeft = difficultyConfig[currentDifficulty].time;
 
     const roleButtons = document.querySelectorAll('.role-btn');
+    const difficultyButtons = document.querySelectorAll('.difficulty-btn');
     const simQuestion = document.getElementById('simQuestion');
     const simRubric = document.getElementById('simRubric');
     const newQuestionBtn = document.getElementById('newQuestionBtn');
+    const hintBtn = document.getElementById('hintBtn');
+    const nailedBtn = document.getElementById('nailedBtn');
+    const skipBtn = document.getElementById('skipBtn');
+    const timerValue = document.getElementById('timerValue');
+    const xpValue = document.getElementById('xpValue');
+    const streakValue = document.getElementById('streakValue');
+    const simFeedback = document.getElementById('simFeedback');
+
+    function updateScoreboard() {
+      xpValue.textContent = `${xp}`;
+      streakValue.textContent = `${streak}`;
+      timerValue.textContent = `${timeLeft}s`;
+      xpValue.classList.remove('xp-burst');
+      void xpValue.offsetWidth;
+      xpValue.classList.add('xp-burst');
+    }
+
+    function startTimer() {
+      if (countdown) {
+        clearInterval(countdown);
+      }
+
+      timeLeft = difficultyConfig[currentDifficulty].time;
+      timerValue.textContent = `${timeLeft}s`;
+
+      countdown = setInterval(() => {
+        timeLeft -= 1;
+        timerValue.textContent = `${Math.max(0, timeLeft)}s`;
+
+        if (timeLeft <= 0) {
+          clearInterval(countdown);
+          streak = 0;
+          simFeedback.textContent = '⏰ Time up! Grab a hint, then try another challenge.';
+          updateScoreboard();
+        }
+      }, 1000);
+    }
 
     function renderInterviewPrompt(roleKey) {
       const prompts = roleData[roleKey];
       const randomIndex = Math.floor(Math.random() * prompts.length);
-      const item = prompts[randomIndex];
+      currentPrompt = prompts[randomIndex];
+      hintIndex = 0;
 
-      simQuestion.textContent = item.question;
+      simQuestion.textContent = currentPrompt.question;
       simRubric.innerHTML = '';
-      item.rubric.forEach(line => {
+      currentPrompt.rubric.forEach(line => {
         const li = document.createElement('li');
         li.textContent = line;
         simRubric.appendChild(li);
       });
+
+      simFeedback.textContent = 'New round loaded. Speak your answer out loud, then score yourself.';
+      startTimer();
+      updateScoreboard();
     }
 
     roleButtons.forEach(button => {
@@ -1189,9 +1317,55 @@
       });
     });
 
+    difficultyButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        difficultyButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        currentDifficulty = button.dataset.difficulty;
+        simFeedback.textContent = `Difficulty set to ${currentDifficulty}.`;
+        renderInterviewPrompt(currentRole);
+      });
+    });
+
     if (newQuestionBtn) {
       newQuestionBtn.addEventListener('click', () => renderInterviewPrompt(currentRole));
     }
+
+    if (hintBtn) {
+      hintBtn.addEventListener('click', () => {
+        if (!currentPrompt || !currentPrompt.hints || currentPrompt.hints.length === 0) {
+          simFeedback.textContent = 'No hints available for this prompt yet.';
+          return;
+        }
+
+        const hint = currentPrompt.hints[Math.min(hintIndex, currentPrompt.hints.length - 1)];
+        hintIndex += 1;
+        simFeedback.textContent = `💡 Hint: ${hint}`;
+      });
+    }
+
+    if (nailedBtn) {
+      nailedBtn.addEventListener('click', () => {
+        const basePoints = difficultyConfig[currentDifficulty].points;
+        const speedBonus = Math.max(0, Math.floor(timeLeft / 5));
+        const streakBonus = streak * 2;
+        const earned = basePoints + speedBonus + streakBonus;
+        xp += earned;
+        streak += 1;
+        simFeedback.textContent = `🔥 Nice run! +${earned} XP (${basePoints} base, ${speedBonus} speed, ${streakBonus} streak).`;
+        updateScoreboard();
+      });
+    }
+
+    if (skipBtn) {
+      skipBtn.addEventListener('click', () => {
+        streak = 0;
+        simFeedback.textContent = '⏭️ Skipped. Streak reset—new challenge loaded.';
+        renderInterviewPrompt(currentRole);
+      });
+    }
+
+    renderInterviewPrompt(currentRole);
 
     const tiltCards = document.querySelectorAll('.tilt-card');
 
