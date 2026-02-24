@@ -35,9 +35,6 @@
         <a href="#writing" class="btn btn-secondary">Read Substack</a>
       </div>
     </div>
-    <div class="bubble"></div>
-    <div class="bubble"></div>
-    <div class="bubble"></div>
   </section>
 
   <section class="section-wrap animate" id="about">
@@ -349,27 +346,10 @@
   <section id="writing" class="section-wrap animate">
     <h2>Girl meets AI world (Substack)</h2>
     <p class="substack-intro">
-      Selected posts from my Substack on applied AI, real-world tech lessons, and career growth.
+      Latest posts pulled directly from Substack on applied AI, practical tech lessons, and career growth.
     </p>
-    <div class="writing-grid">
-      <article class="writing-card tilt-card">
-        <h3>You're Probably Telling AI Way More Than You Think</h3>
-        <div class="meta">Privacy and practical AI usage</div>
-        <p>A practical reflection on AI privacy boundaries, prompt hygiene, and safer day-to-day workflows.</p>
-        <a href="https://open.substack.com/pub/lipgloss2llms/p/youre-probably-telling-ai-way-more?r=6tsia2&utm_campaign=post&utm_medium=web" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Read on Substack</a>
-      </article>
-      <article class="writing-card tilt-card">
-        <h3>This Week I Realized My Boyfriend</h3>
-        <div class="meta">Architecture and collaboration</div>
-        <p>A personal-tech story connecting collaboration styles to AI architecture choices and system design tradeoffs.</p>
-        <a href="https://open.substack.com/pub/lipgloss2llms/p/this-week-i-realized-my-boyfriend?r=6tsia2&utm_campaign=post&utm_medium=web" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Read on Substack</a>
-      </article>
-      <article class="writing-card tilt-card">
-        <h3>This Week I Did Less and Learned</h3>
-        <div class="meta">LLMs, RAG, and foundations</div>
-        <p>An accessible breakdown of LLM and RAG concepts with grounded lessons from practical learning.</p>
-        <a href="https://open.substack.com/pub/lipgloss2llms/p/this-week-i-did-less-and-learned?r=6tsia2&utm_campaign=post&utm_medium=web" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Read on Substack</a>
-      </article>
+    <div class="substack-status" id="substackStatus">Loading latest posts...</div>
+    <div class="writing-grid" id="substackPosts">
     </div>
     <div style="text-align: center; margin-top: 1.2rem;">
       <a href="https://lipgloss2llms.substack.com" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Visit Lipgloss & LLMs</a>
@@ -397,128 +377,7 @@
     &copy; 2026 Tatyana Amugo. Built with curiosity and clear thinking.
   </footer>
 
-  <script>
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.animate').forEach(el => observer.observe(el));
-
-    const navLinks = document.querySelectorAll('#navLinks a');
-    const sectionIds = ['home', 'about', 'projects', 'writing', 'simulator', 'contact'];
-
-    window.addEventListener('scroll', () => {
-      const scrollPos = window.scrollY + 130;
-      sectionIds.forEach(id => {
-        const section = document.getElementById(id);
-        if (!section) {
-          return;
-        }
-
-        if (scrollPos >= section.offsetTop && scrollPos < section.offsetTop + section.offsetHeight) {
-          navLinks.forEach(link => link.classList.remove('active'));
-          const activeLink = document.querySelector(`#navLinks a[href="#${id}"]`);
-          if (activeLink) {
-            activeLink.classList.add('active');
-          }
-        }
-      });
-    });
-
-    const proofSection = document.getElementById('proof');
-    const proofNumbers = document.querySelectorAll('.proof-number');
-    let countersStarted = false;
-
-    const runCounters = () => {
-      if (countersStarted) {
-        return;
-      }
-      countersStarted = true;
-
-      proofNumbers.forEach(counter => {
-        const target = Number(counter.dataset.target || 0);
-        let current = 0;
-        const increment = Math.max(1, Math.ceil(target / 45));
-        const timer = setInterval(() => {
-          current += increment;
-          if (current >= target) {
-            current = target;
-            clearInterval(timer);
-          }
-          counter.textContent = `${current}${target >= 10 ? '+' : ''}`;
-        }, 26);
-      });
-    };
-
-    const proofObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          runCounters();
-        }
-      });
-    }, { threshold: 0.3 });
-
-    if (proofSection) {
-      proofObserver.observe(proofSection);
-    }
-
-    const filterButtons = document.querySelectorAll('.filter-btn');
-    const projectCards = document.querySelectorAll('#projectList .project-card');
-
-    filterButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        filterButtons.forEach(btn => btn.classList.remove('active'));
-        button.classList.add('active');
-        const filter = button.dataset.filter;
-
-        projectCards.forEach(card => {
-          if (filter === 'all') {
-            card.classList.remove('hidden');
-            return;
-          }
-
-          const tags = card.dataset.tags ? card.dataset.tags.split(',') : [];
-          if (tags.includes(filter)) {
-            card.classList.remove('hidden');
-          } else {
-            card.classList.add('hidden');
-          }
-        });
-      });
-    });
-
-
-    const tiltCards = document.querySelectorAll('.tilt-card');
-
-    tiltCards.forEach(card => {
-      card.addEventListener('mousemove', (event) => {
-        const rect = card.getBoundingClientRect();
-        const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
-        const rotateX = ((event.clientY - centerY) / rect.height) * -7;
-        const rotateY = ((event.clientX - centerX) / rect.width) * 7;
-        card.style.transform = `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-3px)`;
-      });
-
-      card.addEventListener('mouseleave', () => {
-        card.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg) translateY(0)';
-      });
-    });
-
-    function sendEmail(e) {
-      e.preventDefault();
-      const form = e.target;
-      const name = form.name.value;
-      const email = form.email.value;
-      const message = form.message.value;
-      const mailto = `mailto:t_amugo@fanshaweonline.ca?subject=Message from ${encodeURIComponent(name)}&body=${encodeURIComponent(message)}%0A%0AReply to: ${email}`;
-      window.location.href = mailto;
-    }
-  </script>
+  <script src="js/site.js"></script>
   <script src="js/substack-game.js"></script>
 </body>
 </html>
