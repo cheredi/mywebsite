@@ -9,8 +9,31 @@
 
   document.querySelectorAll('.animate').forEach((el) => observer.observe(el));
 
+  const navToggle = document.getElementById('navToggle');
+  const navList = document.getElementById('navLinks');
   const navLinks = document.querySelectorAll('#navLinks a');
-  const sectionIds = ['home', 'about', 'projects', 'writing', 'simulator', 'contact'];
+  const sectionIds = ['home', 'about', 'journey', 'skills', 'projects', 'education', 'writing', 'simulator', 'contact'];
+
+  if (navToggle && navList) {
+    navToggle.addEventListener('click', () => {
+      const isOpen = navList.classList.toggle('open');
+      navToggle.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    navLinks.forEach((link) => {
+      link.addEventListener('click', () => {
+        navList.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 900) {
+        navList.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
 
   window.addEventListener('scroll', () => {
     const scrollPos = window.scrollY + 130;

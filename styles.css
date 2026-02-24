@@ -55,6 +55,18 @@ nav {
   letter-spacing: 0.2px;
 }
 
+.nav-toggle {
+  display: none;
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--text);
+  border-radius: 8px;
+  padding: 0.4rem 0.65rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
 .nav-links {
   list-style: none;
   display: flex;
@@ -310,6 +322,10 @@ h2 {
   margin-bottom: 0.75rem;
 }
 
+.timeline-item p {
+  margin-bottom: 0.6rem;
+}
+
 .competency-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -324,6 +340,7 @@ h2 {
 .competency-card li {
   padding: 0.25rem 0;
   color: #344154;
+  line-height: 1.55;
 }
 
 .competency-card li::before {
@@ -629,6 +646,45 @@ footer {
     text-align: center;
   }
 
+  nav {
+    position: relative;
+    padding: 0.85rem 1rem;
+  }
+
+  .nav-toggle {
+    display: inline-block;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 1rem;
+    width: min(280px, calc(100vw - 2rem));
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: var(--shadow-soft);
+    padding: 0.7rem;
+    display: none;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+
+  .nav-links a {
+    display: block;
+    padding: 0.45rem 0.55rem;
+    border-radius: 8px;
+  }
+
+  .nav-links a:hover,
+  .nav-links a.active {
+    background: var(--accent-soft);
+  }
+
   .bio {
     text-align: center;
   }
@@ -643,20 +699,27 @@ footer {
 }
 
 @media (max-width: 620px) {
-  nav {
-    padding: 0.85rem 1rem;
-  }
-
-  .nav-links {
-    gap: 0.75rem;
-  }
-
   h2 {
     font-size: 1.8rem;
   }
 
   .section-wrap {
     padding: 3.5rem 1rem;
+  }
+
+  .hero {
+    min-height: 90vh;
+    background-attachment: scroll;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-actions .btn {
+    width: 100%;
+    text-align: center;
   }
 
   .simulator {

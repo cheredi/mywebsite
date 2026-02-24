@@ -4,15 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Tatyana Amugo ML Developer</title>
-    <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header>
     <nav>
       <div class="logo">Tatyana Amugo</div>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">Menu</button>
       <ul class="nav-links" id="navLinks">
         <li><a href="#home" class="active">Home</a></li>
         <li><a href="#about">About</a></li>
+        <li><a href="#journey">Experience</a></li>
+        <li><a href="#skills">Skills</a></li>
         <li><a href="#projects">Projects</a></li>
         <li><a href="#writing">Substack</a></li>
         <li><a href="#simulator">Interactive</a></li>
@@ -45,20 +48,14 @@
       </div>
       <div class="bio">
         <p>
-          Hi, I'm Tatyana! I'm passionate about turning data into intelligent systems. Whether it's
-          predicting churn, detecting anomalies in video, or building AI copilots, I focus on solutions
-          that are technically strong and genuinely useful.
+          I build AI systems that bridge technical depth with practical business value. My work spans
+          prompt engineering, retrieval pipelines, backend APIs, and enterprise-grade deployment.
         </p>
         <div class="quirky-fact">
-          <strong>Fun fact:</strong> I love simplifying the complex because elegant code is the best kind of magic.
+          <strong>Focus:</strong> shipping reliable AI workflows that improve real operations, not just demos.
         </div>
         <p>
-          Long term, I am targeting roles in consulting, forward deployment engineering, applied AI,
-          or machine learning engineering where I can ship solutions directly with clients and product teams.
-        </p>
-        <p>
-          Outside the terminal, you'll find me mentoring peers, learning generative AI patterns,
-          writing on Substack, and sharing practical lessons from real projects.
+          I enjoy converting ambiguous product and policy constraints into deployable systems that teams can trust.
         </p>
       </div>
     </div>
@@ -68,96 +65,76 @@
     <h2>Momentum & Social Proof</h2>
     <div class="proof-grid">
       <div class="proof-card">
-        <span class="proof-number" data-target="4">0</span>
-        <div class="proof-label">Featured ML projects shipped</div>
+        <span class="proof-number" data-target="3">0</span>
+        <div class="proof-label">Core AI projects delivered</div>
       </div>
       <div class="proof-card">
-        <span class="proof-number" data-target="2">0</span>
-        <div class="proof-label">Live Streamlit demos</div>
+        <span class="proof-number" data-target="79">0</span>
+        <div class="proof-label">Manual overhead reduced in AI workflows (%)</div>
       </div>
       <div class="proof-card">
         <span class="proof-number" data-target="15">0</span>
-        <div class="proof-label">Marketing uplift from dashboard work (%)</div>
+        <div class="proof-label">Marketing uplift from analytics work (%)</div>
       </div>
       <div class="proof-card">
         <span class="proof-number" data-target="30">0</span>
-        <div class="proof-label">Workflow automation impact in ERP (%)</div>
+        <div class="proof-label">ERP workflow automation impact (%)</div>
       </div>
-    </div>
-    <div class="testimonial-row">
-      <div class="testimonial">“Tatyana blends technical depth with clear communication. She turns messy data into decisions.”</div>
-      <div class="testimonial">“Strong product mindset: she builds ML that feels usable, not just impressive.”</div>
-      <div class="testimonial">“Great collaborator with a calm, builder-first approach under deadlines.”</div>
     </div>
   </section>
 
   <section class="section-wrap timeline animate" id="journey">
-    <h2>My Journey</h2>
+    <h2>Work Experience</h2>
     <div class="timeline-list">
       <div class="timeline-item tilt-card">
-        <h3>Graduate Certificate - AI & Machine Learning</h3>
-        <div class="date">Jan 2025 - Present</div>
-        <p>Developing advanced ML models for business use cases, including churn prediction, NLP pipelines, and deep learning experimentation with TensorFlow and PyTorch.</p>
+        <h3>AI Engineer Co-op - Ontario Public Service</h3>
+        <div class="date">Toronto, Canada | Jan 2026 - Present</div>
+        <p>Engineered prompt templates using Jinja for production LLM workflows integrated into the SAMS enterprise case review system, designing structured outputs and validating model responses for accuracy and reliability.</p>
+        <p>Built secure RESTful APIs and backend orchestration layers enabling AI-assisted decision workflows; reduced manual processing overhead by approximately 79% through agentic automation in a regulated government environment.</p>
+        <p>Deployed and debugged LLM integrations via Azure DevOps CI/CD; collaborated with stakeholders to define success metrics and iterate on prompt and retrieval pipeline design.</p>
       </div>
       <div class="timeline-item tilt-card">
-        <h3>ERP Developer</h3>
-        <div class="date">Sep 2024 - Dec 2024</div>
-        <p>Led ERPNext implementations and data migration initiatives, and contributed to IoT integrations that improved workflow automation by 30%.</p>
+        <h3>Extern - Consumer Insights & Data Analytics, Beats by Dre</h3>
+        <div class="date">Nairobi, Kenya | Sep 2024 - Oct 2024</div>
+        <p>Analyzed customer behavior and market segmentation data using Python and Tableau, translating ambiguous business questions into structured, metric-driven insights that improved targeted marketing effectiveness by 15%.</p>
+        <p>Built dynamic dashboards and presented findings to cross-functional stakeholders, distilling complex data into clear recommendations for decision-makers.</p>
+        <p>Designed and deployed customer surveys with optimized question logic, improving data collection efficiency by 20% and downstream analysis quality.</p>
       </div>
       <div class="timeline-item tilt-card">
-        <h3>Consumer Insights & Data Analytics Extern</h3>
-        <div class="date">Sep 2024 - Oct 2024</div>
-        <p>Conducted customer behavior analysis and built dashboards that helped improve campaign targeting by 15%.</p>
-      </div>
-      <div class="timeline-item tilt-card">
-        <h3>Bachelor's Degree - Informatics & Computer Science</h3>
-        <div class="date">2020 - 2023</div>
-        <p>Built spatio-temporal deep learning models for video anomaly detection with a strong focus on optimization and real-time inference constraints.</p>
+        <h3>ERP Developer - Upande</h3>
+        <div class="date">Nairobi, Kenya | Aug 2025 - Dec 2025</div>
+        <p>Implemented and configured ERPNext modules, integrating backend services and automating workflows across departments.</p>
+        <p>Built automation pipelines that reduced manual processing by approximately 30%, improving reporting accuracy and operational efficiency.</p>
       </div>
     </div>
   </section>
 
-  <section class="section-wrap competencies animate">
-    <h2>Core Competencies</h2>
+  <section class="section-wrap competencies animate" id="skills">
+    <h2>Skills</h2>
     <div class="competency-grid">
       <div class="competency-card tilt-card">
-        <h3>Machine Learning & AI</h3>
+        <h3>LLM Systems & Prompt Engineering</h3>
         <ul>
-          <li>Predictive Modeling</li>
-          <li>Deep Learning (PyTorch)</li>
-          <li>Computer Vision</li>
-          <li>Natural Language Processing</li>
-          <li>Model Optimization</li>
+          <li>Designed and optimized prompt templates (Jinja) for production LLM workflows.</li>
+          <li>Built and evaluated RAG pipelines with ChromaDB and sentence-transformers.</li>
+          <li>Integrated LLM-backed APIs into enterprise systems with structured outputs and output validation.</li>
+          <li>Experience with retrieval experiments, embedding model selection, and chunk strategy tuning for reliability.</li>
         </ul>
       </div>
       <div class="competency-card tilt-card">
-        <h3>Data Science & Analytics</h3>
+        <h3>Agentic AI & Tool Development</h3>
         <ul>
-          <li>Statistical Analysis</li>
-          <li>Data Preprocessing</li>
-          <li>Feature Engineering</li>
-          <li>A/B Testing</li>
-          <li>Business Intelligence</li>
+          <li>Built end-to-end agentic systems with FastAPI backends and tool-calling patterns.</li>
+          <li>Designed progressive reasoning layers for complex AI workflows.</li>
+          <li>Created evaluation frameworks to measure output quality, accuracy, and relevance against defined metrics.</li>
         </ul>
       </div>
       <div class="competency-card tilt-card">
-        <h3>Technical Skills</h3>
+        <h3>Enterprise AI Integration</h3>
         <ul>
-          <li>Python (Pandas, NumPy, Scikit-learn)</li>
-          <li>SQL & Database Management</li>
-          <li>Git Version Control</li>
-          <li>Cloud Platforms (AWS, Azure)</li>
-          <li>API Development</li>
-        </ul>
-      </div>
-      <div class="competency-card tilt-card">
-        <h3>Visualization & Tools</h3>
-        <ul>
-          <li>Tableau & Power BI</li>
-          <li>Streamlit & Dash</li>
-          <li>Plotly & Matplotlib</li>
-          <li>Jupyter Notebooks</li>
-          <li>Excel Advanced Analytics</li>
+          <li>Deployed AI services into production enterprise systems through secure RESTful APIs.</li>
+          <li>Implemented delivery and debugging flows via Azure DevOps CI/CD pipelines.</li>
+          <li>Partnered with cross-functional teams to translate business requirements into AI-enabled workflows.</li>
         </ul>
       </div>
     </div>
@@ -169,136 +146,79 @@
       <button class="filter-btn active" data-filter="all">All</button>
       <button class="filter-btn" data-filter="rag">RAG</button>
       <button class="filter-btn" data-filter="nlp">NLP</button>
+      <button class="filter-btn" data-filter="agentic">Agentic AI</button>
       <button class="filter-btn" data-filter="cv">Computer Vision</button>
-      <button class="filter-btn" data-filter="dashboard">Dashboards</button>
-      <button class="filter-btn" data-filter="ml">ML Systems</button>
     </div>
 
     <div class="projects-list" id="projectList">
-      <article class="project-card project-highlight tilt-card" data-tags="rag,nlp,ml">
-        <span class="badge">Flagship Project</span>
-        <h3>Swali-AI - RAG Interview Coach</h3>
-        <p>
-          Swali-AI is a production-grade RAG system for technical interview preparation. It combines
-          retrieval, progressive hints, and role-aware coaching to help candidates go beyond memorized
-          answers and build deeper understanding.
-        </p>
-        <div class="meta"><strong>Business impact:</strong> Converts interview prep into a structured coaching workflow with faster guidance and clearer feedback loops.</div>
-        <div class="meta">Features from repo: Smart Q&A, Progressive Hints, Adaptive Difficulty, Similar Problems, and Follow-up Questions.</div>
+      <article class="project-card project-highlight tilt-card" data-tags="agentic,nlp">
+        <span class="badge">Capstone</span>
+        <h3>ONA - Assistive AI System (Runner-Up: Outstanding Impact)</h3>
+        <p>Led a multidisciplinary team in designing an AI-powered assistive system supporting visually impaired individuals and dementia patients with spatial awareness and memory reinforcement.</p>
+        <div class="meta"><strong>Impact:</strong> Recognized as Runner-Up for Outstanding Impact for real-world applicability and solution clarity.</div>
+        <div class="meta">Defined system architecture and user validation strategy, translating ambiguous human-centered challenges into deployable AI-enabled workflows.</div>
+        <div class="skill-tags">
+          <span class="skill-tag">NLP</span>
+          <span class="skill-tag">Retrieval</span>
+          <span class="skill-tag">Context-Aware AI</span>
+          <span class="skill-tag">Systems Design</span>
+        </div>
+      </article>
+
+      <article class="project-card tilt-card" data-tags="rag,nlp,agentic">
+        <h3>RAG-Powered Interview Preparation System</h3>
+        <p>Building an end-to-end LLM + RAG system that dynamically retrieves role-specific knowledge and generates structured interview simulations with feedback.</p>
+        <div class="meta"><strong>Focus:</strong> Prompt templates, retrieval pipelines, and response validation logic to improve output relevance and reduce hallucinations.</div>
         <div class="skill-tags">
           <span class="skill-tag">RAG</span>
-          <span class="skill-tag">Embeddings</span>
+          <span class="skill-tag">Prompt Engineering</span>
           <span class="skill-tag">ChromaDB</span>
           <span class="skill-tag">FastAPI</span>
-          <span class="skill-tag">React + Vite</span>
-          <span class="skill-tag">Gemini API</span>
-          <span class="skill-tag">sentence-transformers</span>
+          <span class="skill-tag">Validation Logic</span>
         </div>
         <div class="project-actions">
           <a href="https://github.com/cheredi/swali-ai#readme" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View README</a>
           <a href="https://github.com/cheredi/swali-ai" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">GitHub Repo</a>
-          <a href="https://lipgloss2llms.substack.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Case Study</a>
         </div>
-        <details class="architecture">
-          <summary>See architecture</summary>
-          <p><strong>Flow:</strong> ingest technical problem corpus → chunking + embeddings → Chroma retrieval → Gemini answer + coaching layer.</p>
-          <ul>
-            <li><strong>Backend:</strong> Python + FastAPI service with modular RAG components.</li>
-            <li><strong>Frontend:</strong> React + Vite interface for interview prep workflows.</li>
-            <li><strong>Data layer:</strong> ChromaDB vector store + sentence-transformer embeddings.</li>
-          </ul>
-        </details>
       </article>
 
-      <article class="project-card tilt-card" data-tags="ml">
-        <h3>Customer Churn Prediction Model</h3>
-        <p>Built and deployed predictive models with logistic regression, decision trees, and random forests to identify customers at risk of churn.</p>
-        <div class="meta"><strong>Business impact:</strong> Helps retention teams prioritize high-risk customers and target interventions before revenue is lost.</div>
+      <article class="project-card tilt-card" data-tags="cv">
+        <h3>Anomaly Detection System (Graduate Project)</h3>
+        <p>Engineered and benchmarked PaDiM, SPADE, and CLIP-based models using PyTorch and OpenCV for video anomaly detection.</p>
+        <div class="meta">Optimized preprocessing and inference pipelines for stronger performance on real-world datasets, and deployed an interactive demo with Grad-CAM visualizations.</div>
         <div class="skill-tags">
-          <span class="skill-tag">Python</span>
-          <span class="skill-tag">Scikit-learn</span>
-          <span class="skill-tag">Pandas</span>
-          <span class="skill-tag">Machine Learning</span>
-        </div>
-        <div class="project-actions">
-          <a href="https://github.com/cheredi" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">GitHub</a>
-        </div>
-        <details class="architecture">
-          <summary>See architecture</summary>
-          <p>EDA → feature engineering → model training → threshold tuning → dashboard-ready outputs for retention teams.</p>
-        </details>
-      </article>
-
-      <article class="project-card tilt-card" data-tags="cv,ml">
-        <h3>Anomaly Detection System</h3>
-        <p>Developed a comparative study with PaDiM, SPADE, and CLIP, then optimized inference using Python, PyTorch, and OpenCV.</p>
-        <div class="meta"><strong>Business impact:</strong> Improves inspection speed and consistency by surfacing defects early in quality-control workflows.</div>
-        <div class="skill-tags">
-          <span class="skill-tag">Deep Learning</span>
-          <span class="skill-tag">OpenCV</span>
           <span class="skill-tag">PyTorch</span>
-          <span class="skill-tag">Computer Vision</span>
+          <span class="skill-tag">OpenCV</span>
+          <span class="skill-tag">PaDiM</span>
+          <span class="skill-tag">SPADE</span>
+          <span class="skill-tag">CLIP</span>
         </div>
         <div class="project-actions">
           <a href="https://anomal-y-detection.streamlit.app" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Live Demo</a>
-          <a href="https://github.com/cheredi" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">GitHub</a>
         </div>
-        <details class="architecture">
-          <summary>See architecture</summary>
-          <p>Image preprocessing → embedding extraction → anomaly scoring → visualization overlays for rapid QA.</p>
-        </details>
-      </article>
-
-      <article class="project-card tilt-card" data-tags="dashboard,ml">
-        <h3>Consumer Insights Dashboard</h3>
-        <p>Built dynamic dashboards for Beats by Dre to analyze behavior and segmentation, helping improve targeted marketing by 15%.</p>
-        <div class="meta"><strong>Business impact:</strong> Enabled sharper campaign targeting and better budget allocation through segment-level insights.</div>
-        <div class="skill-tags">
-          <span class="skill-tag">Tableau</span>
-          <span class="skill-tag">Data Analysis</span>
-          <span class="skill-tag">Market Research</span>
-          <span class="skill-tag">Python</span>
-        </div>
-        <div class="project-actions">
-          <a href="https://github.com/cheredi" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">GitHub</a>
-        </div>
-        <details class="architecture">
-          <summary>See architecture</summary>
-          <p>Data cleaning → KPI design → segmentation dashboards → executive storytelling for go-to-market decisions.</p>
-        </details>
-      </article>
-
-      <article class="project-card tilt-card" data-tags="dashboard,ml">
-        <h3>Teen Phone Addiction Dashboard</h3>
-        <p>Built a team project predicting smartphone addiction levels using Ridge, MLPRegressor, and Gradient Boosting in an interactive Streamlit app.</p>
-        <div class="meta"><strong>Business impact:</strong> Turns behavioral model outputs into interpretable risk signals for educators, researchers, and care programs.</div>
-        <div class="skill-tags">
-          <span class="skill-tag">Python</span>
-          <span class="skill-tag">Streamlit</span>
-          <span class="skill-tag">Scikit-learn</span>
-          <span class="skill-tag">Plotly</span>
-          <span class="skill-tag">SHAP</span>
-        </div>
-        <div class="project-actions">
-          <a href="https://phoneaddiction.streamlit.app" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Live Demo</a>
-          <a href="https://github.com/cheredi" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">GitHub</a>
-        </div>
-        <details class="architecture">
-          <summary>See architecture</summary>
-          <p>Survey preprocessing → model comparison → SHAP explainability → interactive controls for scenario exploration.</p>
-        </details>
       </article>
     </div>
   </section>
 
-  <section id="now" class="section-wrap now-building animate">
-    <h2>Now Building</h2>
-    <div class="changelog">
-      <ul>
-        <li><strong>Feb 2026:</strong> Added role-specific question pathways in Swali-AI for analyst and ML engineer tracks.</li>
-        <li><strong>Feb 2026:</strong> Improved retrieval quality with chunk strategy tuning and cleaner source grounding.</li>
-        <li><strong>Jan 2026:</strong> Prototyped scoring rubrics for answer clarity, depth, and technical correctness.</li>
-      </ul>
+  <section id="education" class="section-wrap animate">
+    <h2>Education & Credentials</h2>
+    <div class="timeline-list">
+      <div class="timeline-item">
+        <h3>Graduate Certificate - Artificial Intelligence & Machine Learning (Co-op)</h3>
+        <div class="date">Fanshawe College, London, Canada | Jan 2025 - Present</div>
+      </div>
+      <div class="timeline-item">
+        <h3>Bachelor’s Degree - Informatics & Computer Science</h3>
+        <div class="date">Strathmore University, Nairobi, Kenya | Apr 2020 - Jul 2023</div>
+      </div>
+      <div class="timeline-item">
+        <h3>Diploma - Business Information Technology</h3>
+        <div class="date">Strathmore University, Nairobi, Kenya | Jan 2019 - Sep 2021</div>
+      </div>
+      <div class="timeline-item">
+        <h3>Professional Credential</h3>
+        <div class="date">Data Analyst with Python and SQL, DataCamp (2024)</div>
+      </div>
     </div>
   </section>
 
@@ -349,8 +269,7 @@
       Latest posts pulled directly from Substack on applied AI, practical tech lessons, and career growth.
     </p>
     <div class="substack-status" id="substackStatus">Loading latest posts...</div>
-    <div class="writing-grid" id="substackPosts">
-    </div>
+    <div class="writing-grid" id="substackPosts"></div>
     <div style="text-align: center; margin-top: 1.2rem;">
       <a href="https://lipgloss2llms.substack.com" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Visit Lipgloss & LLMs</a>
     </div>
