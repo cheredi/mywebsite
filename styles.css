@@ -1122,14 +1122,15 @@ header {
   flex-direction: column;
   justify-content: center;
   min-height: 540px;
+  padding-left: 0.35rem;
 }
 
 .hero-creative-title {
   display: inline-flex;
   flex-direction: column;
   color: #e11077;
-  line-height: 0.84;
-  margin-bottom: 0.8rem;
+  line-height: 0.8;
+  margin-bottom: 1.15rem;
 }
 
 .hero-creative-title span {
@@ -1145,10 +1146,12 @@ header {
   font-size: 0.95rem;
   font-weight: 700;
   text-transform: uppercase;
-  color: #f8f2f6;
+  color: #f5edf3;
   letter-spacing: 1px;
-  margin-top: -0.35rem;
-  margin-bottom: 0.65rem;
+  margin-top: 0;
+  margin-bottom: 0.95rem;
+  max-width: 640px;
+  line-height: 1.35;
 }
 
 .hero-name {
@@ -1157,7 +1160,7 @@ header {
   font-size: clamp(1.8rem, 3.2vw, 2.8rem);
   text-transform: uppercase;
   letter-spacing: 1px;
-  margin-bottom: 0.7rem;
+  margin-bottom: 1rem;
   text-shadow: 0 2px 0 rgba(94, 68, 91, 0.2);
 }
 
@@ -1166,7 +1169,8 @@ header {
   max-width: 760px;
   color: #503d51;
   font-size: 1.04rem;
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.7rem;
+  line-height: 1.5;
 }
 
 .hero-summary {
@@ -1182,6 +1186,7 @@ header {
   flex-direction: column;
   justify-content: center;
   gap: 0.8rem;
+  align-items: flex-end;
 }
 
 .hero-panel-btn,
@@ -1203,6 +1208,19 @@ header {
   padding: 1.2rem 0.75rem;
   font-size: 2rem;
   line-height: 1;
+  width: 180px;
+}
+
+.hero-side-panel .hero-panel-btn:nth-child(1) {
+  transform: translateX(-10px) rotate(-1.7deg);
+}
+
+.hero-side-panel .hero-panel-btn:nth-child(2) {
+  transform: translateX(10px) rotate(1.4deg);
+}
+
+.hero-side-panel .hero-panel-btn:nth-child(3) {
+  transform: translateX(-2px) rotate(-1deg);
 }
 
 .hero-panel-btn--soft {
@@ -1213,15 +1231,29 @@ header {
 
 .hero-panel-row {
   display: grid;
-  grid-template-columns: 1fr 56px 56px;
+  grid-template-columns: 170px 90px 108px;
   gap: 0.55rem;
+  width: auto;
+  transform: translateX(9px) rotate(1deg);
 }
 
 .hero-mini-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.85rem;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: none;
+  letter-spacing: 0.2px;
+  padding: 0 0.35rem;
+}
+
+.hero-panel-row .hero-mini-btn:nth-child(2) {
+  transform: rotate(-3deg);
+}
+
+.hero-panel-row .hero-mini-btn:nth-child(3) {
+  transform: rotate(2.5deg);
 }
 
 #about.section-wrap {
@@ -1304,10 +1336,16 @@ header {
 @media (max-width: 1100px) {
   .hero-panel-btn {
     font-size: 1.55rem;
+    width: 156px;
   }
 
   .hero-poster {
     grid-template-columns: minmax(0, 1fr) 205px;
+  }
+
+  .hero-panel-row {
+    width: auto;
+    grid-template-columns: 150px 74px 88px;
   }
 }
 

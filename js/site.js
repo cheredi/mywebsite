@@ -135,24 +135,24 @@
   const substackStatus = document.getElementById('substackStatus');
   const substackPosts = document.getElementById('substackPosts');
 
-  const fallbackPosts = [
+  const featuredPosts = [
     {
-      title: "You're Probably Telling AI Way More Than You Think",
-      description: 'Privacy and practical AI usage in day-to-day workflows.',
-      canonical_url: 'https://lipgloss2llms.substack.com/p/youre-probably-telling-ai-way-more',
-      post_date: '2026-02-13T18:02:21.765Z'
+      title: 'Girl, Read This — Edition #005',
+      description: 'A personal + practical edition focused on clarity, momentum, and career direction in tech.',
+      canonical_url: 'https://lipgloss2llms.substack.com/p/girl-read-this-edition-005?r=6tsia2',
+      post_date: '2026-05-01T00:00:00.000Z'
     },
     {
-      title: "I Have to Decide What's Next...",
-      description: 'A practical decision framework using expected value and career tradeoffs.',
-      canonical_url: 'https://lipgloss2llms.substack.com/p/i-have-to-decide-whats-next',
-      post_date: '2026-02-04T00:01:27.818Z'
+      title: 'AI Concepts Explained: Hallucinations',
+      description: 'A plain-English breakdown of AI hallucinations, why they happen, and how to design around them.',
+      canonical_url: 'https://lipgloss2llms.substack.com/p/ai-concepts-explained-hallucinations-e11?r=6tsia2',
+      post_date: '2026-05-02T00:00:00.000Z'
     },
     {
-      title: 'I am learning to Say “I Don’t Know”',
-      description: 'What uncertainty in AI models teaches us about honest decision making.',
-      canonical_url: 'https://lipgloss2llms.substack.com/p/i-am-learning-to-say-i-dont-know',
-      post_date: '2026-01-27T23:00:57.919Z'
+      title: 'AI Concepts Explained: Constitutional AI',
+      description: 'An accessible guide to constitutional AI and how safety-aligned behavior is shaped in LLM systems.',
+      canonical_url: 'https://lipgloss2llms.substack.com/p/ai-concepts-explained-constitutional?r=6tsia2',
+      post_date: '2026-05-03T00:00:00.000Z'
     }
   ];
 
@@ -206,33 +206,13 @@
     });
   }
 
-  async function loadSubstackPosts() {
+  function loadSubstackPosts() {
     if (!substackPosts || !substackStatus) {
       return;
     }
 
-    try {
-      const response = await fetch('https://lipgloss2llms.substack.com/api/v1/posts', {
-        headers: {
-          Accept: 'application/json'
-        }
-      });
-
-      if (!response.ok) {
-        throw new Error(`Request failed: ${response.status}`);
-      }
-
-      const posts = await response.json();
-      if (!Array.isArray(posts) || posts.length === 0) {
-        throw new Error('No posts returned');
-      }
-
-      renderPosts(posts);
-      substackStatus.textContent = 'Latest posts synced from Substack.';
-    } catch (error) {
-      renderPosts(fallbackPosts);
-      substackStatus.textContent = 'Live sync unavailable right now. Showing recent featured posts.';
-    }
+    renderPosts(featuredPosts);
+    substackStatus.textContent = 'Featured posts from Lipgloss & LLMS.';
   }
 
   loadSubstackPosts();
