@@ -1,0 +1,17 @@
+{
+  "name": "mywebsiteportfolio",
+  "version": "1.0.0",
+  "description": "Tatyana Amugo's personal portfolio site (static HTML/CSS/JS).",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "fetch:substack": "node scripts/fetch-substack-posts.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "rss-parser": "^3.13.0"
+  }
+}

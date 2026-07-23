@@ -5,18 +5,58 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Tatyana Amugo — Product & AI Builder</title>
   <link rel="stylesheet" href="styles.css" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Tatyana Amugo",
+    "jobTitle": "Product & AI Builder",
+    "description": "Product & AI Builder shipping AI-forward products, prompt/retrieval pipelines, and data-driven decision tools.",
+    "image": "images/Tatyana-profile.jpg",
+    "email": "mailto:t_amugo@fanshaweonline.ca",
+    "sameAs": [
+      "https://linkedin.com/in/tatyana-amugo02",
+      "https://github.com/cheredi",
+      "https://lipgloss2llms.substack.com"
+    ],
+    "alumniOf": [
+      {
+        "@type": "CollegeOrUniversity",
+        "name": "Fanshawe College"
+      },
+      {
+        "@type": "CollegeOrUniversity",
+        "name": "Strathmore University"
+      }
+    ],
+    "worksFor": {
+      "@type": "Organization",
+      "name": "Ontario Public Service"
+    },
+    "knowsAbout": [
+      "Product Management",
+      "Artificial Intelligence",
+      "Prompt Engineering",
+      "Retrieval-Augmented Generation",
+      "Data Analysis"
+    ]
+  }
+  </script>
 </head>
 <body>
   <header>
     <nav>
-      <div class="logo">Tatyana Amugo</div>
+      <a href="#home" class="logo">
+        <img src="images/logo.jpg" alt="Tatyana Amugo logo" class="logo-mark">
+        <span>Tatyana Amugo</span>
+      </a>
       <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">Menu</button>
       <ul class="nav-links" id="navLinks">
         <li><a href="#home" class="active">Home</a></li>
+        <li><a href="#projects">Projects</a></li>
         <li><a href="#about">About</a></li>
         <li><a href="#journey">Experience</a></li>
         <li><a href="#skills">Skills</a></li>
-        <li><a href="#projects">Projects</a></li>
         <li><a href="#writing">Substack</a></li>
         <li><a href="#simulator">Interactive</a></li>
         <li><a href="#contact">Contact</a></li>
@@ -49,10 +89,111 @@
     </div>
   </section>
 
+  <section class="social-proof section-wrap animate" id="proof">
+    <h2>Momentum & Social Proof</h2>
+    <div class="proof-grid">
+      <a class="proof-card" href="#projects">
+        <span class="proof-number" data-target="3">0</span>
+        <div class="proof-label">Core AI projects delivered</div>
+      </a>
+      <a class="proof-card" href="#exp-ai-engineer">
+        <span class="proof-number" data-target="79">0</span>
+        <div class="proof-label">Manual overhead reduced in AI workflows (%)</div>
+      </a>
+      <a class="proof-card" href="#exp-beats-by-dre">
+        <span class="proof-number" data-target="15">0</span>
+        <div class="proof-label">Marketing uplift from analytics work (%)</div>
+      </a>
+      <a class="proof-card" href="#exp-upande">
+        <span class="proof-number" data-target="30">0</span>
+        <div class="proof-label">ERP workflow automation impact (%)</div>
+      </a>
+    </div>
+  </section>
+
+  <section id="projects" class="section-wrap animate">
+    <h2>Featured Projects</h2>
+    <div class="filters" id="projectFilters">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="rag">RAG</button>
+      <button class="filter-btn" data-filter="nlp">NLP</button>
+      <button class="filter-btn" data-filter="agentic">Agentic AI</button>
+      <button class="filter-btn" data-filter="cv">Computer Vision</button>
+    </div>
+
+    <div class="projects-list" id="projectList">
+      <article class="project-card project-highlight tilt-card" data-tags="all">
+        <span class="badge">Featured</span>
+        <h3>Shipping Setup Assistant Prototype (Shopify-Style Assignment)</h3>
+        <p>A small prototype I built based on a Shopify shipping setup assignment prompt. The problem: many merchants abandon setup before finishing when they hit unfamiliar shipping terms. My solution: a guided assistant that asks two plain-English questions and configures the setup flow automatically. Built and deployed as an interactive prototype on Netlify.</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Product Management</span>
+          <span class="skill-tag">UX</span>
+          <span class="skill-tag">Prototype</span>
+          <span class="skill-tag">Live Service Thinking</span>
+        </div>
+        <div class="project-actions">
+          <a href="https://shippingsetup-tatyana.netlify.app" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View Prototype</a>
+        </div>
+      </article>
+
+      <article class="project-card project-highlight tilt-card" data-tags="agentic,nlp">
+        <span class="badge">Capstone</span>
+        <h3>ONA - Assistive AI System (Runner-Up: Outstanding Impact)</h3>
+        <p>Led a multidisciplinary team in designing an AI-powered assistive system supporting visually impaired individuals and dementia patients with spatial awareness and memory reinforcement.</p>
+        <div class="meta"><strong>Impact:</strong> Recognized as Runner-Up for Outstanding Impact for real-world applicability and solution clarity.</div>
+        <div class="meta">Defined system architecture and user validation strategy, translating ambiguous human-centered challenges into deployable AI-enabled workflows.</div>
+        <div class="skill-tags">
+          <span class="skill-tag">NLP</span>
+          <span class="skill-tag">Retrieval</span>
+          <span class="skill-tag">Context-Aware AI</span>
+          <span class="skill-tag">Systems Design</span>
+        </div>
+        <div class="project-actions">
+          <a href="https://www.youtube.com/watch?v=DmDypLwYT3E" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Watch Demo Video</a>
+          <a href="https://ona-vision.netlify.app/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Live Demo</a>
+        </div>
+      </article>
+
+      <article class="project-card tilt-card" data-tags="rag,nlp,agentic">
+        <h3>RAG-Powered Interview Preparation System</h3>
+        <p>Building an end-to-end LLM + RAG system that dynamically retrieves role-specific knowledge and generates structured interview simulations with feedback.</p>
+        <div class="meta"><strong>Focus:</strong> Prompt templates, retrieval pipelines, and response validation logic to improve output relevance and reduce hallucinations.</div>
+        <div class="skill-tags">
+          <span class="skill-tag">RAG</span>
+          <span class="skill-tag">Prompt Engineering</span>
+          <span class="skill-tag">ChromaDB</span>
+          <span class="skill-tag">FastAPI</span>
+          <span class="skill-tag">Validation Logic</span>
+        </div>
+        <div class="project-actions">
+          <a href="https://github.com/cheredi/swali-ai#readme" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View README</a>
+          <a href="https://github.com/cheredi/swali-ai" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">GitHub Repo</a>
+        </div>
+      </article>
+
+      <article class="project-card tilt-card" data-tags="cv">
+        <h3>Anomaly Detection System (Graduate Project)</h3>
+        <p>Engineered and benchmarked PaDiM, SPADE, and CLIP-based models using PyTorch and OpenCV for video anomaly detection.</p>
+        <div class="meta">Optimized preprocessing and inference pipelines for stronger performance on real-world datasets, and deployed an interactive demo with Grad-CAM visualizations.</div>
+        <div class="skill-tags">
+          <span class="skill-tag">PyTorch</span>
+          <span class="skill-tag">OpenCV</span>
+          <span class="skill-tag">PaDiM</span>
+          <span class="skill-tag">SPADE</span>
+          <span class="skill-tag">CLIP</span>
+        </div>
+        <div class="project-actions">
+          <a href="https://anomal-y-detection.streamlit.app" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Live Demo</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
   <section class="section-wrap animate" id="about">
     <div class="about-content">
       <div>
-        <img src="images/Tatyana-profile.jpg" alt="Tatyana Amugo" class="profile-pic">
+        <img src="images/TATYANA-PP.jpg" alt="Tatyana Amugo" class="profile-pic">
       </div>
       <div class="bio">
         <h2>About Me</h2>
@@ -70,52 +211,30 @@
     </div>
   </section>
 
-  <section class="social-proof section-wrap animate" id="proof">
-    <h2>Momentum & Social Proof</h2>
-    <div class="proof-grid">
-      <div class="proof-card">
-        <span class="proof-number" data-target="3">0</span>
-        <div class="proof-label">Core AI projects delivered</div>
-      </div>
-      <div class="proof-card">
-        <span class="proof-number" data-target="79">0</span>
-        <div class="proof-label">Manual overhead reduced in AI workflows (%)</div>
-      </div>
-      <div class="proof-card">
-        <span class="proof-number" data-target="15">0</span>
-        <div class="proof-label">Marketing uplift from analytics work (%)</div>
-      </div>
-      <div class="proof-card">
-        <span class="proof-number" data-target="30">0</span>
-        <div class="proof-label">ERP workflow automation impact (%)</div>
-      </div>
-    </div>
-  </section>
-
   <section class="section-wrap timeline animate" id="journey">
     <div class="experience-skills-layout">
       <div class="experience-column">
         <h2>Experience</h2>
         <div class="timeline-list">
-          <div class="timeline-item tilt-card">
+          <div class="timeline-item tilt-card" id="exp-ai-engineer">
             <h3>AI Engineer Co-op - Ontario Public Service</h3>
             <div class="date">Toronto, Canada | Jan 2026 - Present</div>
-            <p>Engineered prompt templates using Jinja for production LLM workflows integrated into the SAMS enterprise case review system, designing structured outputs and validating model responses for accuracy and reliability.</p>
-            <p>Built secure RESTful APIs and backend orchestration layers enabling AI-assisted decision workflows; reduced manual processing overhead by approximately 79% through agentic automation in a regulated government environment.</p>
-            <p>Deployed and debugged LLM integrations via Azure DevOps CI/CD; collaborated with stakeholders to define success metrics and iterate on prompt and retrieval pipeline design.</p>
+            <p>Enabled reliable, structured AI-assisted case review decisions in the SAMS enterprise case management system by validating model responses for accuracy — engineered using Jinja-based prompt templates for production LLM workflows.</p>
+            <p>Reduced manual case-processing overhead in a regulated government environment by approximately 79% by building secure RESTful APIs and backend orchestration layers for agentic, AI-assisted decision workflows.</p>
+            <p>Improved reliability and stakeholder alignment of LLM integrations by defining measurable success metrics and iterating on prompt/retrieval pipeline design — deployed and debugged via Azure DevOps CI/CD.</p>
           </div>
-          <div class="timeline-item tilt-card">
+          <div class="timeline-item tilt-card" id="exp-beats-by-dre">
             <h3>Extern - Consumer Insights &amp; Data Analytics, Beats by Dre</h3>
             <div class="date">Nairobi, Kenya | Sep 2024 - Oct 2024</div>
-            <p>Analyzed customer behavior and market segmentation data using Python and Tableau, translating ambiguous business questions into structured, metric-driven insights that improved targeted marketing effectiveness by 15%.</p>
-            <p>Built dynamic dashboards and presented findings to cross-functional stakeholders, distilling complex data into clear recommendations for decision-makers.</p>
-            <p>Designed and deployed customer surveys with optimized question logic, improving data collection efficiency by 20% and downstream analysis quality.</p>
+            <p>Improved targeted marketing effectiveness by 15% by translating ambiguous business questions into structured, metric-driven insights — analyzed customer behavior and market segmentation data using Python and Tableau.</p>
+            <p>Enabled faster, clearer decision-making for cross-functional stakeholders by distilling complex data into actionable recommendations — presented through dynamic dashboards.</p>
+            <p>Improved data collection efficiency and downstream analysis quality by 20% by designing and deploying customer surveys with optimized question logic.</p>
           </div>
-          <div class="timeline-item tilt-card">
+          <div class="timeline-item tilt-card" id="exp-upande">
             <h3>ERP Developer - Upande</h3>
             <div class="date">Nairobi, Kenya | Aug 2025 - Dec 2025</div>
-            <p>Implemented and configured ERPNext modules, integrating backend services and automating workflows across departments.</p>
-            <p>Built automation pipelines that reduced manual processing by approximately 30%, improving reporting accuracy and operational efficiency.</p>
+            <p>Streamlined cross-department operations by integrating backend services and automating workflows — implemented and configured using ERPNext modules.</p>
+            <p>Improved reporting accuracy and operational efficiency by reducing manual processing by approximately 30% — achieved by building automation pipelines.</p>
           </div>
         </div>
       </div>
@@ -166,81 +285,6 @@
           </div>
         </div>
       </div>
-    </div>
-  </section>
-
-  <section id="projects" class="section-wrap animate">
-    <h2>Featured Projects</h2>
-    <div class="filters" id="projectFilters">
-      <button class="filter-btn active" data-filter="all">All</button>
-      <button class="filter-btn" data-filter="rag">RAG</button>
-      <button class="filter-btn" data-filter="nlp">NLP</button>
-      <button class="filter-btn" data-filter="agentic">Agentic AI</button>
-      <button class="filter-btn" data-filter="cv">Computer Vision</button>
-    </div>
-
-    <div class="projects-list" id="projectList">
-      <article class="project-card project-highlight tilt-card" data-tags="all">
-        <span class="badge">Featured</span>
-        <h3>Shipping Setup Assistant Prototype (Shopify-Style Assignment)</h3>
-        <p>A small prototype I built based on a Shopify shipping setup assignment prompt. The problem: many merchants abandon setup before finishing when they hit unfamiliar shipping terms. My solution: a guided assistant that asks two plain-English questions and configures the setup flow automatically. Built and deployed as an interactive prototype on Netlify.</p>
-        <div class="skill-tags">
-          <span class="skill-tag">Product Management</span>
-          <span class="skill-tag">UX</span>
-          <span class="skill-tag">Prototype</span>
-          <span class="skill-tag">Live Service Thinking</span>
-        </div>
-        <div class="project-actions">
-          <a href="https://shippingsetup-tatyana.netlify.app" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View Prototype</a>
-        </div>
-      </article>
-
-      <article class="project-card project-highlight tilt-card" data-tags="agentic,nlp">
-        <span class="badge">Capstone</span>
-        <h3>ONA - Assistive AI System (Runner-Up: Outstanding Impact)</h3>
-        <p>Led a multidisciplinary team in designing an AI-powered assistive system supporting visually impaired individuals and dementia patients with spatial awareness and memory reinforcement.</p>
-        <div class="meta"><strong>Impact:</strong> Recognized as Runner-Up for Outstanding Impact for real-world applicability and solution clarity.</div>
-        <div class="meta">Defined system architecture and user validation strategy, translating ambiguous human-centered challenges into deployable AI-enabled workflows.</div>
-        <div class="skill-tags">
-          <span class="skill-tag">NLP</span>
-          <span class="skill-tag">Retrieval</span>
-          <span class="skill-tag">Context-Aware AI</span>
-          <span class="skill-tag">Systems Design</span>
-        </div>
-      </article>
-
-      <article class="project-card tilt-card" data-tags="rag,nlp,agentic">
-        <h3>RAG-Powered Interview Preparation System</h3>
-        <p>Building an end-to-end LLM + RAG system that dynamically retrieves role-specific knowledge and generates structured interview simulations with feedback.</p>
-        <div class="meta"><strong>Focus:</strong> Prompt templates, retrieval pipelines, and response validation logic to improve output relevance and reduce hallucinations.</div>
-        <div class="skill-tags">
-          <span class="skill-tag">RAG</span>
-          <span class="skill-tag">Prompt Engineering</span>
-          <span class="skill-tag">ChromaDB</span>
-          <span class="skill-tag">FastAPI</span>
-          <span class="skill-tag">Validation Logic</span>
-        </div>
-        <div class="project-actions">
-          <a href="https://github.com/cheredi/swali-ai#readme" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View README</a>
-          <a href="https://github.com/cheredi/swali-ai" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">GitHub Repo</a>
-        </div>
-      </article>
-
-      <article class="project-card tilt-card" data-tags="cv">
-        <h3>Anomaly Detection System (Graduate Project)</h3>
-        <p>Engineered and benchmarked PaDiM, SPADE, and CLIP-based models using PyTorch and OpenCV for video anomaly detection.</p>
-        <div class="meta">Optimized preprocessing and inference pipelines for stronger performance on real-world datasets, and deployed an interactive demo with Grad-CAM visualizations.</div>
-        <div class="skill-tags">
-          <span class="skill-tag">PyTorch</span>
-          <span class="skill-tag">OpenCV</span>
-          <span class="skill-tag">PaDiM</span>
-          <span class="skill-tag">SPADE</span>
-          <span class="skill-tag">CLIP</span>
-        </div>
-        <div class="project-actions">
-          <a href="https://anomal-y-detection.streamlit.app" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Live Demo</a>
-        </div>
-      </article>
     </div>
   </section>
 

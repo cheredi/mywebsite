@@ -53,6 +53,17 @@ nav {
   font-size: 1.05rem;
   color: var(--text);
   letter-spacing: 0.2px;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  text-decoration: none;
+}
+
+.logo-mark {
+  height: 34px;
+  width: auto;
+  display: block;
+  border-radius: 8px;
 }
 
 .nav-toggle {
@@ -247,6 +258,17 @@ h2 {
   border: 1px solid var(--border);
   box-shadow: var(--shadow-soft);
   text-align: center;
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.proof-card:hover,
+.proof-card:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover, var(--shadow-soft));
+  border-color: var(--accent-strong);
 }
 
 .proof-number {
