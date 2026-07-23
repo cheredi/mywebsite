@@ -1,17 +1,44 @@
 {
   "name": "mywebsiteportfolio",
   "version": "1.0.0",
-  "description": "Tatyana Amugo's personal portfolio site (static HTML/CSS/JS).",
+  "description": "Tatyana Amugo's personal portfolio - Next.js (App Router) + TypeScript + Tailwind CSS.",
   "private": true,
-  "main": "index.js",
   "scripts": {
-    "fetch:substack": "node scripts/fetch-substack-posts.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "generate:favicons": "node scripts/generate-favicons.mjs"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "overrides": {
+    "postcss": "^8.5.22",
+    "sharp": "^0.35.3"
+  },
   "dependencies": {
+    "next": "^16.2.11",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
     "rss-parser": "^3.13.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.5",
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "^26.1.1",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "autoprefixer": "^10.5.4",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.2.11",
+    "globals": "^16.4.0",
+    "png-to-ico": "^3.0.2",
+    "postcss": "^8.5.22",
+    "sharp": "^0.35.3",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.65.0"
   }
 }
