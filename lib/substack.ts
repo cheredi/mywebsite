@@ -1,6 +1,13 @@
 import Parser from "rss-parser";
-import { SubstackPost } from "@/types";
-import { SUBSTACK_FEED_URL } from "@/lib/constants";
+import { LINKS } from "@/content/site";
+
+export interface SubstackPost {
+  title: string;
+  description: string;
+  canonicalUrl: string;
+  postDate: string;
+  imageUrl: string | null;
+}
 
 // How long Next.js should cache the fetched feed before re-fetching in the
 // background (ISR-style revalidation). 6 hours keeps the site fresh without
@@ -42,9 +49,9 @@ export async function getSubstackPosts(): Promise<{
   error: string | null;
 }> {
   try {
-    const response = await fetch(SUBSTACK_FEED_URL, {
+    const response = await fetch(LINKS.substackFeed, {
       next: { revalidate: REVALIDATE_SECONDS },
-      headers: { "User-Agent": "tatyanaamugo-portfolio/1.0 (+substack-feed-reader)" },
+      headers: { "User-Agent": "tatyanaamugo.com/1.0 (+https://tatyanaamugo.com)" },
     });
 
     if (!response.ok) {
