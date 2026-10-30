@@ -17,11 +17,11 @@ import { PERSON, SITE } from "@/content/site";
 export const revalidate = 21600;
 
 export const metadata: Metadata = {
-  title: { absolute: `${PERSON.name} — AI Product Builder & Engineer` },
+  title: { absolute: `${PERSON.name} — AI Product Builder & Engineer in Toronto` },
   description: SITE.description,
   alternates: { canonical: "/" },
   openGraph: {
-    title: `${PERSON.name} — AI Product Builder & Engineer`,
+    title: `${PERSON.name} — AI Product Builder & Engineer in Toronto`,
     description: SITE.description,
     url: "/",
   },
@@ -31,7 +31,7 @@ const profilePage = {
   "@type": "ProfilePage",
   "@id": `${absolute("/")}#profile`,
   url: absolute("/"),
-  name: `${PERSON.name} — AI Product Builder & Engineer`,
+  name: `${PERSON.name} — AI Product Builder & Engineer in Toronto`,
   isPartOf: { "@id": WEBSITE_ID },
   mainEntity: { "@id": PERSON_ID },
   hasPart: caseStudies.map((s) => ({ "@type": "CreativeWork", name: s.title, url: absolute(`/work/${s.slug}`) })),

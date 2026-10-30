@@ -6,8 +6,10 @@ export const PERSON = {
   name: "Tatyana Amugo",
   firstName: "Tatyana",
   role: "AI Product Builder",
-  /** Shown in the hero and used for local-time display. */
-  location: "Ontario, Canada",
+  /** City she lives in; shown across the site. */
+  location: "Toronto, Canada",
+  /** Where she's looking for work. */
+  workArea: "Toronto & the GTA",
   timeZone: "America/Toronto",
   email: "t_amugo@fanshaweonline.ca",
 };
@@ -15,7 +17,7 @@ export const PERSON = {
 export const SITE = {
   title: "Tatyana Amugo — AI Product Builder",
   description:
-    "Tatyana Amugo builds AI products people trust — from a government AI workflow that cut manual case processing by ~79% to an award-winning assistive vision system. Open to product and AI roles.",
+    "Tatyana Amugo is a Toronto-based AI product builder: government AI that cut manual case processing ~79%, and an award-winning assistive vision system. Open to roles across the GTA.",
   locale: "en_CA",
 };
 

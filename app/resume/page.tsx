@@ -8,7 +8,7 @@ import PrintButton from "@/components/ui/PrintButton";
 
 export const metadata: Metadata = {
   title: "Résumé",
-  description: `Résumé of ${PERSON.name}, AI product builder: AI engineering at the Ontario Public Service, an award-winning assistive AI capstone, and product, data and ERP experience.`,
+  description: `Résumé of ${PERSON.name}, Toronto-based AI product builder: AI engineering at the Ontario Public Service, an award-winning assistive AI capstone, and product, data and ERP experience.`,
   alternates: { canonical: "/resume" },
   openGraph: { title: `Résumé · ${PERSON.name}`, url: "/resume" },
 };
@@ -41,6 +41,7 @@ export default function ResumePage() {
             <div>
               <h1 className="resume__name">{PERSON.name}</h1>
               <p className="resume__role">{PERSON.role} · {PERSON.location}</p>
+              <p className="resume__where">Open to roles across Toronto and the GTA</p>
             </div>
             <address className="resume__contact" style={{ fontStyle: "normal" }}>
               <a href={`mailto:${PERSON.email}`}>{PERSON.email}</a>

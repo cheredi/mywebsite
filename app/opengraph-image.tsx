@@ -6,7 +6,7 @@ export const contentType = "image/png";
 
 export default function Image() {
   return renderOg({
-    eyebrow: "AI Product Builder · Ontario, Canada",
+    eyebrow: "AI Product Builder · Toronto, Canada",
     title: "Tatyana Amugo",
     subtitle: "Find the problem. Build the fix. Prove it worked.",
   });

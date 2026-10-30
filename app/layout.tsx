@@ -12,7 +12,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${PERSON.name} — AI Product Builder & Engineer`,
+    default: `${PERSON.name} — AI Product Builder & Engineer in Toronto`,
     template: `%s · ${PERSON.name}`,
   },
   description: SITE.description,

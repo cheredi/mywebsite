@@ -44,7 +44,7 @@ export default function Contact() {
             I&apos;d love to hear from you.
           </p>
           <div className="contact__open">
-            <span className="label">Open to</span>
+            <span className="label">Open to · Toronto &amp; the GTA</span>
             <ul className="chips">
               {OPEN_TO.map((role) => (
                 <li key={role}>{role}</li>

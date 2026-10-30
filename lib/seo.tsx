@@ -19,7 +19,13 @@ export const personSchema = {
   url: SITE_URL,
   image: absolute("/images/tatyana-portrait.webp"),
   email: `mailto:${PERSON.email}`,
-  address: { "@type": "PostalAddress", addressRegion: "ON", addressCountry: "CA" },
+  address: { "@type": "PostalAddress", addressLocality: "Toronto", addressRegion: "ON", addressCountry: "CA" },
+  homeLocation: { "@type": "City", name: "Toronto", containedInPlace: { "@type": "State", name: "Ontario" } },
+  workLocation: {
+    "@type": "Place",
+    name: "Greater Toronto Area (GTA)",
+    address: { "@type": "PostalAddress", addressRegion: "ON", addressCountry: "CA" },
+  },
   sameAs: [LINKS.linkedin, LINKS.github, LINKS.substack],
   alumniOf: [...new Set(EDUCATION.map((e) => e.institution))].map((name) => ({
     "@type": "CollegeOrUniversity",

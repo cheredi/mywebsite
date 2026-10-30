@@ -25,7 +25,7 @@ export const IDENTITIES = [
   "Writer",
   "Strathmore alum",
   "Fanshawe AI & ML",
-  "Nairobi → Ontario",
+  "Nairobi → Toronto",
 ];
 
 export const CURRENTLY = [
@@ -180,7 +180,7 @@ export const TOOLS = [
 ];
 
 export const ABOUT = {
-  title: "From Nairobi to Ontario, with a soft spot for elegant solutions.",
+  title: "From Nairobi to Toronto, with a soft spot for elegant solutions.",
   paragraphs: [
     "I studied Informatics and Computer Science at Strathmore University in Nairobi, then put it to work: automating ERP workflows at Upande and turning customer data into marketing decisions for Beats by Dre.",
     "I moved to Canada for a Graduate Certificate in AI and Machine Learning at Fanshawe College, led the team behind ONA, and spent a co-op term at the Ontario Public Service building AI workflows where accuracy isn't optional.",

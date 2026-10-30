@@ -1915,6 +1915,12 @@ main {
   font-weight: 500;
 }
 
+.resume__where {
+  margin-top: 4px;
+  font-size: 15px;
+  color: var(--muted);
+}
+
 .resume__contact {
   display: grid;
   gap: 4px;

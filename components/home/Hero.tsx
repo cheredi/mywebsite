@@ -13,7 +13,7 @@ export default function Hero() {
           <p className="hero__label label">
             <span className="dot">Open to product &amp; AI roles</span>
             <span>
-              ( {PERSON.role} — {PERSON.location} )
+              ( {PERSON.role} — {PERSON.workArea} )
             </span>
           </p>
           <h1 id="hero-title" className="hero__name">
