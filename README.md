@@ -1,7 +1,7 @@
 # tatyanaamugo.com
 
-Tatyana Amugo's portfolio. Next.js (App Router) + TypeScript, deployed on Netlify. Every page is
-statically generated; the home page refreshes every 6 hours to pick up new Substack posts.
+Tatyana Amugo's portfolio. Next.js (App Router) + TypeScript on Netlify, with GSAP (ScrollTrigger,
+SplitText) and Lenis for motion.
 
 ## Develop
 
@@ -13,40 +13,31 @@ npm run typecheck
 npm run build
 ```
 
-## Editing content
+## Content
 
-Almost everything lives in `content/` — no component changes needed:
+All copy is Tatyana's own and lives in `content/` — edit it there, not in components:
 
-| File | What it holds |
+| File | What |
 | --- | --- |
-| `content/site.ts` | Name, role, location, email, social links, nav, roles she's open to |
-| `content/profile.ts` | Hero headline, proof numbers, "I am a…" strip, approach, experience, education, toolkit, About copy |
-| `content/work.ts` | Case studies (one page each at `/work/<slug>`) |
+| `content/site.ts` | Hero, About, section titles, links, email, nav, SEO title/description |
+| `content/projects.ts` | Featured Projects (each also gets a page at `/work/<slug>`) |
+| `content/experience.ts`, `skills.ts`, `education.ts`, `proof.ts` | The rest of the page |
+| `content/media.ts` | Screenshots shown with each project |
 
-Rules of thumb: keep every claim something Tatyana can speak to in an interview, and keep the About
-quote verbatim.
+## Motion
 
-## Pages
+- `lib/motion.ts` — GSAP plugins and the site's single easing curve
+- `components/motion/Shell.tsx` — Lenis smooth scroll, intro state, page-transition curtain
+- `components/motion/Loader.tsx` — the "Hello" intro (plays once per session; skipped for
+  reduced-motion users)
+- `components/motion/SplitHeading.tsx` / `Reveal.tsx` — scroll reveals
 
-- `/` — home
-- `/work/<slug>` — case studies, generated from `content/work.ts`
-- `/resume` — printable HTML résumé ("Download PDF" uses the browser's print-to-PDF)
-- `/arcade` — Interview Arcade mini-game
+Animated elements are only hidden when JavaScript runs (`.js` on `<html>`), so the page is fully
+readable without it.
 
-Social preview images are generated at build time (`opengraph-image.tsx` files, shared layout in
-`lib/og.tsx`). Structured data (Person, WebSite, ProfilePage, CreativeWork, BreadcrumbList) is in
-`lib/seo.tsx`.
+## Contact
 
-## Images
 
-- `public/images/tatyana-portrait.webp` — hero portrait, background removed and un-mirrored
-- `public/images/tatyana-closeup.jpg` — About section
-- `public/images/monogram.png` — TCA monogram (nav/footer), recoloured from `app/icon.png`
-- `public/images/work/*` — project screenshots
-- `assets/og-portrait.png` — portrait used inside social preview images
 
-## Contact form
 
-Netlify Forms. `public/__forms.html` is a hidden copy of the form Netlify reads at deploy time; the
-real form in `components/home/Contact.tsx` posts to it. Change field names in both places.
-Submissions appear under **Forms** in the Netlify dashboard (turn on email notifications there).
+Contact is by email (`PERSON.email` in `content/site.ts`) and her social links; there is no form.

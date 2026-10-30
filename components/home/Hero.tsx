@@ -1,58 +1,139 @@
+"use client";
+
 import Image from "next/image";
-import Link from "next/link";
-import { HEADLINE } from "@/content/profile";
-import { PERSON } from "@/content/site";
+import { useRef } from "react";
+import { HERO, LINKS, PERSON } from "@/content/site";
+import { EASE, gsap, reducedMotion, useGSAP } from "@/lib/motion";
+import { useShell } from "@/components/motion/Shell";
+import { useWeightHover } from "@/components/motion/useWeightHover";
+import TLink from "@/components/motion/TLink";
+import LocalTime from "@/components/ui/LocalTime";
+import Arrow from "@/components/ui/Arrow";
+
+// Shared with the intro curtain so both request the identical image.
+export const PORTRAIT = { src: "/images/tatyana-portrait.webp", width: 664, height: 1037, sizes: "(max-width: 1024px) 80vw, 560px" };
 
 export default function Hero() {
-  const [first, second, last] = HEADLINE.beats;
+  const { introDone } = useShell();
+  const root = useRef<HTMLElement>(null);
+  const name = useRef<HTMLSpanElement>(null);
+  useWeightHover(name, { base: 600, max: 900, radius: 260 });
+
+  // Copy enters as the intro curtain slides into the panel.
+  useGSAP(
+    () => {
+      if (!introDone || !root.current) return;
+      const q = gsap.utils.selector(root);
+      gsap.set(q("[data-hero]"), { visibility: "visible" });
+      if (reducedMotion()) return;
+      gsap
+        .timeline({ defaults: { ease: EASE } })
+        .from(q(".hero__im .char"), { yPercent: 120, duration: 1.2, stagger: 0.06 }, 0.1)
+        .from(q(".hero__name .char"), { yPercent: 115, duration: 1.15, stagger: 0.025 }, 0.2)
+        .fromTo(q(".hero__name .char"), { fontWeight: 100 }, { fontWeight: 600, duration: 1.6, ease: "power2.inOut", stagger: 0.035 }, 0.25)
+        .from(q(".hero__kicker"), { autoAlpha: 0, y: 12, duration: 0.9 }, 0.35)
+        .from(q(".hero__summary, .hero__sub"), { autoAlpha: 0, y: 24, duration: 1.1, stagger: 0.08 }, 0.55)
+        .from(q(".hero__actions > *"), { autoAlpha: 0, y: 20, duration: 1, stagger: 0.07 }, 0.7)
+        .from(q(".hero__bar"), { autoAlpha: 0, duration: 1 }, 0.9);
+    },
+    { scope: root, dependencies: [introDone] }
+  );
+
+  // As the page slides up over the hero, the hero recedes.
+  useGSAP(
+    () => {
+      if (reducedMotion() || !root.current) return;
+      gsap.to(root.current.querySelector(".hero__inner"), {
+        scale: 0.94,
+        yPercent: -4,
+        ease: "none",
+        scrollTrigger: { start: 0, end: () => window.innerHeight, scrub: true },
+      });
+    },
+    { scope: root }
+  );
+
+  const nameWords = PERSON.name.split(" ");
 
   return (
-    <section className="hero" aria-labelledby="hero-title">
-      <div className="wrap hero__grid">
+    <section ref={root} className="hero" aria-labelledby="hero-title">
+      <div className="container hero__inner">
         <div className="hero__copy">
-          <p className="hero__label label">
-            <span className="dot">Open to product &amp; AI roles</span>
-            <span>
-              ( {PERSON.role} — {PERSON.workArea} )
+          <p className="mono hero__kicker" data-hero="">
+            {HERO.kicker}
+          </p>
+          <h1 id="hero-title" className="hero__title" data-hero="" aria-label={`${HERO.im} ${PERSON.name}`}>
+            <span className="hero__im" aria-hidden="true">
+              <span className="chars">
+                {HERO.im.split("").map((c, i) => (
+                  <span key={i} className="char">
+                    {c}
+                  </span>
+                ))}
+              </span>
             </span>
-          </p>
-          <h1 id="hero-title" className="hero__name">
-            Tatyana <span className="serif">Amugo</span>
+            <span ref={name} className="hero__name" aria-hidden="true">
+              {nameWords.map((word, w) => (
+                <span key={word}>
+                  <span className="word">
+                    {word.split("").map((c, i) => (
+                      <span key={i} className="char">
+                        {c}
+                      </span>
+                    ))}
+                  </span>
+                  {w < nameWords.length - 1 ? " " : null}
+                </span>
+              ))}
+            </span>
           </h1>
-          <p className="hero__beats">
-            <span>{first}</span>
-            <span>{second}</span>
-            <span className="gloss">{last}</span>
+          <p className="hero__summary" data-hero="">
+            {HERO.summary}
           </p>
-          <p className="hero__intro">{HEADLINE.intro}</p>
-          <div className="hero__actions">
-            <Link href="#work" className="btn btn--primary">
-              See the work
-            </Link>
-            <Link href="/resume" className="btn btn--secondary">
-              View résumé
-            </Link>
+          <p className="hero__sub" data-hero="">
+            {HERO.sub}
+          </p>
+          <div className="hero__actions" data-hero="">
+            <TLink href="/#projects" className="btn btn--ink">
+              Projects
+              <span className="btn__icon">
+                <Arrow />
+              </span>
+            </TLink>
+            <TLink href="/#contact" className="btn btn--line">
+              Contact
+              <span className="btn__icon">
+                <Arrow />
+              </span>
+            </TLink>
           </div>
         </div>
 
         <div className="hero__visual">
-          <div className="hero__glow" aria-hidden="true" />
-          <Image
-            src="/images/tatyana-portrait.webp"
-            alt="Tatyana Amugo at a conference, wearing her name badge."
-            width={664}
-            height={1037}
-            priority
-            sizes="(max-width: 860px) 80vw, 520px"
-            className="hero__portrait"
-          />
-          <Link href="/work/ai-case-review" className="hero__tag hero__tag--a">
-            <b>~79%</b> less manual case work
-          </Link>
-          <Link href="/work/ona" className="hero__tag hero__tag--b">
-            <b>★</b> Runner-up, Outstanding Impact
-          </Link>
+          <div className="hero__panel">
+            <div className="hero__portrait">
+              <Image src={PORTRAIT.src} alt="Tatyana Amugo" width={PORTRAIT.width} height={PORTRAIT.height} priority sizes={PORTRAIT.sizes} />
+            </div>
+          </div>
         </div>
+      </div>
+
+      <div className="hero__bar mono" data-hero="">
+        <span>
+          {PERSON.city} <LocalTime />
+        </span>
+        <span className="hide-sm">
+          <a className="u-link" href={LINKS.linkedin} target="_blank" rel="noopener noreferrer">
+            LinkedIn
+          </a>
+          {"  ·  "}
+          <a className="u-link" href={LINKS.substack} target="_blank" rel="noopener noreferrer">
+            Substack
+          </a>
+        </span>
+        <span className="hero__scroll">
+          Scroll <i />
+        </span>
       </div>
     </section>
   );

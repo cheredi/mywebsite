@@ -1,149 +1,120 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { CREDENTIALS, EDUCATION, EXPERIENCE, TOOLKIT, TOOLS } from "@/content/profile";
-import { caseStudies } from "@/content/work";
-import { LINKS, OPEN_TO, PERSON, SITE_URL } from "@/content/site";
+import { experienceEntries } from "@/content/experience";
+import { educationEntries } from "@/content/education";
+import { skillCategories } from "@/content/skills";
+import { projects } from "@/content/projects";
+import { HERO, LINKS, PERSON, SECTIONS, SITE_URL } from "@/content/site";
 import { JsonLd, PERSON_ID, absolute, breadcrumbs } from "@/lib/seo";
+import Specimen from "@/components/motion/Specimen";
+import Reveal from "@/components/motion/Reveal";
+import TLink from "@/components/motion/TLink";
 import PrintButton from "@/components/ui/PrintButton";
 
 export const metadata: Metadata = {
-  title: "Résumé",
-  description: `Résumé of ${PERSON.name}, Toronto-based AI product builder: AI engineering at the Ontario Public Service, an award-winning assistive AI capstone, and product, data and ERP experience.`,
+  title: "Resume",
+  description: `${PERSON.name} — ${HERO.summary} Experience, projects, education and skills.`,
   alternates: { canonical: "/resume" },
-  openGraph: { title: `Résumé · ${PERSON.name}`, url: "/resume" },
+  openGraph: { title: `Resume — ${PERSON.name}`, url: "/resume", images: ["/opengraph-image"] },
 };
 
-const SUMMARY =
-  "AI product builder with an engineer's toolkit. I frame messy, high-stakes problems, build the smallest thing that proves the solution, and measure whether it worked — most recently cutting manual case-processing overhead by ~79% with validated, agentic AI workflows at the Ontario Public Service.";
-
-const host = (url: string) => url.replace(/^https?:\/\//, "").replace(/\/$/, "");
+const host = (url: string) => url.replace(/^https?:\/\//, "");
 
 export default function ResumePage() {
   return (
-    <section className="resume">
+    <section className="container resume">
       <JsonLd
         data={[
-          { "@type": "ProfilePage", url: absolute("/resume"), name: `Résumé · ${PERSON.name}`, mainEntity: { "@id": PERSON_ID } },
+          { "@type": "ProfilePage", url: absolute("/resume"), mainEntity: { "@id": PERSON_ID } },
           breadcrumbs([
             { name: "Home", path: "/" },
-            { name: "Résumé", path: "/resume" },
+            { name: "Resume", path: "/resume" },
           ]),
         ]}
       />
-      <div className="wrap wrap--narrow">
-        <div className="resume__actions">
-          <p className="label">( Résumé )</p>
-          <PrintButton />
+      <header className="resume__top">
+        <div>
+          <p className="mono" style={{ color: "var(--muted)", marginBottom: 16 }}>
+            {HERO.kicker}
+          </p>
+          <Specimen as="h1" className="resume__name" weight={[100, 500]}>
+            {PERSON.name}
+          </Specimen>
+          <p className="resume__summary">{HERO.summary}</p>
         </div>
+        <Reveal className="resume__contact" delay={0.2}>
+          <a className="u-link" href={`mailto:${PERSON.email}`}>{PERSON.email}</a>
+          <a className="u-link" href={SITE_URL}>{host(SITE_URL)}</a>
+          <a className="u-link" href={LINKS.linkedin}>{host(LINKS.linkedin)}</a>
+          <a className="u-link" href={LINKS.github}>{host(LINKS.github)}</a>
+          <span style={{ color: "var(--muted)" }}>{PERSON.city}, Canada</span>
+          <div style={{ marginTop: 12 }}>
+            <PrintButton />
+          </div>
+        </Reveal>
+      </header>
 
-        <div className="resume__sheet">
-          <header className="resume__top">
-            <div>
-              <h1 className="resume__name">{PERSON.name}</h1>
-              <p className="resume__role">{PERSON.role} · {PERSON.location}</p>
-              <p className="resume__where">Open to roles across Toronto and the GTA</p>
-            </div>
-            <address className="resume__contact" style={{ fontStyle: "normal" }}>
-              <a href={`mailto:${PERSON.email}`}>{PERSON.email}</a>
-              <a href={SITE_URL}>{host(SITE_URL)}</a>
-              <a href={LINKS.linkedin}>{host(LINKS.linkedin)}</a>
-              <a href={LINKS.github}>{host(LINKS.github)}</a>
-            </address>
-          </header>
-
-          <section className="resume__section" aria-labelledby="r-summary">
-            <h2 id="r-summary" className="label resume__h">Summary</h2>
-            <div>
-              <p className="resume__summary">{SUMMARY}</p>
-              <p className="resume__summary" style={{ marginTop: 10, color: "var(--muted)", fontSize: 15 }}>
-                Open to: {OPEN_TO.join(" · ")}
-              </p>
-            </div>
-          </section>
-
-          <section className="resume__section" aria-labelledby="r-exp">
-            <h2 id="r-exp" className="label resume__h">Experience</h2>
-            <div>
-              {EXPERIENCE.map((role) => (
-                <div key={role.id} className="resume__entry">
-                  <div className="resume__entry-head">
-                    <h3>
-                      {role.title} <span>· {role.org}, {role.location}</span>
-                    </h3>
-                    <p className="resume__when">{role.dates}</p>
-                  </div>
-                  <ul>
-                    {role.highlights.map((h) => (
-                      <li key={h}>{h}</li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          <section className="resume__section" aria-labelledby="r-projects">
-            <h2 id="r-projects" className="label resume__h">Selected projects</h2>
-            <div>
-              {caseStudies
-                .filter((s) => s.slug !== "ai-case-review")
-                .map((s) => (
-                  <div key={s.slug} className="resume__entry">
-                    <div className="resume__entry-head">
-                      <h3>
-                        <Link href={`/work/${s.slug}`}>{s.title}</Link> <span>· {s.category}</span>
-                      </h3>
-                      {s.badge ? <p className="resume__when">{s.badge}</p> : null}
-                    </div>
-                    <ul>
-                      <li>{s.summary}</li>
-                    </ul>
-                  </div>
+      <Reveal as="section" className="resume__section" aria-labelledby="r-exp">
+        <h2 id="r-exp" className="mono resume__h">{SECTIONS.experience}</h2>
+        <div>
+          {experienceEntries.map((e) => (
+            <div key={e.id} className="resume__entry">
+              <h3>{e.role}</h3>
+              <p>{e.location}</p>
+              <ul>
+                {e.bullets.map((b) => (
+                  <li key={b}>{b}</li>
                 ))}
+              </ul>
             </div>
-          </section>
-
-          <section className="resume__section" aria-labelledby="r-edu">
-            <h2 id="r-edu" className="label resume__h">Education</h2>
-            <div>
-              {EDUCATION.map((e) => (
-                <div key={e.credential} className="resume__entry">
-                  <div className="resume__entry-head">
-                    <h3>
-                      {e.credential} <span>· {e.institution}, {e.location}</span>
-                    </h3>
-                    <p className="resume__when">{e.dates}</p>
-                  </div>
-                </div>
-              ))}
-              {CREDENTIALS.map((c) => (
-                <div key={c.name} className="resume__entry">
-                  <div className="resume__entry-head">
-                    <h3>
-                      {c.name} <span>· {c.issuer}</span>
-                    </h3>
-                    <p className="resume__when">{c.year}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          <section className="resume__section" aria-labelledby="r-skills">
-            <h2 id="r-skills" className="label resume__h">Skills</h2>
-            <div className="resume__skills">
-              {TOOLKIT.map((kit) => (
-                <p key={kit.title}>
-                  <b>{kit.title}:</b> {kit.items.join(", ")}.
-                </p>
-              ))}
-              <p>
-                <b>Tools:</b> {TOOLS.join(", ")}.
-              </p>
-            </div>
-          </section>
+          ))}
         </div>
-      </div>
+      </Reveal>
+
+      <Reveal as="section" className="resume__section" aria-labelledby="r-proj">
+        <h2 id="r-proj" className="mono resume__h">{SECTIONS.projects}</h2>
+        <div>
+          {projects.map((p) => (
+            <div key={p.slug} className="resume__entry">
+              <h3>
+                <TLink href={`/work/${p.slug}`} className="u-link" transitionLabel={p.title}>
+                  {p.title}
+                </TLink>
+              </h3>
+              <ul>
+                <li>{p.description}</li>
+              </ul>
+            </div>
+          ))}
+        </div>
+      </Reveal>
+
+      <Reveal as="section" className="resume__section" aria-labelledby="r-edu">
+        <h2 id="r-edu" className="mono resume__h">{SECTIONS.education}</h2>
+        <div>
+          {educationEntries.map((e) => (
+            <div key={e.title} className="resume__entry">
+              <h3>{e.title}</h3>
+              <p>{e.detail}</p>
+            </div>
+          ))}
+        </div>
+      </Reveal>
+
+      <Reveal as="section" className="resume__section" aria-labelledby="r-skills">
+        <h2 id="r-skills" className="mono resume__h">{SECTIONS.skills}</h2>
+        <div>
+          {skillCategories.map((c) => (
+            <div key={c.title} className="resume__entry">
+              <h3>{c.title}</h3>
+              <ul>
+                {c.items.map((i) => (
+                  <li key={i}>{i}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </Reveal>
     </section>
   );
 }

@@ -1,78 +1,50 @@
-import { EDUCATION } from "@/content/profile";
-import { LINKS, PERSON, SITE, SITE_URL } from "@/content/site";
+import { educationEntries } from "@/content/education";
+import { HERO, LINKS, PERSON, SEO, SITE_URL } from "@/content/site";
 
 export const PERSON_ID = `${SITE_URL}/#person`;
-export const WEBSITE_ID = `${SITE_URL}/#website`;
 
-export function absolute(path = "/") {
-  return new URL(path, SITE_URL).toString();
-}
+export const absolute = (path = "/") => new URL(path, SITE_URL).toString();
+
+const schools = [...new Set(educationEntries.map((e) => e.detail.split(",")[0]).filter((s) => !s.includes("DataCamp")))];
 
 export const personSchema = {
   "@type": "Person",
   "@id": PERSON_ID,
   name: PERSON.name,
-  givenName: "Tatyana",
-  familyName: "Amugo",
-  jobTitle: PERSON.role,
-  description: SITE.description,
+  jobTitle: "Product & AI Builder",
+  description: HERO.summary,
   url: SITE_URL,
   image: absolute("/images/tatyana-portrait.webp"),
   email: `mailto:${PERSON.email}`,
   address: { "@type": "PostalAddress", addressLocality: "Toronto", addressRegion: "ON", addressCountry: "CA" },
-  homeLocation: { "@type": "City", name: "Toronto", containedInPlace: { "@type": "State", name: "Ontario" } },
-  workLocation: {
-    "@type": "Place",
-    name: "Greater Toronto Area (GTA)",
-    address: { "@type": "PostalAddress", addressRegion: "ON", addressCountry: "CA" },
-  },
+  homeLocation: { "@type": "City", name: "Toronto" },
+  workLocation: { "@type": "Place", name: "Greater Toronto Area (GTA)" },
   sameAs: [LINKS.linkedin, LINKS.github, LINKS.substack],
-  alumniOf: [...new Set(EDUCATION.map((e) => e.institution))].map((name) => ({
-    "@type": "CollegeOrUniversity",
-    name,
-  })),
-  knowsAbout: [
-    "AI product management",
-    "Large language models",
-    "Retrieval-augmented generation",
-    "Prompt engineering",
-    "Agentic AI workflows",
-    "Computer vision",
-    "Data analysis",
-    "Product strategy",
-  ],
+  alumniOf: schools.map((name) => ({ "@type": "CollegeOrUniversity", name })),
+  knowsAbout: ["Product Management", "Artificial Intelligence", "Prompt Engineering", "Retrieval-Augmented Generation", "Data Analysis"],
 };
 
 export const websiteSchema = {
   "@type": "WebSite",
-  "@id": WEBSITE_ID,
   url: SITE_URL,
   name: PERSON.name,
-  description: SITE.description,
-  inLanguage: "en-CA",
-  publisher: { "@id": PERSON_ID },
+  description: SEO.description,
+  author: { "@id": PERSON_ID },
 };
 
 export function breadcrumbs(items: { name: string; path: string }[]) {
   return {
     "@type": "BreadcrumbList",
-    itemListElement: items.map((item, index) => ({
-      "@type": "ListItem",
-      position: index + 1,
-      name: item.name,
-      item: absolute(item.path),
-    })),
+    itemListElement: items.map((item, i) => ({ "@type": "ListItem", position: i + 1, name: item.name, item: absolute(item.path) })),
   };
 }
 
-export function JsonLd({ data }: { data: Record<string, unknown> | Record<string, unknown>[] }) {
-  const graph = Array.isArray(data) ? data : [data];
+export function JsonLd({ data }: { data: Record<string, unknown>[] }) {
   return (
     <script
       type="application/ld+json"
-      // JSON-LD must be inlined; content is static and built from our own data.
       dangerouslySetInnerHTML={{
-        __html: JSON.stringify({ "@context": "https://schema.org", "@graph": graph }).replace(/</g, "\\u003c"),
+        __html: JSON.stringify({ "@context": "https://schema.org", "@graph": data }).replace(/</g, "\\u003c"),
       }}
     />
   );

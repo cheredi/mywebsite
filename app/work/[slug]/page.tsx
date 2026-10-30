@@ -1,234 +1,138 @@
 import type { Metadata } from "next";
-import Image from "next/image";
-import Link from "next/link";
 import { notFound } from "next/navigation";
-import { caseStudies, getCaseStudy } from "@/content/work";
+import { projects } from "@/content/projects";
+import { PROJECT_MEDIA } from "@/content/media";
 import { PERSON } from "@/content/site";
 import { JsonLd, PERSON_ID, absolute, breadcrumbs } from "@/lib/seo";
-import Reveal from "@/components/ui/Reveal";
+import SplitHeading from "@/components/motion/SplitHeading";
+import Specimen from "@/components/motion/Specimen";
+import Reveal from "@/components/motion/Reveal";
+import TLink from "@/components/motion/TLink";
+import ParallaxImage from "@/components/ui/ParallaxImage";
+import Arrow from "@/components/ui/Arrow";
 
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return caseStudies.map((study) => ({ slug: study.slug }));
+  return projects.map((p) => ({ slug: p.slug }));
 }
 
 type Props = { params: Promise<{ slug: string }> };
 
+const find = (slug: string) => projects.find((p) => p.slug === slug);
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
-  const study = getCaseStudy(slug);
-  if (!study) return {};
-  const title = `${study.title} — Case study`;
+  const project = find((await params).slug);
+  if (!project) return {};
+  const description = project.description.length > 160 ? `${project.description.slice(0, 157).trimEnd()}…` : project.description;
   return {
-    title,
-    description: study.seoDescription,
-    alternates: { canonical: `/work/${study.slug}` },
-    openGraph: { type: "article", title: `${title} · ${PERSON.name}`, description: study.seoDescription, url: `/work/${study.slug}` },
+    title: project.title,
+    description,
+    alternates: { canonical: `/work/${project.slug}` },
+    openGraph: { type: "article", title: `${project.title} — ${PERSON.name}`, description, url: `/work/${project.slug}` },
   };
 }
 
-const DARK = new Set(["espresso", "navy"]);
-
-export default async function CaseStudyPage({ params }: Props) {
-  const { slug } = await params;
-  const study = getCaseStudy(slug);
-  if (!study) notFound();
-
-  const index = caseStudies.findIndex((s) => s.slug === study.slug);
-  const next = caseStudies[(index + 1) % caseStudies.length];
-  const dark = DARK.has(study.theme);
-  const external = (href: string) => href.startsWith("http");
-
-  const schema = {
-    "@type": "CreativeWork",
-    "@id": `${absolute(`/work/${study.slug}`)}#work`,
-    name: study.title,
-    headline: study.tagline,
-    description: study.seoDescription,
-    url: absolute(`/work/${study.slug}`),
-    author: { "@id": PERSON_ID },
-    creator: { "@id": PERSON_ID },
-    keywords: study.stack.join(", "),
-    ...(study.image ? { image: absolute(study.image.src) } : {}),
-    ...(study.badge ? { award: study.badge } : {}),
-  };
+export default async function ProjectPage({ params }: Props) {
+  const project = find((await params).slug);
+  if (!project) notFound();
+  const index = projects.indexOf(project);
+  const next = projects[(index + 1) % projects.length];
+  const media = PROJECT_MEDIA[project.slug];
 
   return (
     <article>
       <JsonLd
         data={[
-          schema,
+          {
+            "@type": "CreativeWork",
+            name: project.title,
+            description: project.description,
+            url: absolute(`/work/${project.slug}`),
+            author: { "@id": PERSON_ID },
+            keywords: project.tags.join(", "),
+            ...(media ? { image: absolute(media.src) } : {}),
+          },
           breadcrumbs([
             { name: "Home", path: "/" },
-            { name: "Work", path: "/#work" },
-            { name: study.title, path: `/work/${study.slug}` },
+            { name: "Featured Projects", path: "/#projects" },
+            { name: project.title, path: `/work/${project.slug}` },
           ]),
         ]}
       />
 
-      <header className={`cs-hero cs-hero--${study.theme}${dark ? " on-dark" : ""}`}>
-        <div className="wrap">
-          <nav aria-label="Breadcrumb" className="crumbs label" style={{ color: "inherit", opacity: 0.7 }}>
-            <Link href="/">Home</Link>
-            <span aria-hidden="true">/</span>
-            <Link href="/#work">Work</Link>
-          </nav>
-          <p className="label" style={{ color: "inherit", opacity: 0.7 }}>
-            {study.category}
-          </p>
-          <h1 className="cs-hero__title">{study.title}</h1>
-          <p className="cs-hero__tagline">{study.tagline}</p>
-          {study.badge ? (
-            <p className="cs-hero__badge">
-              <span className="tile__badge">{study.badge}</span>
-            </p>
-          ) : null}
-
-          {study.image ? (
-            <div className="cs-hero__media">
-              <div className="browser">
-                <div className="browser__bar" aria-hidden="true">
-                  <i />
-                  <i />
-                  <i />
-                </div>
-                <Image
-                  src={study.image.src}
-                  width={study.image.width}
-                  height={study.image.height}
-                  alt={study.image.alt}
-                  priority
-                  sizes="(max-width: 1100px) 92vw, 1040px"
-                />
-              </div>
-            </div>
-          ) : study.metric ? (
-            <div className="cs-hero__metric">
-              <span className="tile__big gloss">{study.metric.value}</span>
-              <span className="tile__big-label">{study.metric.label}</span>
-            </div>
-          ) : (
-            <div className="cs-hero__spacer" />
-          )}
-        </div>
-      </header>
-
-      <div className="wrap">
-        <dl className="facts">
-          <div>
-            <dt className="label">Role</dt>
-            <dd>{study.role}</dd>
-          </div>
-          {study.when ? (
-            <div>
-              <dt className="label">When</dt>
-              <dd>{study.when}</dd>
-            </div>
-          ) : null}
-          <div className="facts__wide">
-            <dt className="label">Built with</dt>
-            <dd>{study.stack.join(" · ")}</dd>
-          </div>
-        </dl>
-
-        <Reveal as="section" className="cs-section" aria-labelledby="cs-context">
-          <h2 id="cs-context" className="label cs-section__label">
-            ( Context )
-          </h2>
-          <p className="cs-lead" style={{ fontWeight: 500 }}>
-            {study.context}
-          </p>
-        </Reveal>
-
-        <Reveal as="section" className="cs-section" aria-labelledby="cs-problem">
-          <h2 id="cs-problem" className="label cs-section__label">
-            ( The problem )
-          </h2>
-          <p className="cs-lead">{study.problem}</p>
-        </Reveal>
-
-        <Reveal as="section" className="cs-section" aria-labelledby="cs-approach">
-          <h2 id="cs-approach" className="label cs-section__label">
-            ( What I did )
-          </h2>
-          <ol className="cs-list">
-            {study.approach.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ol>
-        </Reveal>
-
-        {study.howItWorks ? (
-          <Reveal as="section" className="cs-section" aria-labelledby="cs-how">
-            <h2 id="cs-how" className="label cs-section__label">
-              ( How it works )
-            </h2>
-            <ol className="how">
-              {study.howItWorks.map((step, i) => (
-                <li key={step.title}>
-                  <span className="label how__n">0{i + 1}</span>
-                  <h3 className="how__title">{step.title}</h3>
-                  <p className="how__text">{step.text}</p>
-                </li>
-              ))}
-            </ol>
+      <header className="container ph">
+        <nav className="mono ph__crumbs" aria-label="Breadcrumb">
+          <TLink href="/" transitionLabel="Home">
+            Home
+          </TLink>
+          <span aria-hidden="true">/</span>
+          <TLink href="/#projects">Featured Projects</TLink>
+        </nav>
+        <Specimen as="h1" className="ph__title" weight={[100, 500]}>
+          {project.title}
+        </Specimen>
+        {project.badge ? (
+          <Reveal as="p" delay={0.3}>
+            <span className="mono ph__badge">{project.badge}</span>
           </Reveal>
         ) : null}
+        {media ? <ParallaxImage {...media} /> : null}
+      </header>
 
-        <Reveal as="section" className="cs-section" aria-labelledby="cs-outcome">
-          <h2 id="cs-outcome" className="label cs-section__label">
-            ( Outcome )
-          </h2>
-          <div>
-            <ul className="outcome">
-              {study.outcome.map((item) => (
-                <li key={item}>{item}</li>
+      <div className="container ph__body">
+        <p className="mono" style={{ color: "var(--muted)" }}>
+          ({String(index + 1).padStart(2, "0")})
+        </p>
+        <div>
+          <SplitHeading as="p" className="ph__desc">
+            {project.description}
+          </SplitHeading>
+          {project.meta?.length ? (
+            <Reveal className="ph__meta" stagger={0.1}>
+              {project.meta.map((m) => (
+                <p key={m.text}>
+                  {m.label ? <strong>{m.label}</strong> : null}
+                  {m.text}
+                </p>
+              ))}
+            </Reveal>
+          ) : null}
+          <Reveal className="ph__side" stagger={0.1}>
+            <ul className="tags" aria-label="Tools and topics">
+              {project.tags.map((t) => (
+                <li key={t}>{t}</li>
               ))}
             </ul>
-            {study.note ? <p className="cs-note">{study.note}</p> : null}
-          </div>
-        </Reveal>
-
-        {study.links.length ? (
-          <Reveal as="section" className="cs-section" aria-labelledby="cs-links">
-            <h2 id="cs-links" className="label cs-section__label">
-              ( See it )
-            </h2>
-            <div className="cs-links">
-              {study.links.map((link, i) =>
-                external(link.href) ? (
+            {project.links?.length ? (
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                {project.links.map((link, i) => (
                   <a
                     key={link.href}
                     href={link.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`btn ${i === 0 ? "btn--primary" : "btn--secondary"}`}
+                    className={`btn ${i === 0 ? "btn--ink" : "btn--line"}`}
                   >
-                    {link.label} ↗
-                  </a>
-                ) : (
-                  <Link key={link.href} href={link.href} className={`btn ${i === 0 ? "btn--primary" : "btn--secondary"}`}>
                     {link.label}
-                  </Link>
-                )
-              )}
-            </div>
+                    <span className="btn__icon">
+                      <Arrow dir="out" />
+                    </span>
+                  </a>
+                ))}
+              </div>
+            ) : null}
           </Reveal>
-        ) : null}
+        </div>
       </div>
 
-      <div className="wrap band band--tight">
-        <Link href={`/work/${next.slug}`} className="next">
-          <span className="label" style={{ color: "var(--on-dark-muted)" }}>
-            Next case study
+      <div className="container">
+        <TLink href={`/work/${next.slug}`} className="ph__next" transitionLabel={next.title}>
+          <span className="mono" style={{ color: "var(--muted)" }}>
+            Next — {String(projects.indexOf(next) + 1).padStart(2, "0")}
           </span>
-          <p className="next__title">{next.title}</p>
-          <p style={{ marginTop: 12, color: "var(--on-dark-muted)" }}>{next.tagline}</p>
-          <span className="more" style={{ marginTop: 24, color: "#f0b9c6" }}>
-            Read it
-          </span>
-        </Link>
+          <p className="ph__next-title">{next.title}</p>
+        </TLink>
       </div>
     </article>
   );
