@@ -1,4 +1,7 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import "@fontsource-variable/inter";
+import "@fontsource/instrument-serif/400.css";
+import "@fontsource/instrument-serif/400-italic.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { SITE_NAME, SITE_DESCRIPTION, SITE_URL, SOCIAL_LINKS, CONTACT_EMAIL } from "@/lib/constants";
@@ -30,6 +33,10 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  themeColor: "#fbf6f8",
+};
+
 const personSchema = {
   "@context": "https://schema.org",
   "@type": "Person",
@@ -44,10 +51,6 @@ const personSchema = {
     { "@type": "CollegeOrUniversity", name: "Fanshawe College" },
     { "@type": "CollegeOrUniversity", name: "Strathmore University" },
   ],
-  worksFor: {
-    "@type": "Organization",
-    name: "Ontario Public Service",
-  },
   knowsAbout: [
     "Product Management",
     "Artificial Intelligence",
@@ -59,14 +62,20 @@ const personSchema = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" data-scroll-behavior="smooth">
+    // `js` is added before paint so scroll-reveal styles only apply when the
+    // script that reveals sections can actually run.
+    <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
         />
       </head>
       <body>
+        <a className="skip-link" href="#main">
+          Skip to content
+        </a>
         <Header />
         {children}
         <Footer />

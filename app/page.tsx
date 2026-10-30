@@ -1,30 +1,25 @@
 import Hero from "@/components/sections/Hero";
-import ProofSection from "@/components/sections/ProofSection";
 import ProjectsSection from "@/components/sections/ProjectsSection";
 import AboutSection from "@/components/sections/AboutSection";
-import ExperienceSkillsSection from "@/components/sections/ExperienceSkillsSection";
-import EducationSection from "@/components/sections/EducationSection";
-import InterviewArcade from "@/components/sections/InterviewArcade";
+import ExperienceSection from "@/components/sections/ExperienceSection";
+import SkillsSection from "@/components/sections/SkillsSection";
 import SubstackSection from "@/components/sections/SubstackSection";
+import InterviewArcade from "@/components/sections/InterviewArcade";
 import ContactSection from "@/components/sections/ContactSection";
 
-interface HomePageProps {
-  searchParams: Promise<{ page?: string }>;
-}
+// Serve a cached page and refresh it in the background (picks up new Substack
+// posts) instead of rendering on every request.
+export const revalidate = 21600;
 
-export default async function Home({ searchParams }: HomePageProps) {
-  const params = await searchParams;
-  const page = Number(params.page) || 1;
-
+export default function Home() {
   return (
-    <main>
+    <main id="main">
       <Hero />
-      <ProofSection />
       <ProjectsSection />
       <AboutSection />
-      <ExperienceSkillsSection />
-      <SubstackSection page={page} />
-      <EducationSection />
+      <ExperienceSection />
+      <SkillsSection />
+      <SubstackSection />
       <InterviewArcade />
       <ContactSection />
     </main>

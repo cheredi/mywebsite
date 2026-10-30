@@ -1,12 +1,11 @@
 import { ProofStat } from "@/types";
 
-// "Momentum & Social Proof" stat cards. Each links to the section/entry it
-// references so the numbers are backed by evidence, not just decoration.
+// Headline stats under the hero. Each links to the entry that backs it up.
 export const proofStats: ProofStat[] = [
   {
     target: 3,
     label: "Core AI projects delivered",
-    href: "#projects",
+    href: "#work",
   },
   {
     target: 79,

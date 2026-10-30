@@ -1,37 +1,34 @@
-"use client";
-
 import Image from "next/image";
-import Link from "next/link";
 import type { SubstackPost } from "@/types";
-import { useTilt } from "@/components/hooks/useTilt";
 
-function formatDate(value: string): string {
+function formatDate(value: string): string | null {
   const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return "Recent post";
-  return date.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
+  if (Number.isNaN(date.getTime())) return null;
+  return date.toLocaleDateString("en-CA", { year: "numeric", month: "short", day: "numeric" });
 }
 
 export default function SubstackPostCard({ post }: { post: SubstackPost }) {
-  const { ref, onMouseMove, onMouseLeave } = useTilt<HTMLElement>();
+  const date = formatDate(post.postDate);
 
   return (
-    <article
-      ref={ref}
-      className="writing-card tilt-card"
-      onMouseMove={onMouseMove}
-      onMouseLeave={onMouseLeave}
-    >
-      {post.imageUrl ? (
-        <div className="writing-card-image">
-          <Image src={post.imageUrl} alt={post.title} fill sizes="(max-width: 620px) 100vw, 33vw" />
-        </div>
-      ) : null}
-      <h3>{post.title}</h3>
-      <div className="meta">{formatDate(post.postDate)}</div>
-      <p>{post.description}</p>
-      <Link href={post.canonicalUrl} target="_blank" rel="noopener noreferrer" className="btn btn-secondary">
-        Read on Substack
-      </Link>
+    <article className="card post">
+      <a href={post.canonicalUrl} target="_blank" rel="noopener noreferrer" className="post-link">
+        {post.imageUrl ? (
+          <div className="post-image">
+            <Image src={post.imageUrl} alt="" fill sizes="(max-width: 700px) 100vw, 360px" />
+          </div>
+        ) : null}
+        {date ? (
+          <time className="post-date" dateTime={post.postDate}>
+            {date}
+          </time>
+        ) : null}
+        <h3>{post.title}</h3>
+        <p>{post.description}</p>
+        <span className="post-cta" aria-hidden="true">
+          Read on Substack →
+        </span>
+      </a>
     </article>
   );
 }

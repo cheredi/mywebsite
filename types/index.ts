@@ -1,5 +1,4 @@
 // Shared TypeScript types for the portfolio site's content model.
-// Keeping these centralized avoids copy-pasted inline shapes across components.
 
 export interface ProjectLink {
   label: string;
@@ -10,19 +9,24 @@ export interface ProjectLink {
 export interface Project {
   slug: string;
   title: string;
+  /** Short context line shown above the title, e.g. "Capstone · Runner-up". */
+  eyebrow?: string;
   description: string;
-  meta?: { label: string; text: string }[];
+  /** Extra labelled lines shown under the description. */
+  meta?: { label?: string; text: string }[];
+  /** Longer technical write-up, collapsed by default. */
+  details?: { summary: string; text: string };
   tags: string[];
-  filterTags: string[];
-  badge?: string;
-  highlight?: boolean;
+  featured?: boolean;
   links?: ProjectLink[];
 }
 
 export interface ExperienceEntry {
   id: string;
   role: string;
+  org: string;
   location: string;
+  dates: string;
   bullets: string[];
 }
 
@@ -41,7 +45,8 @@ export interface ProofStat {
 
 export interface EducationEntry {
   title: string;
-  detail: string;
+  institution: string;
+  dates: string;
 }
 
 export interface SubstackPost {
