@@ -20,13 +20,13 @@ export const metadata: Metadata = {
     title: SITE_NAME,
     description: SITE_DESCRIPTION,
     siteName: SITE_NAME,
-    images: [{ url: "/images/TATYANA-PP.jpg" }],
+    images: [{ url: "/images/og.jpg", width: 1200, height: 630, alt: SITE_NAME }],
   },
   twitter: {
     card: "summary_large_image",
     title: SITE_NAME,
     description: SITE_DESCRIPTION,
-    images: ["/images/TATYANA-PP.jpg"],
+    images: ["/images/og.jpg"],
   },
 };
 

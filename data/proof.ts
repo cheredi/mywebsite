@@ -10,17 +10,20 @@ export const proofStats: ProofStat[] = [
   },
   {
     target: 79,
-    label: "Manual overhead reduced in AI workflows (%)",
+    suffix: "%",
+    label: "Less manual case-processing overhead",
     href: "#exp-ai-engineer",
   },
   {
     target: 15,
-    label: "Marketing uplift from analytics work (%)",
+    suffix: "%",
+    label: "Marketing uplift from analytics work",
     href: "#exp-beats-by-dre",
   },
   {
     target: 30,
-    label: "ERP workflow automation impact (%)",
+    suffix: "%",
+    label: "Less manual processing in ERP workflows",
     href: "#exp-upande",
   },
 ];

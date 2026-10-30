@@ -33,6 +33,8 @@ export interface SkillCategory {
 
 export interface ProofStat {
   target: number;
+  /** Rendered after the number, e.g. "%". */
+  suffix?: string;
   label: string;
   href: string;
 }

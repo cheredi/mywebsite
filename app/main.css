@@ -111,10 +111,6 @@ nav {
 
 .hero {
   min-height: 96vh;
-  background-image: url('/images/background.jpg');
-  background-size: cover;
-  background-attachment: fixed;
-  background-position: center;
   position: relative;
   display: flex;
   align-items: center;

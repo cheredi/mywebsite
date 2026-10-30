@@ -56,7 +56,7 @@ export default function ProofSection() {
           <Link className="proof-card" href={stat.href} key={stat.label}>
             <span className="proof-number">
               {counts[index]}
-              {stat.target >= 10 ? "+" : ""}
+              {stat.suffix}
             </span>
             <div className="proof-label">{stat.label}</div>
           </Link>

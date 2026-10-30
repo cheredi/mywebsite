@@ -34,10 +34,10 @@ export const projects: Project[] = [
       },
       {
         label: "Under the Hood",
-        text: "A PyTorch-based pipeline runs YOLOv26 for real-time object and obstacle detection alongside MiDaS for monocular depth estimation, giving the system a live read on what's nearby and how far away it is. FriendNet, a custom-trained model, recognizes familiar faces to support memory reinforcement for dementia patients. Gemini turns those detections into natural-language scene descriptions and contextual guidance, Argos Translate enables fully offline multilingual output, and Piper TTS speaks the results aloud for hands-free, screen-free accessibility.",
+        text: "A PyTorch-based pipeline runs YOLO26 for real-time object and obstacle detection alongside MiDaS for monocular depth estimation, giving the system a live read on what's nearby and how far away it is. FriendNet, a custom-trained model, recognizes familiar faces to support memory reinforcement for dementia patients. Gemini turns those detections into natural-language scene descriptions and contextual guidance, Argos Translate enables fully offline multilingual output, and Piper TTS speaks the results aloud for hands-free, screen-free accessibility.",
       },
     ],
-    tags: ["YOLOv26", "MiDaS", "PyTorch", "Gemini", "Argos Translate", "Piper TTS", "FriendNet (Custom Model)"],
+    tags: ["YOLO26", "MiDaS", "PyTorch", "Gemini", "Argos Translate", "Piper TTS", "FriendNet (Custom Model)"],
     filterTags: ["agentic", "nlp", "cv"],
     badge: "Capstone",
     highlight: true,

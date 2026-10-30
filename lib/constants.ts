@@ -6,9 +6,9 @@ export const SITE_SHORT_NAME = "Tatyana Amugo";
 export const SITE_DESCRIPTION =
   "Product & AI Builder shipping AI-forward products, prompt/retrieval pipelines, and data-driven decision tools.";
 
-// Update this once the production domain is confirmed; used for canonical
-// URLs, Open Graph tags, and sitemap/robots generation.
-export const SITE_URL = "https://www.tatyanaamugo.com";
+// Production domain (hosted on Netlify); used for canonical URLs, Open Graph
+// tags, structured data, and sitemap/robots generation.
+export const SITE_URL = "https://tatyanaamugo.com";
 
 export const SOCIAL_LINKS = {
   linkedin: "https://linkedin.com/in/tatyana-amugo02",

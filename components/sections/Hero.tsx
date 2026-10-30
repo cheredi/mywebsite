@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SOCIAL_LINKS } from "@/lib/constants";
 
 export default function Hero() {
   return (
@@ -38,7 +39,7 @@ export default function Hero() {
               Contact
             </Link>
             <Link
-              href="https://linkedin.com/in/tatyana-amugo02"
+              href={SOCIAL_LINKS.linkedin}
               target="_blank"
               rel="noopener noreferrer"
               className="hero-mini-btn"
@@ -46,7 +47,7 @@ export default function Hero() {
               LinkedIn
             </Link>
             <Link
-              href="https://lipgloss2llms.substack.com"
+              href={SOCIAL_LINKS.substack}
               target="_blank"
               rel="noopener noreferrer"
               className="hero-mini-btn"
