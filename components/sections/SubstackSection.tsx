@@ -1,49 +1,50 @@
-import Link from "next/link";
 import { getSubstackPosts } from "@/lib/substack";
-import { SOCIAL_LINKS } from "@/lib/constants";
+import { SOCIAL_LINKS, SUBSTACK_NAME } from "@/lib/constants";
 import SubstackPostCard from "@/components/sections/SubstackPostCard";
-import SubstackPagination from "@/components/sections/SubstackPagination";
 import RevealSection from "@/components/ui/RevealSection";
 
-const POSTS_PER_PAGE = 6;
+const POSTS_SHOWN = 6;
 
-export default async function SubstackSection({ page }: { page: number }) {
+export default async function SubstackSection() {
   const { posts, error } = await getSubstackPosts();
-
-  const totalPages = Math.max(1, Math.ceil(posts.length / POSTS_PER_PAGE));
-  const currentPage = Math.min(Math.max(1, page), totalPages);
-  const start = (currentPage - 1) * POSTS_PER_PAGE;
-  const pagePosts = posts.slice(start, start + POSTS_PER_PAGE);
-
-  const statusText = error
-    ? error
-    : posts.length
-      ? "Latest posts, auto-synced from Lipgloss & LLMS."
-      : "No posts found yet — check back soon.";
+  const latest = posts.slice(0, POSTS_SHOWN);
 
   return (
-    <RevealSection id="writing" className="section-wrap">
-      <h2>Lipgloss &amp; LLMS</h2>
-      <p className="substack-intro">
-        Featured reads from my Substack on practical AI concepts and real-world thinking.
-      </p>
-      <div className="substack-status">{statusText}</div>
+    <RevealSection id="writing" labelledBy="writing-title">
+      <div className="container">
+        <div className="section-heading section-heading--row">
+          <div>
+            <p className="eyebrow">Writing</p>
+            <h2 id="writing-title">{SUBSTACK_NAME}</h2>
+            <p className="section-intro">
+              My Substack on practical AI concepts and real-world thinking.
+            </p>
+          </div>
+          <a
+            href={SOCIAL_LINKS.substack}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-secondary"
+          >
+            Subscribe on Substack
+          </a>
+        </div>
 
-      {pagePosts.length ? (
-        <>
+        {latest.length ? (
           <div className="writing-grid">
-            {pagePosts.map((post) => (
+            {latest.map((post) => (
               <SubstackPostCard key={post.canonicalUrl} post={post} />
             ))}
           </div>
-          <SubstackPagination currentPage={currentPage} totalPages={totalPages} />
-        </>
-      ) : null}
-
-      <div style={{ textAlign: "center", marginTop: "1.2rem" }}>
-        <Link href={SOCIAL_LINKS.substack} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
-          Visit Lipgloss &amp; LLMs
-        </Link>
+        ) : (
+          <p className="empty-state">
+            {error ?? "New posts are on the way."}{" "}
+            <a href={SOCIAL_LINKS.substack} target="_blank" rel="noopener noreferrer">
+              Read {SUBSTACK_NAME} on Substack
+            </a>
+            .
+          </p>
+        )}
       </div>
     </RevealSection>
   );

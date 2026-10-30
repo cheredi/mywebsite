@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useScrollReveal } from "@/components/hooks/useScrollReveal";
+import RevealSection from "@/components/ui/RevealSection";
+import SectionHeading from "@/components/ui/SectionHeading";
 
 interface Prompt {
   question: string;
@@ -11,6 +12,7 @@ interface Prompt {
 
 type RoleKey = "data_analyst" | "ml_engineer" | "product_analytics";
 type DifficultyKey = "easy" | "medium" | "hard";
+type Phase = "idle" | "running" | "done";
 
 const ROLE_DATA: Record<RoleKey, Prompt[]> = {
   data_analyst: [
@@ -107,195 +109,217 @@ const DIFFICULTY_BUTTONS: { value: DifficultyKey; label: string }[] = [
   { value: "hard", label: "Hard" },
 ];
 
-function pickPrompt(role: RoleKey): Prompt {
-  const prompts = ROLE_DATA[role];
-  return prompts[Math.floor(Math.random() * prompts.length)];
+/** Picks a random prompt for the role, avoiding an immediate repeat. */
+function pickPrompt(role: RoleKey, current?: Prompt): Prompt {
+  const prompts = ROLE_DATA[role].filter((p) => p !== current);
+  const pool = prompts.length ? prompts : ROLE_DATA[role];
+  return pool[Math.floor(Math.random() * pool.length)];
 }
 
 /**
- * "Interview Arcade" mini-game — a client-side port of js/substack-game.js
- * (role/difficulty selection, countdown timer, XP + streak scoring, hints).
+ * "Interview Arcade": pick a role and difficulty, answer out loud against the
+ * clock, then score yourself. The timer only runs once a round is started.
  */
 export default function InterviewArcade() {
   const [role, setRole] = useState<RoleKey>("data_analyst");
   const [difficulty, setDifficulty] = useState<DifficultyKey>("medium");
-  // Deterministic first prompt (index 0) so server and client render the same
-  // markup on initial load; a random prompt is picked client-side after mount
-  // and on every subsequent user-triggered round.
+  // Deterministic first prompt so server and client markup match.
   const [prompt, setPrompt] = useState<Prompt>(ROLE_DATA.data_analyst[0]);
-  const [hintIndex, setHintIndex] = useState(0);
+  const [phase, setPhase] = useState<Phase>("idle");
+  const [timeLeft, setTimeLeft] = useState(DIFFICULTY_CONFIG.medium.time);
+  const [hintsShown, setHintsShown] = useState(0);
   const [xp, setXp] = useState(0);
   const [streak, setStreak] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(DIFFICULTY_CONFIG.medium.time);
-  const [feedback, setFeedback] = useState(
-    "Start the round, answer aloud, then score yourself honestly."
-  );
-  const [burstKey, setBurstKey] = useState(0);
+  const [feedback, setFeedback] = useState("Pick a role and difficulty, then start the clock.");
 
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const timeLeftRef = useRef(timeLeft);
+
+  function stopTimer() {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    intervalRef.current = null;
+  }
+
+  useEffect(() => stopTimer, []);
 
   useEffect(() => {
-    timeLeftRef.current = timeLeft;
-  }, [timeLeft]);
+    if (phase === "running" && timeLeft === 0) {
+      stopTimer();
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- ends the round when the countdown reaches zero.
+      setPhase("done");
+      setStreak(0);
+      setFeedback("Time's up. Streak reset — try another question.");
+    }
+  }, [phase, timeLeft]);
 
-  function runCountdown() {
-    if (intervalRef.current) clearInterval(intervalRef.current);
+  function startRound(nextPrompt: Prompt = prompt) {
+    stopTimer();
+    setPrompt(nextPrompt);
+    setHintsShown(0);
+    setTimeLeft(DIFFICULTY_CONFIG[difficulty].time);
+    setPhase("running");
+    setFeedback("Answer out loud. Score yourself when you're done.");
     intervalRef.current = setInterval(() => {
-      setTimeLeft((prev) => {
-        const next = prev - 1;
-        if (next <= 0) {
-          if (intervalRef.current) clearInterval(intervalRef.current);
-          setStreak(0);
-          setFeedback("Time up. Grab a hint, then try another challenge.");
-          return 0;
-        }
-        return next;
-      });
+      setTimeLeft((t) => Math.max(0, t - 1));
     }, 1000);
   }
 
-  function startTimer(diff: DifficultyKey) {
-    setTimeLeft(DIFFICULTY_CONFIG[diff].time);
-    runCountdown();
-  }
-
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- intentional: randomizes the prompt client-side only, after the deterministic SSR-safe initial render, to avoid a hydration mismatch.
-    setPrompt(pickPrompt("data_analyst"));
-    runCountdown();
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    };
-  }, []);
-
-  function loadNewRound(nextRole: RoleKey, nextDifficulty: DifficultyKey, message: string) {
-    setPrompt(pickPrompt(nextRole));
-    setHintIndex(0);
-    setFeedback(message);
-    setBurstKey((k) => k + 1);
-    startTimer(nextDifficulty);
-  }
-
-  function handleRoleClick(nextRole: RoleKey) {
+  function resetTo(nextRole: RoleKey, nextDifficulty: DifficultyKey) {
+    stopTimer();
     setRole(nextRole);
-    loadNewRound(nextRole, difficulty, "New round loaded. Speak your answer out loud, then score yourself.");
-  }
-
-  function handleDifficultyClick(nextDifficulty: DifficultyKey) {
     setDifficulty(nextDifficulty);
-    loadNewRound(role, nextDifficulty, `Difficulty set to ${nextDifficulty}.`);
-  }
-
-  function handleNewQuestion() {
-    loadNewRound(role, difficulty, "New round loaded. Speak your answer out loud, then score yourself.");
+    setPrompt(pickPrompt(nextRole, prompt));
+    setHintsShown(0);
+    setTimeLeft(DIFFICULTY_CONFIG[nextDifficulty].time);
+    setPhase("idle");
+    setFeedback("New question ready. Start the clock when you are.");
   }
 
   function handleHint() {
-    if (!prompt.hints.length) {
-      setFeedback("No hints available for this prompt yet.");
-      return;
-    }
-    const hint = prompt.hints[Math.min(hintIndex, prompt.hints.length - 1)];
-    setHintIndex((i) => i + 1);
-    setFeedback(`Hint: ${hint}`);
+    if (hintsShown >= prompt.hints.length) return;
+    setHintsShown((n) => n + 1);
   }
 
   function handleNailedIt() {
-    const basePoints = DIFFICULTY_CONFIG[difficulty].points;
-    const speedBonus = Math.max(0, Math.floor(timeLeftRef.current / 5));
+    stopTimer();
+    const base = DIFFICULTY_CONFIG[difficulty].points;
+    const speed = Math.floor(timeLeft / 5);
     const streakBonus = streak * 2;
-    const earned = basePoints + speedBonus + streakBonus;
+    const earned = base + speed + streakBonus;
     setXp((x) => x + earned);
     setStreak((s) => s + 1);
-    setFeedback(
-      `Strong run. +${earned} XP (${basePoints} base, ${speedBonus} speed, ${streakBonus} streak).`
-    );
-    setBurstKey((k) => k + 1);
+    setPhase("done");
+    setFeedback(`+${earned} XP (${base} base, ${speed} speed, ${streakBonus} streak).`);
   }
 
   function handleSkip() {
+    stopTimer();
     setStreak(0);
-    loadNewRound(role, difficulty, "Skipped. Streak reset. New challenge loaded.");
+    setPhase("done");
+    setFeedback("Skipped. Streak reset.");
   }
 
-  const sectionRef = useScrollReveal<HTMLElement>();
+  const total = DIFFICULTY_CONFIG[difficulty].time;
+  const progress = phase === "idle" ? 1 : timeLeft / total;
 
   return (
-    <section id="simulator" ref={sectionRef} className="animate section-wrap">
-      <h2>Interview Arcade</h2>
-      <div className="simulator-wrap">
-        <div className="simulator">
-          <p style={{ marginBottom: "1rem", color: "#4d4d4d" }}>
-            Pick role + difficulty, beat the timer, stack a streak, and train like an interview
-            game.
-          </p>
-          <div className="sim-meta">
-            <div className="sim-stat">
-              XP
-              <strong key={`xp-${burstKey}`} className="xp-burst">
-                {xp}
-              </strong>
-            </div>
-            <div className="sim-stat">
-              Streak
-              <strong key={`streak-${burstKey}`} className="xp-burst">
-                {streak}
-              </strong>
-            </div>
-            <div className="sim-stat">
-              Timer<strong>{timeLeft}s</strong>
-            </div>
-          </div>
-          <div className="role-buttons">
-            {ROLE_BUTTONS.map(({ value, label }) => (
-              <button
-                key={value}
-                className={`role-btn${role === value ? " active" : ""}`}
-                onClick={() => handleRoleClick(value)}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
-          <div className="difficulty-buttons">
-            {DIFFICULTY_BUTTONS.map(({ value, label }) => (
-              <button
-                key={value}
-                className={`difficulty-btn${difficulty === value ? " active" : ""}`}
-                onClick={() => handleDifficultyClick(value)}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
-          <div className="sim-output">
-            <h4>Question</h4>
-            <p>{prompt.question}</p>
-            <h4 style={{ marginTop: "0.8rem" }}>Ideal Rubric</h4>
-            <ul>
-              {prompt.rubric.map((line, index) => (
-                <li key={index}>{line}</li>
+    <RevealSection id="arcade" labelledBy="arcade-title">
+      <div className="container">
+        <SectionHeading
+          id="arcade-title"
+          eyebrow="Try it"
+          title="Interview Arcade"
+          intro="A tiny version of the interview coaching I'm building: pick a track, beat the clock, and grade yourself against a rubric."
+        />
+
+        <div className="card arcade">
+          <div className="arcade-controls">
+            <div className="segmented" role="group" aria-label="Role">
+              {ROLE_BUTTONS.map(({ value, label }) => (
+                <button
+                  key={value}
+                  type="button"
+                  aria-pressed={role === value}
+                  onClick={() => resetTo(value, difficulty)}
+                >
+                  {label}
+                </button>
               ))}
-            </ul>
+            </div>
+            <div className="segmented" role="group" aria-label="Difficulty">
+              {DIFFICULTY_BUTTONS.map(({ value, label }) => (
+                <button
+                  key={value}
+                  type="button"
+                  aria-pressed={difficulty === value}
+                  onClick={() => resetTo(role, value)}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
           </div>
-          <div className="sim-actions">
-            <button className="sim-action-btn" onClick={handleHint}>
-              Need Hint
-            </button>
-            <button className="sim-action-btn" onClick={handleNailedIt}>
-              I Nailed It
-            </button>
-            <button className="sim-action-btn" onClick={handleSkip}>
-              Skip
-            </button>
-            <button className="btn btn-primary" onClick={handleNewQuestion}>
-              New Challenge
-            </button>
+
+          <div className="arcade-body">
+            <div className="arcade-question">
+              <p className="arcade-label">Question</p>
+              <p className="arcade-prompt">{prompt.question}</p>
+
+              <p className="arcade-label">What a strong answer covers</p>
+              <ul className="arcade-rubric">
+                {prompt.rubric.map((line) => (
+                  <li key={line}>{line}</li>
+                ))}
+              </ul>
+
+              {hintsShown > 0 ? (
+                <>
+                  <p className="arcade-label">Hints</p>
+                  <ul className="arcade-hints">
+                    {prompt.hints.slice(0, hintsShown).map((hint) => (
+                      <li key={hint}>{hint}</li>
+                    ))}
+                  </ul>
+                </>
+              ) : null}
+            </div>
+
+            <div className="arcade-side">
+              <dl className="arcade-stats">
+                <div>
+                  <dt>Time</dt>
+                  <dd className={phase === "running" && timeLeft <= 10 ? "is-urgent" : undefined}>
+                    {timeLeft}s
+                  </dd>
+                </div>
+                <div>
+                  <dt>XP</dt>
+                  <dd>{xp}</dd>
+                </div>
+                <div>
+                  <dt>Streak</dt>
+                  <dd>{streak}</dd>
+                </div>
+              </dl>
+              <div className="arcade-timer" aria-hidden="true">
+                <span style={{ transform: `scaleX(${progress})` }} />
+              </div>
+
+              {phase === "running" ? (
+                <div className="arcade-actions">
+                  <button type="button" className="btn btn-primary" onClick={handleNailedIt}>
+                    I nailed it
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={handleHint}
+                    disabled={hintsShown >= prompt.hints.length}
+                  >
+                    Hint ({prompt.hints.length - hintsShown} left)
+                  </button>
+                  <button type="button" className="btn btn-ghost" onClick={handleSkip}>
+                    Skip
+                  </button>
+                </div>
+              ) : (
+                <div className="arcade-actions">
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={() => startRound(phase === "done" ? pickPrompt(role, prompt) : prompt)}
+                  >
+                    {phase === "done" ? "Next question" : "Start the clock"}
+                  </button>
+                </div>
+              )}
+
+              <p className="arcade-feedback" aria-live="polite">
+                {feedback}
+              </p>
+            </div>
           </div>
-          <div className="sim-feedback">{feedback}</div>
         </div>
       </div>
-    </section>
+    </RevealSection>
   );
 }

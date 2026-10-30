@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Forms</title>
+    <meta name="robots" content="noindex" />
+  </head>
+  <body>
+    <!--
+      Static copy of the contact form so Netlify Forms can detect it at deploy
+      time. The real form lives in components/sections/ContactSection.tsx and
+      posts here; keep the field names in sync.
+    -->
+    <form name="contact" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="contact" />
+      <input name="bot-field" />
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <textarea name="message"></textarea>
+    </form>
+  </body>
+</html>
