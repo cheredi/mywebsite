@@ -4,34 +4,42 @@ import Image from "next/image";
 import { useRef } from "react";
 import { projects } from "@/content/projects";
 import { PROJECT_MEDIA } from "@/content/media";
-import { SECTIONS } from "@/content/site";
+import { useDict } from "@/components/prefs/Prefs";
+import type { Dict } from "@/content/i18n";
 import { EASE, gsap, reducedMotion, useGSAP } from "@/lib/motion";
 import SectionHead from "@/components/ui/SectionHead";
 import TLink from "@/components/motion/TLink";
 import Arrow from "@/components/ui/Arrow";
 import type { Project } from "@/content/types";
 
-function Visual({ project }: { project: Project }) {
+const ALT: Record<string, keyof Dict["alt"]> = { "shipping-setup-assistant": "shipping", "ona-assistive-ai": "ona" };
+
+function Visual({ project, t }: { project: Project; t: Dict }) {
   const media = PROJECT_MEDIA[project.slug];
   if (media) {
+    const alt = ALT[project.slug] ? t.alt[ALT[project.slug]] : media.alt;
     return (
-      <div className="card__shot">
-        <Image src={media.src} width={media.width} height={media.height} alt={media.alt} sizes="(max-width: 1024px) 90vw, 640px" />
-      </div>
+      <figure className="card__shot">
+        <Image src={media.src} width={media.width} height={media.height} alt={alt} sizes="(max-width: 1024px) 90vw, 640px" />
+        <figcaption className="a11y-caption" style={{ padding: "8px 12px" }}>
+          {t.ui.image} {alt}
+        </figcaption>
+      </figure>
     );
   }
   if (project.slug === "rag-interview-prep") {
     // A question and rubric line from her Interview Arcade (ML Engineer track).
+    const q = t.arcade.data.ml_engineer[0];
     return (
       <div className="qa" aria-hidden="true">
         <div className="qa__bubble">
-          <span className="mono">Question</span>
-          How would you evaluate a RAG interview coach beyond model accuracy?
+          <span className="mono">{t.arcade.question}</span>
+          {q.question}
         </div>
-        <div className="qa__bubble qa__bubble--me">Separates retrieval quality from generation quality.</div>
+        <div className="qa__bubble qa__bubble--me">{q.rubric[0]}</div>
         <div className="qa__bubble">
-          <span className="mono">Ideal Rubric</span>
-          Defines groundedness and hallucination checks.
+          <span className="mono">{t.arcade.rubric}</span>
+          {q.rubric[1]}
         </div>
       </div>
     );
@@ -46,6 +54,7 @@ function Visual({ project }: { project: Project }) {
 }
 
 export default function Projects() {
+  const t = useDict();
   const root = useRef<HTMLElement>(null);
 
   useGSAP(
@@ -100,10 +109,12 @@ export default function Projects() {
   return (
     <section ref={root} id="projects" className="section" aria-labelledby="projects-title" style={{ paddingTop: 0 }}>
       <div className="container">
-        <SectionHead index="03" title={SECTIONS.projects} id="projects-title" />
+        <SectionHead index="03" title={t.sections.projects} id="projects-title" />
         <div className="stack">
           {projects.map((project, i) => {
-            const meta = project.meta?.filter((m) => m.label !== "Under the Hood") ?? [];
+            const copy = t.projects[project.slug];
+            // The long "Under the Hood" note lives on the project page; position matches the English source.
+            const meta = copy.meta.filter((_, k) => project.meta?.[k]?.label !== "Under the Hood");
             const dark = i < 2;
             return (
               <article key={project.slug} className={`card card--${i % 4}`} style={{ ["--i" as string]: i }}>
@@ -114,22 +125,22 @@ export default function Projects() {
                       <span>
                         {String(i + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}
                       </span>
-                      {project.badge ? <span>{project.badge}</span> : null}
+                      {copy.badge ? <span>{copy.badge}</span> : null}
                     </div>
                     <h3 className="card__title">
-                      <TLink href={`/work/${project.slug}`} transitionLabel={project.title}>
-                        {project.title}
+                      <TLink href={`/work/${project.slug}`} transitionLabel={copy.title}>
+                        {copy.title}
                       </TLink>
                     </h3>
-                    <p className="card__desc">{project.description}</p>
+                    <p className="card__desc">{copy.description}</p>
                     {meta.map((m) => (
                       <p key={m.text} className="card__meta">
                         {m.label ? <strong>{m.label}: </strong> : null}
                         {m.text}
                       </p>
                     ))}
-                    <ul className="tags" aria-label="Tools and topics">
-                      {project.tags.map((tag) => (
+                    <ul className="tags" aria-label={t.ui.toolsTopics}>
+                      {copy.tags.map((tag) => (
                         <li key={tag}>{tag}</li>
                       ))}
                     </ul>
@@ -142,7 +153,7 @@ export default function Projects() {
                           rel="noopener noreferrer"
                           className={`btn ${j === 0 ? (dark ? "btn--cream" : "btn--ink") : dark ? "btn--ghost-dark" : "btn--line"}`}
                         >
-                          {link.label}
+                          {copy.links[j] ?? link.label}
                           <span className="btn__icon">
                             <Arrow dir="out" />
                           </span>
@@ -150,9 +161,9 @@ export default function Projects() {
                       ))}
                       <TLink
                         href={`/work/${project.slug}`}
-                        transitionLabel={project.title}
+                        transitionLabel={copy.title}
                         className={`btn ${dark ? "btn--ghost-dark" : "btn--line"}`}
-                        aria-label={`${project.title} — details`}
+                        aria-label={`${copy.title} — ${t.ui.details}`}
                         style={{ padding: "0 8px" }}
                       >
                         <span className="btn__icon">
@@ -162,7 +173,7 @@ export default function Projects() {
                     </div>
                   </div>
                   <div className="card__visual">
-                    <Visual project={project} />
+                    <Visual project={project} t={t} />
                   </div>
                 </div>
               </article>

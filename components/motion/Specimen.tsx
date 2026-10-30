@@ -3,6 +3,7 @@
 import { useRef, type ElementType, type ReactNode } from "react";
 import { EASE, SplitText, gsap, reducedMotion, useGSAP } from "@/lib/motion";
 import { useWeightHover } from "@/components/motion/useWeightHover";
+import { useDict } from "@/components/prefs/Prefs";
 
 interface Props {
   as?: ElementType;
@@ -27,7 +28,10 @@ export default function Specimen({ as: Tag = "h2", id, className, children, weig
   const wrap = useRef<HTMLDivElement>(null);
   const text = useRef<HTMLElement>(null);
   const final = weight?.[1] ?? 400;
-  useWeightHover(text, { base: final, max: Math.min(900, final + 300), radius: 240, selector: ".split-char", enabled: hover && !!weight });
+  // Letters for most scripts; whole words where letters join (Devanagari).
+  const unit = useDict().splitChars ? "chars" : "words";
+  const unitClass = unit === "chars" ? ".split-char" : ".split-word";
+  useWeightHover(text, { base: final, max: Math.min(900, final + 300), radius: 240, selector: unitClass, enabled: hover && !!weight });
 
   useGSAP(
     () => {
@@ -39,22 +43,24 @@ export default function Specimen({ as: Tag = "h2", id, className, children, weig
         return;
       }
       SplitText.create(el, {
-        type: "lines,chars",
+        type: unit === "chars" ? "lines,words,chars" : "lines,words",
         mask: "lines",
         maskClass: "split-mask",
         linesClass: "split-line",
+        wordsClass: "split-word",
         charsClass: "split-char",
         autoSplit: true,
         onSplit(self) {
           gsap.set(el, { visibility: "visible" });
+          const parts = unit === "chars" ? self.chars : self.words;
           const tl = gsap.timeline({ scrollTrigger: { trigger: box, start: "top 88%", once: true } });
           tl.from(box.querySelectorAll(".spec__line"), { scaleX: 0, duration: 1.4, ease: EASE, stagger: 0.1 }, 0)
             .from(box.querySelectorAll(".spec__tag"), { autoAlpha: 0, duration: 0.6, stagger: 0.1 }, 0.3)
-            .from(self.chars, { yPercent: 115, duration: 1.1, ease: EASE, stagger: 0.022 }, 0.1);
+            .from(parts, { yPercent: 115, duration: 1.1, ease: EASE, stagger: 0.022 }, 0.1);
           if (weight) {
             const w = { v: weight[0] };
-            const sweep = 1.3 + self.chars.length * 0.028;
-            tl.fromTo(self.chars, { fontWeight: weight[0] }, { fontWeight: weight[1], duration: 1.3, ease: "power2.inOut", stagger: 0.028 }, 0.2).fromTo(
+            const sweep = 1.3 + parts.length * 0.028;
+            tl.fromTo(parts, { fontWeight: weight[0] }, { fontWeight: weight[1], duration: 1.3, ease: "power2.inOut", stagger: 0.028 }, 0.2).fromTo(
               w,
               { v: weight[0] },
               {

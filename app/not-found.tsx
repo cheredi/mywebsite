@@ -1,7 +1,11 @@
+"use client";
+
 import TLink from "@/components/motion/TLink";
 import Arrow from "@/components/ui/Arrow";
+import { useDict } from "@/components/prefs/Prefs";
 
 export default function NotFound() {
+  const t = useDict();
   return (
     <section className="lost">
       <div>
@@ -9,10 +13,10 @@ export default function NotFound() {
           (404)
         </p>
         <h1>
-          Hello <span className="serif">👋🏾</span>
+          {t.hero.hello} <span className="serif">👋🏾</span>
         </h1>
         <TLink href="/" className="btn btn--ink">
-          Home
+          {t.ui.home}
           <span className="btn__icon">
             <Arrow />
           </span>

@@ -4,6 +4,7 @@ import Lenis from "lenis";
 import { usePathname, useRouter } from "next/navigation";
 import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import { EASE, ScrollTrigger, gsap, reducedMotion } from "@/lib/motion";
+import { usePrefs } from "@/components/prefs/Prefs";
 
 interface ShellValue {
   lenis: Lenis | null;
@@ -26,6 +27,7 @@ const NAV_OFFSET = -88;
 export default function Shell({ children }: { children: ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
+  const { a11y } = usePrefs();
   const [lenis, setLenis] = useState<Lenis | null>(null);
   const [introDone, setIntroDone] = useState(false);
   const [label, setLabel] = useState("");
@@ -33,6 +35,7 @@ export default function Shell({ children }: { children: ReactNode }) {
   const pending = useRef<{ hash: string } | null>(null);
 
   // Smooth scrolling, driven by GSAP's ticker so ScrollTrigger stays in sync.
+  // Off in accessibility mode or with reduced motion; rebuilt when that changes.
   useEffect(() => {
     if (reducedMotion()) return undefined;
     const instance = new Lenis({ duration: 1.3, smoothWheel: true });
@@ -45,8 +48,9 @@ export default function Shell({ children }: { children: ReactNode }) {
     return () => {
       gsap.ticker.remove(tick);
       instance.destroy();
+      setLenis(null);
     };
-  }, []);
+  }, [a11y]);
 
   // Skip the intro entirely when it already played this session (or motion is reduced).
   useEffect(() => {

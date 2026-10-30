@@ -3,18 +3,22 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import type { SubstackPost } from "@/lib/substack";
-import { LINKS, SECTIONS } from "@/content/site";
+import { LINKS } from "@/content/site";
+import { useDict } from "@/components/prefs/Prefs";
 import { EASE, gsap, reducedMotion, useGSAP } from "@/lib/motion";
 import SplitHeading from "@/components/motion/SplitHeading";
 import Specimen from "@/components/motion/Specimen";
 import Arrow from "@/components/ui/Arrow";
 
-function formatDate(value: string) {
+function formatDate(value: string, locale: string) {
   const d = new Date(value);
-  return Number.isNaN(d.getTime()) ? null : d.toLocaleDateString("en-CA", { year: "numeric", month: "short", day: "numeric" });
+  return Number.isNaN(d.getTime()) ? null : d.toLocaleDateString(locale, { year: "numeric", month: "short", day: "numeric" });
 }
 
-export default function WritingRail({ posts, status }: { posts: SubstackPost[]; status: string }) {
+export default function WritingRail({ posts, status: kind }: { posts: SubstackPost[]; status: "ok" | "empty" | "error" }) {
+  const t = useDict();
+  const SECTIONS = t.sections;
+  const status = kind === "error" ? SECTIONS.substackError : kind === "ok" ? SECTIONS.substackStatus : SECTIONS.substackEmpty;
   const root = useRef<HTMLElement>(null);
   const rail = useRef<HTMLUListElement>(null);
   const [edge, setEdge] = useState({ start: true, end: false });
@@ -74,10 +78,10 @@ export default function WritingRail({ posts, status }: { posts: SubstackPost[]; 
           </div>
           {posts.length > 1 ? (
             <div className="paddles">
-              <button type="button" className="paddle" onClick={() => page(-1)} disabled={edge.start} aria-label="Previous posts">
+              <button type="button" className="paddle" onClick={() => page(-1)} disabled={edge.start} aria-label={t.ui.previousPosts}>
                 <Arrow dir="left" />
               </button>
-              <button type="button" className="paddle" onClick={() => page(1)} disabled={edge.end} aria-label="Next posts">
+              <button type="button" className="paddle" onClick={() => page(1)} disabled={edge.end} aria-label={t.ui.nextPosts}>
                 <Arrow />
               </button>
             </div>
@@ -88,7 +92,7 @@ export default function WritingRail({ posts, status }: { posts: SubstackPost[]; 
       {posts.length ? (
         <ul ref={rail} className="rail">
           {posts.map((post) => {
-            const date = formatDate(post.postDate);
+            const date = formatDate(post.postDate, t.htmlLang);
             return (
               <li key={post.canonicalUrl} className="rail__item">
                 <a className="post" href={post.canonicalUrl} target="_blank" rel="noopener noreferrer">

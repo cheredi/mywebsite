@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { proofStats } from "@/content/proof";
-import { SECTIONS } from "@/content/site";
+import { useDict } from "@/components/prefs/Prefs";
 import { EASE, gsap, reducedMotion, useGSAP } from "@/lib/motion";
 import SectionHead from "@/components/ui/SectionHead";
 import TLink from "@/components/motion/TLink";
@@ -22,6 +22,7 @@ const HREFS: Record<string, string> = {
 };
 
 export default function Momentum() {
+  const t = useDict();
   const list = useRef<HTMLUListElement>(null);
 
   useGSAP(
@@ -63,10 +64,10 @@ export default function Momentum() {
   return (
     <section className="section" aria-labelledby="proof-title" style={{ paddingTop: 0 }}>
       <div className="container">
-        <SectionHead index="02" title={SECTIONS.proof} id="proof-title" />
+        <SectionHead index="02" title={t.sections.proof} id="proof-title" />
         <ul ref={list} className="proof">
-          {proofStats.map((stat) => {
-            const { pct, text } = parse(stat.label);
+          {proofStats.map((stat, i) => {
+            const { pct, text } = parse(t.proof[i]);
             return (
               <li key={stat.label}>
                 <TLink href={HREFS[stat.href] ?? stat.href}>

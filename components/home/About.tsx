@@ -2,18 +2,16 @@
 
 import Image from "next/image";
 import { useRef } from "react";
-import { ABOUT } from "@/content/site";
+import { useDict } from "@/components/prefs/Prefs";
 import { SplitText, gsap, reducedMotion, useGSAP } from "@/lib/motion";
 import SectionHead from "@/components/ui/SectionHead";
 import Reveal from "@/components/motion/Reveal";
 
-// Small photos tucked between Tatyana's own phrases (the words are unchanged).
-const BREAKS = [
-  { after: "build solutions,", src: "/images/work/ona.webp", alt: "ONA" },
-  { after: "and measure whether they worked.", src: "/images/work/shipping.webp", alt: "Shipping Setup Assistant" },
-];
+// Small screenshots tucked between her own phrases (the words are unchanged).
+const IMAGES = ["/images/work/ona.webp", "/images/work/shipping.webp"];
 
-function LeadWithImages({ text }: { text: string }) {
+function LeadWithImages({ text, anchors, alts }: { text: string; anchors: [string, string]; alts: [string, string] }) {
+  const BREAKS = anchors.map((after, i) => ({ after, src: IMAGES[i], alt: alts[i] }));
   const nodes: React.ReactNode[] = [];
   let rest = text;
   BREAKS.forEach((b, i) => {
@@ -33,6 +31,7 @@ function LeadWithImages({ text }: { text: string }) {
 }
 
 export default function About() {
+  const t = useDict();
   const lead = useRef<HTMLParagraphElement>(null);
 
   // Words brighten one by one as the paragraph moves through the viewport.
@@ -65,17 +64,17 @@ export default function About() {
   return (
     <section id="about" className="section" aria-labelledby="about-title">
       <div className="container">
-        <SectionHead index="01" title={ABOUT.heading} id="about-title" />
+        <SectionHead index="01" title={t.about.heading} id="about-title" />
         <div className="about__grid">
           <span aria-hidden="true" />
           <div>
             <p ref={lead} className="about__lead">
-              <LeadWithImages text={ABOUT.paragraphs[0]} />
+              <LeadWithImages text={t.about.paragraphs[0]} anchors={t.about.imageAnchors} alts={[t.alt.ona, t.alt.shipping]} />
             </p>
             <Reveal className="about__rest" stagger={0.1}>
-              <p>{ABOUT.paragraphs[1]}</p>
+              <p>{t.about.paragraphs[1]}</p>
               <p className="about__focus">
-                <strong>{ABOUT.focus.label}</strong> {ABOUT.focus.text}
+                <strong>{t.about.focusLabel}</strong> {t.about.focusText}
               </p>
             </Reveal>
           </div>
