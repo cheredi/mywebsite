@@ -7,7 +7,7 @@ export default function SectionHead({ index, title, id }: { index: string; title
   const readout = useRef<HTMLSpanElement>(null);
   return (
     <div className="section-head">
-      <p className="mono section-head__index">
+      <p className="mono section-head__index" aria-hidden="true">
         ({index})
         <span ref={readout} className="section-head__readout" aria-hidden="true">
           WGHT 500

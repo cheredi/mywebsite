@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef } from "react";
-import { LINKS, PERSON, SECTIONS } from "@/content/site";
+import { LINKS, PERSON } from "@/content/site";
+import { useDict } from "@/components/prefs/Prefs";
 import { EASE, gsap, reducedMotion, useGSAP } from "@/lib/motion";
 import { useShell } from "@/components/motion/Shell";
 import Specimen from "@/components/motion/Specimen";
@@ -18,6 +19,7 @@ const DRAPE = `M0 0H1200V18${Array.from({ length: SWAGS }, (_, i) => {
 
 export default function Connect() {
   const { lenis } = useShell();
+  const t = useDict();
   const root = useRef<HTMLElement>(null);
 
   useGSAP(
@@ -55,12 +57,12 @@ export default function Connect() {
 
       <div className="container curtain__inner">
         <Specimen as="h2" id="contact-title" className="curtain__title" weight={[100, 500]} tags={false}>
-          {SECTIONS.contact}
+          {t.sections.contact}
         </Specimen>
 
         <div className="curtain__grid">
           <div>
-            <span className="mono curtain__label">Email</span>
+            <span className="mono curtain__label">{t.ui.email}</span>
             <a className="curtain__email u-link" href={`mailto:${PERSON.email}`}>
               {PERSON.email}
             </a>
@@ -89,10 +91,10 @@ export default function Connect() {
 
         <div className="curtain__base">
           <p>
-            &copy; {new Date().getFullYear()} {PERSON.name}. {SECTIONS.footer}
+            &copy; {new Date().getFullYear()} {PERSON.name}
           </p>
           <p className="mono">
-            {PERSON.city} <LocalTime />
+            {t.ui.city} <LocalTime />
           </p>
           <button
             type="button"
@@ -100,7 +102,7 @@ export default function Connect() {
             style={{ background: "none", border: 0, padding: 0, color: "inherit" }}
             onClick={() => (lenis ? lenis.scrollTo(0, { duration: 2, force: true }) : window.scrollTo({ top: 0, behavior: "smooth" }))}
           >
-            Back to top ↑
+            {t.ui.backToTop}
           </button>
         </div>
       </div>

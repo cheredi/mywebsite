@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import { useRef } from "react";
-import { HERO, LINKS, PERSON } from "@/content/site";
+import { LINKS, PERSON } from "@/content/site";
+import { useDict } from "@/components/prefs/Prefs";
 import { EASE, gsap, reducedMotion, useGSAP } from "@/lib/motion";
 import { useShell } from "@/components/motion/Shell";
 import { useWeightHover } from "@/components/motion/useWeightHover";
@@ -15,6 +16,7 @@ export const PORTRAIT = { src: "/images/tatyana-portrait.webp", width: 664, heig
 
 export default function Hero() {
   const { introDone } = useShell();
+  const t = useDict();
   const root = useRef<HTMLElement>(null);
   const name = useRef<HTMLSpanElement>(null);
   useWeightHover(name, { base: 600, max: 900, radius: 260 });
@@ -60,12 +62,12 @@ export default function Hero() {
       <div className="container hero__inner">
         <div className="hero__copy">
           <p className="mono hero__kicker" data-hero="">
-            {HERO.kicker}
+            {t.hero.kicker}
           </p>
-          <h1 id="hero-title" className="hero__title" data-hero="" aria-label={`${HERO.im} ${PERSON.name}`}>
+          <h1 id="hero-title" className="hero__title" data-hero="" aria-label={`${t.hero.im} ${PERSON.name}`}>
             <span className="hero__im" aria-hidden="true">
               <span className="chars">
-                {HERO.im.split("").map((c, i) => (
+                {(t.splitChars ? Array.from(t.hero.im) : [t.hero.im]).map((c, i) => (
                   <span key={i} className="char">
                     {c}
                   </span>
@@ -88,20 +90,20 @@ export default function Hero() {
             </span>
           </h1>
           <p className="hero__summary" data-hero="">
-            {HERO.summary}
+            {t.hero.summary}
           </p>
           <p className="hero__sub" data-hero="">
-            {HERO.sub}
+            {t.hero.sub}
           </p>
           <div className="hero__actions" data-hero="">
             <TLink href="/#projects" className="btn btn--ink">
-              Projects
+              {t.nav.projects}
               <span className="btn__icon">
                 <Arrow />
               </span>
             </TLink>
             <TLink href="/#contact" className="btn btn--line">
-              Contact
+              {t.nav.contact}
               <span className="btn__icon">
                 <Arrow />
               </span>
@@ -112,15 +114,18 @@ export default function Hero() {
         <div className="hero__visual">
           <div className="hero__panel">
             <div className="hero__portrait">
-              <Image src={PORTRAIT.src} alt="Tatyana Amugo" width={PORTRAIT.width} height={PORTRAIT.height} priority sizes={PORTRAIT.sizes} />
+              <Image src={PORTRAIT.src} alt={t.alt.portrait} width={PORTRAIT.width} height={PORTRAIT.height} priority sizes={PORTRAIT.sizes} />
             </div>
+            <p className="a11y-caption hero__caption">
+              {t.ui.image} {t.alt.portrait}
+            </p>
           </div>
         </div>
       </div>
 
       <div className="hero__bar mono" data-hero="">
         <span>
-          {PERSON.city} <LocalTime />
+          {t.ui.city} <LocalTime />
         </span>
         <span className="hide-sm">
           <a className="u-link" href={LINKS.linkedin} target="_blank" rel="noopener noreferrer">
@@ -132,7 +137,7 @@ export default function Hero() {
           </a>
         </span>
         <span className="hero__scroll">
-          Scroll <i />
+          {t.ui.scroll} <i />
         </span>
       </div>
     </section>

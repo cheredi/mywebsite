@@ -44,7 +44,6 @@ export const SECTIONS = {
   arcade: "Interview Arcade",
   arcadeIntro: "Pick role + difficulty, beat the timer, stack a streak, and train like an interview game.",
   contact: "Let's Connect",
-  footer: "Built with curiosity and clear thinking.",
 };
 
 export const LINKS = {

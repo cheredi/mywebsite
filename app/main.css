@@ -21,13 +21,68 @@
   --on-dark-muted: rgba(241, 236, 228, 0.6);
   --line-dark: rgba(241, 236, 228, 0.16);
 
-  --sans: "Inter Variable", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --serif: "Instrument Serif", Georgia, serif;
+  --sans: "Inter Variable", "Inter", "Noto Sans Devanagari Variable", "Noto Sans SC Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --serif: "Instrument Serif", Georgia, "Noto Sans Devanagari Variable", "Noto Sans SC Variable", serif;
   --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
 
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --gutter: clamp(20px, 4vw, 56px);
   --max: 1360px;
+
+  /* Semantic colours (these flip with the theme; the brand colours above don't) */
+  --bg: #f1ece4;
+  --fg: #121010;
+  --fg-2: #2a2423;
+  --surface: #f8f5f0;
+  --surface-2: #ead5cf;
+  --accent: #6b1934;
+  --panel: #121010;
+  color-scheme: light;
+}
+
+/* Dark theme: set by the boot script; the media query covers no-JS visitors. */
+:root[data-theme="dark"] {
+  --bg: #121010;
+  --fg: #f1ece4;
+  --fg-2: #d8cfc6;
+  --surface: #1c1918;
+  --surface-2: #2b1b21;
+  --accent: #f08cb2;
+  --panel: #1f1b1a;
+  --muted: #a89d96;
+  --line: rgba(241, 236, 228, 0.15);
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121010;
+    --fg: #f1ece4;
+    --fg-2: #d8cfc6;
+    --surface: #1c1918;
+    --surface-2: #2b1b21;
+    --accent: #f08cb2;
+    --panel: #1f1b1a;
+    --muted: #a89d96;
+    --line: rgba(241, 236, 228, 0.15);
+    color-scheme: dark;
+  }
+}
+
+[data-theme="dark"] .nav {
+  box-shadow: 0 0 0 1px var(--line-dark), 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.btn--ink:hover {
+  color: var(--cream);
+}
+
+/* Keep page content hidden for a moment when a non-English language is about
+   to be applied, so English doesn't flash first. */
+html[data-lang]:not([data-lang="en"]):not([data-ready]) main,
+html[data-lang]:not([data-lang="en"]):not([data-ready]) .curtain,
+html[data-lang]:not([data-lang="en"]):not([data-ready]) .nav {
+  visibility: hidden;
 }
 
 /* ================= Base ================= */
@@ -68,8 +123,8 @@ body {
   font-size: 17px;
   line-height: 1.55;
   letter-spacing: -0.012em;
-  color: var(--ink);
-  background: var(--cream);
+  color: var(--fg);
+  background: var(--bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: clip;
@@ -159,7 +214,9 @@ main {
   visibility: hidden;
 }
 
-.split-mask {
+/* GSAP names masks after the split class (e.g. split-line-mask), not maskClass. */
+.split-mask,
+[class$="-mask"][class^="split-"] {
   overflow: clip;
   padding-bottom: 0.16em;
   margin-bottom: -0.16em;
@@ -282,9 +339,14 @@ main {
 }
 
 /* Masks clip vertically only, so heavier glyphs can widen freely */
-.spec .split-mask {
+.spec .split-mask,
+.spec .split-line-mask {
   overflow: visible !important;
-  clip-path: inset(-0.1em -50vw -0.16em -50vw);
+  padding-bottom: 0;
+  margin-bottom: 0;
+  /* Room below for descenders on tight line-heights, but not so much that
+     rising glyphs peek out before they animate in. */
+  clip-path: inset(-0.1em -50vw -0.24em -50vw);
 }
 
 .spec .split-line {
@@ -342,8 +404,8 @@ main {
 }
 
 .btn--ink {
-  background: var(--ink);
-  color: var(--cream);
+  background: var(--fg);
+  color: var(--bg);
 }
 
 .btn--ink::before {
@@ -351,31 +413,31 @@ main {
 }
 
 .btn--ink .btn__icon {
-  background: var(--cream);
-  color: var(--ink);
+  background: var(--bg);
+  color: var(--fg);
 }
 
 .btn--line {
   border-color: var(--line);
-  color: var(--ink);
+  color: var(--fg);
 }
 
 .btn--line::before {
-  background: var(--ink);
+  background: var(--fg);
 }
 
 .btn--line:hover {
-  color: var(--cream);
+  color: var(--bg);
 }
 
 .btn--line .btn__icon {
-  background: var(--ink);
-  color: var(--cream);
+  background: var(--fg);
+  color: var(--bg);
 }
 
 .btn--line:hover .btn__icon {
-  background: var(--cream);
-  color: var(--ink);
+  background: var(--bg);
+  color: var(--fg);
 }
 
 .btn--cream {
@@ -503,7 +565,7 @@ main {
   left: 0;
   right: 0;
   height: 50.5%;
-  background: var(--cream);
+  background: var(--bg);
   will-change: transform;
 }
 
@@ -520,7 +582,7 @@ main {
   inset: 0;
   visibility: hidden;
   padding: clamp(20px, 3vw, 40px);
-  color: var(--ink);
+  color: var(--fg);
 }
 
 .ld-label {
@@ -528,10 +590,10 @@ main {
   color: var(--muted);
 }
 
-.ld-label--tl { top: clamp(20px, 3vw, 40px); left: clamp(20px, 3vw, 40px); color: var(--ink); }
+.ld-label--tl { top: clamp(20px, 3vw, 40px); left: clamp(20px, 3vw, 40px); color: var(--fg); }
 .ld-label--tr { top: clamp(20px, 3vw, 40px); right: clamp(20px, 3vw, 40px); }
-.ld-label--bl { bottom: clamp(20px, 3vw, 40px); left: clamp(20px, 3vw, 40px); color: var(--ink); }
-.ld-label--br { bottom: clamp(20px, 3vw, 40px); right: clamp(20px, 3vw, 40px); color: var(--ink); font-variant-numeric: tabular-nums; }
+.ld-label--bl { bottom: clamp(20px, 3vw, 40px); left: clamp(20px, 3vw, 40px); color: var(--fg); }
+.ld-label--br { bottom: clamp(20px, 3vw, 40px); right: clamp(20px, 3vw, 40px); color: var(--fg); font-variant-numeric: tabular-nums; }
 
 .ld-guides {
   position: absolute;
@@ -579,7 +641,7 @@ main {
   font-size: clamp(6rem, 22vw, 20rem);
   line-height: 1;
   letter-spacing: -0.03em;
-  color: var(--berry);
+  color: var(--accent);
   white-space: nowrap;
 }
 
@@ -680,9 +742,9 @@ main {
   z-index: 200;
   transform: translateX(-50%);
   display: grid;
-  grid-template-columns: 44px 1fr 44px;
+  grid-template-columns: 44px 44px 1fr 44px 44px;
   align-items: center;
-  width: min(380px, calc(100vw - 32px));
+  width: min(420px, calc(100vw - 24px));
   height: 52px;
   padding: 0 4px;
   border-radius: 16px;
@@ -755,6 +817,209 @@ main {
 .nav__burger[aria-expanded="true"] span:nth-child(2) {
   top: 21.5px;
   transform: rotate(-45deg);
+}
+
+button.nav__icon {
+  border: 0;
+  background: none;
+  color: inherit;
+  padding: 0;
+}
+
+.nav__a11y[aria-pressed="true"],
+.nav__prefs[aria-expanded="true"] {
+  background: var(--cream);
+  color: var(--ink);
+}
+
+/* ---- Preferences panel ---- */
+.prefs {
+  position: fixed;
+  top: 78px;
+  left: 50%;
+  z-index: 210;
+  transform: translateX(-50%);
+  width: min(400px, calc(100vw - 24px));
+  max-height: calc(100svh - 96px);
+  overflow: auto;
+  padding: 20px;
+  border-radius: 18px;
+  background: var(--surface);
+  color: var(--fg);
+  border: 1px solid var(--line);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.22);
+}
+
+.prefs[hidden] {
+  display: none;
+}
+
+.prefs__title {
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+
+.prefs__group {
+  border: 0;
+  padding: 14px 0;
+  margin: 0;
+  border-top: 1px solid var(--line);
+}
+
+.prefs__group legend {
+  color: var(--muted);
+  padding: 0;
+  margin-bottom: 10px;
+}
+
+.prefs__langs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.prefs__seg {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.prefs__option {
+  min-height: 44px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--fg);
+  font-size: 15px;
+  text-align: left;
+}
+
+.prefs__seg .prefs__option {
+  text-align: center;
+}
+
+.prefs__option:hover {
+  border-color: var(--fg);
+}
+
+.prefs__option[aria-checked="true"] {
+  background: var(--fg);
+  color: var(--bg);
+  border-color: var(--fg);
+}
+
+.prefs__a11y {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.prefs__a11y-title {
+  font-weight: 600;
+}
+
+.prefs__hint {
+  margin-top: 4px;
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.switch {
+  position: relative;
+  flex: none;
+  width: 56px;
+  height: 32px;
+  margin-top: 2px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+}
+
+.switch__thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--muted);
+  transition: transform 0.3s var(--ease), background-color 0.3s var(--ease);
+}
+
+.switch[aria-checked="true"] {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.switch[aria-checked="true"] .switch__thumb {
+  transform: translateX(24px);
+  background: var(--bg);
+}
+
+/* ---- Read-aloud bar (accessibility mode) ---- */
+.reader {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  z-index: 180;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  max-width: calc(100vw - 32px);
+  padding: 8px;
+  border-radius: 18px;
+  background: var(--ink);
+  color: var(--cream);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+}
+
+.reader__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 0 18px;
+  border-radius: 12px;
+  border: 1px solid var(--line-dark);
+  background: transparent;
+  color: var(--cream);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.reader__btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.reader__btn--main {
+  background: var(--cream);
+  color: var(--ink);
+  border-color: var(--cream);
+}
+
+.reader__note {
+  flex-basis: 100%;
+  padding: 0 8px 4px;
+  font-size: 14px;
+  color: var(--on-dark-muted);
+}
+
+.hero__caption {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  z-index: 2;
+  margin: 0 !important;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(18, 16, 16, 0.78);
+  color: var(--cream) !important;
 }
 
 .menu {
@@ -837,7 +1102,7 @@ main {
   height: 100svh;
   min-height: 680px;
   overflow: hidden;
-  background: var(--cream);
+  background: var(--bg);
 }
 
 .hero__inner {
@@ -876,7 +1141,7 @@ main {
   font-size: clamp(4.5rem, min(11.5vw, 17vh), 12.5rem);
   line-height: 0.86;
   letter-spacing: -0.035em;
-  color: var(--berry);
+  color: var(--accent);
   margin-left: -0.04em;
 }
 
@@ -1007,7 +1272,7 @@ main {
   content: "";
   position: absolute;
   inset: 0;
-  background: var(--ink);
+  background: var(--fg);
   transform: translateX(-100%);
   animation: scroll-hint 2.2s var(--ease) infinite;
 }
@@ -1027,7 +1292,7 @@ main {
 .stage {
   position: relative;
   z-index: 1;
-  background: var(--cream);
+  background: var(--bg);
   border-radius: 28px 28px 0 0;
   box-shadow: 0 -30px 60px rgba(18, 16, 16, 0.08);
 }
@@ -1053,7 +1318,7 @@ main {
   margin: -0.1em 0.12em 0;
   border-radius: 999px;
   overflow: hidden;
-  background: var(--blush);
+  background: var(--surface-2);
   transform: translateY(-0.06em);
   transition: width 0.7s var(--ease);
 }
@@ -1086,7 +1351,7 @@ main {
 
 .about__focus {
   padding-left: 20px;
-  border-left: 2px solid var(--berry);
+  border-left: 2px solid var(--accent);
 }
 
 /* ================= Momentum ================= */
@@ -1129,7 +1394,7 @@ main {
   letter-spacing: 0;
   position: relative;
   top: 0.2em;
-  color: var(--berry);
+  color: var(--accent);
 }
 
 .proof__label {
@@ -1140,7 +1405,7 @@ main {
 }
 
 .proof a:hover .proof__label {
-  color: var(--ink);
+  color: var(--fg);
 }
 
 /* ================= Projects (stacked) ================= */
@@ -1168,10 +1433,10 @@ main {
   z-index: 3;
 }
 
-.card--0 { background: var(--ink); color: var(--cream); }
+.card--0 { background: var(--panel); color: var(--cream); }
 .card--1 { background: var(--berry); color: var(--cream); }
-.card--2 { background: var(--paper); color: var(--ink); border: 1px solid var(--line); }
-.card--3 { background: var(--blush); color: var(--ink); }
+.card--2 { background: var(--surface); color: var(--fg); border: 1px solid var(--line); }
+.card--3 { background: var(--surface-2); color: var(--fg); }
 
 .card__inner {
   position: relative;
@@ -1253,8 +1518,8 @@ main {
 
 .card--0 .card__visual { background: #1d1a19; }
 .card--1 .card__visual { background: var(--berry-deep); }
-.card--2 .card__visual { background: var(--ink); }
-.card--3 .card__visual { background: #f6ebe7; }
+.card--2 .card__visual { background: var(--panel); }
+.card--3 .card__visual { background: var(--surface); }
 
 .card__shot {
   width: 88%;
@@ -1313,7 +1578,7 @@ main {
 
 .frames span.hot {
   position: relative;
-  outline: 2px solid var(--berry);
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
@@ -1364,7 +1629,7 @@ main {
   display: grid;
   gap: 12px;
   font-size: 15.5px;
-  color: var(--ink-2);
+  color: var(--fg-2);
 }
 
 .xp__bullets li {
@@ -1379,7 +1644,7 @@ main {
   top: 0.68em;
   width: 7px;
   height: 1px;
-  background: var(--berry);
+  background: var(--accent);
 }
 
 /* ================= Skills ================= */
@@ -1420,7 +1685,7 @@ main {
 }
 
 .dark {
-  background: var(--ink);
+  background: var(--panel);
   color: var(--cream);
 }
 
@@ -1438,7 +1703,7 @@ main {
   font-size: min(15.2vw, 14.5rem);
   line-height: 0.95;
   letter-spacing: -0.03em;
-  color: var(--berry);
+  color: var(--accent);
 }
 
 .writing__head {
@@ -1478,8 +1743,8 @@ main {
 }
 
 .paddle:hover:not(:disabled) {
-  background: var(--ink);
-  color: var(--cream);
+  background: var(--fg);
+  color: var(--bg);
 }
 
 .paddle:disabled {
@@ -1524,7 +1789,7 @@ main {
   aspect-ratio: 4 / 3;
   border-radius: 18px;
   overflow: hidden;
-  background: var(--blush);
+  background: var(--surface-2);
 }
 
 .post__img img {
@@ -1602,7 +1867,7 @@ main {
 /* ================= Interview Arcade ================= */
 .arcade {
   border-radius: 24px;
-  background: var(--paper);
+  background: var(--surface);
   border: 1px solid var(--line);
   padding: clamp(24px, 4vw, 56px);
 }
@@ -1625,7 +1890,7 @@ main {
 .sim-stat {
   padding: 16px 18px;
   border-radius: 14px;
-  background: var(--cream);
+  background: var(--bg);
   font-family: var(--mono);
   font-size: 11px;
   letter-spacing: 0.08em;
@@ -1640,7 +1905,7 @@ main {
   font-size: 32px;
   font-weight: 500;
   letter-spacing: -0.04em;
-  color: var(--ink);
+  color: var(--fg);
   font-variant-numeric: tabular-nums;
   text-transform: none;
 }
@@ -1672,21 +1937,21 @@ main {
 .role-btn:hover,
 .difficulty-btn:hover,
 .sim-action-btn:hover {
-  border-color: var(--ink);
+  border-color: var(--fg);
 }
 
 .role-btn.active,
 .difficulty-btn.active {
-  background: var(--ink);
-  border-color: var(--ink);
-  color: var(--cream);
+  background: var(--fg);
+  border-color: var(--fg);
+  color: var(--bg);
 }
 
 .sim-output {
   margin-block: 28px;
   padding: clamp(20px, 3vw, 36px);
   border-radius: 18px;
-  background: var(--ink);
+  background: var(--panel);
   color: var(--cream);
 }
 
@@ -1756,7 +2021,7 @@ main {
   left: 0;
   width: 100%;
   height: clamp(36px, 5vw, 72px);
-  color: var(--cream);
+  color: var(--bg);
 }
 
 .curtain__title {
@@ -1825,7 +2090,7 @@ main {
 }
 
 .ph__crumbs a:hover {
-  color: var(--ink);
+  color: var(--fg);
 }
 
 .ph__title {
@@ -1876,7 +2141,7 @@ main {
   gap: 20px;
   max-width: 64ch;
   font-size: 17px;
-  color: var(--ink-2);
+  color: var(--fg-2);
 }
 
 .ph__meta strong {
@@ -1913,7 +2178,7 @@ main {
 }
 
 .ph__next:hover .ph__next-title {
-  color: var(--berry);
+  color: var(--accent);
 }
 
 /* ================= Resume ================= */
@@ -1929,7 +2194,7 @@ main {
   align-items: flex-end;
   gap: 24px;
   padding-bottom: 32px;
-  border-bottom: 1px solid var(--ink);
+  border-bottom: 1px solid var(--fg);
 }
 
 .resume__name {
@@ -1941,7 +2206,7 @@ main {
 .resume__summary {
   margin-top: 16px;
   max-width: 52ch;
-  color: var(--ink-2);
+  color: var(--fg-2);
 }
 
 .resume__contact {
@@ -2149,6 +2414,134 @@ main {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* ================= Accessibility mode =================
+   Off by default; toggled from the nav. Larger, more legible type, higher
+   contrast, underlined links, no motion, visible image descriptions. */
+html.a11y {
+  --sans: "Atkinson Hyperlegible", "Noto Sans Devanagari Variable", "Noto Sans SC Variable", system-ui, sans-serif;
+  --serif: var(--sans);
+  --muted: #463e3a;
+  --line: rgba(18, 16, 16, 0.32);
+  --on-dark-muted: rgba(241, 236, 228, 0.88);
+  --line-dark: rgba(241, 236, 228, 0.38);
+}
+
+html.a11y[data-theme="dark"] {
+  --muted: #dcd3cb;
+  --line: rgba(241, 236, 228, 0.34);
+}
+
+html.a11y body {
+  font-size: 19px;
+  line-height: 1.75;
+  letter-spacing: 0.01em;
+  word-spacing: 0.06em;
+}
+
+html.a11y *,
+html.a11y *::before,
+html.a11y *::after {
+  animation: none !important;
+  transition: none !important;
+}
+
+html.a11y .serif,
+html.a11y .hero__im,
+html.a11y .writing__brand,
+html.a11y .pt__label {
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* Atkinson is wider than the italic serif: let the brand wrap and scale down. */
+html.a11y .writing__brand {
+  white-space: normal;
+  font-size: clamp(2.75rem, 9vw, 8rem);
+  line-height: 1.05;
+}
+
+html.a11y h1,
+html.a11y h2,
+html.a11y h3,
+html.a11y .hero__name,
+html.a11y .section-head__title,
+html.a11y .curtain__title {
+  letter-spacing: -0.01em;
+  line-height: 1.12;
+}
+
+html.a11y .mono {
+  font-size: 14px;
+  letter-spacing: 0.03em;
+  text-transform: none;
+}
+
+html.a11y main a:not(.btn):not(.nav__brand),
+html.a11y footer a:not(.btn),
+html.a11y .menu__foot a {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 2px;
+}
+
+html.a11y :focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 4px;
+}
+
+html.a11y .btn {
+  min-height: 54px;
+  font-size: 17px;
+}
+
+/* Decorative motion and type-specimen ornaments step aside */
+html.a11y .spec__guides,
+html.a11y .section-head__readout,
+html.a11y .inline-img,
+html.a11y .hero__scroll {
+  display: none;
+}
+
+/* Nothing pins or stacks: content reads straight down */
+html.a11y .hero,
+html.a11y .card {
+  position: relative;
+  top: auto;
+}
+
+html.a11y .hero {
+  height: auto;
+}
+
+/* Image descriptions become visible captions */
+.a11y-caption {
+  display: none;
+}
+
+html.a11y .a11y-caption {
+  display: block;
+  margin-top: 10px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.on-dark .a11y-caption,
+.card--0 .a11y-caption,
+.card--1 .a11y-caption,
+.hero__panel .a11y-caption {
+  color: var(--on-dark-muted);
+}
+
+/* The element being read aloud */
+.is-reading {
+  outline: 3px solid var(--accent);
+  outline-offset: 6px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
 }
 
 /* ================= Print (resume) ================= */

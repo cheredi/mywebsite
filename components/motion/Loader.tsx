@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef } from "react";
 import { HERO, PERSON } from "@/content/site";
+import { usePrefs } from "@/components/prefs/Prefs";
 import { EASE, gsap, useGSAP } from "@/lib/motion";
 import { useShell } from "@/components/motion/Shell";
 import { PORTRAIT } from "@/components/home/Hero";
@@ -19,6 +20,7 @@ const GUIDES = ["Ascender", "x-height", "Baseline", "Descender"];
  */
 export default function Loader() {
   const { lenis, finishIntro } = useShell();
+  const { dict: t, ready } = usePrefs();
   const root = useRef<HTMLDivElement>(null);
   const tl = useRef<gsap.core.Timeline | null>(null);
   const active = useRef(false);
@@ -27,7 +29,8 @@ export default function Loader() {
     () => {
       const html = document.documentElement;
       const el = root.current;
-      if (!el || html.classList.contains("no-intro")) return;
+      // Wait for saved preferences so "Hello" appears in the visitor's language.
+      if (!ready || !el || html.classList.contains("no-intro") || active.current) return;
       const short = html.classList.contains("intro-short");
       const panel = document.querySelector<HTMLElement>(".hero__panel");
       active.current = true;
@@ -122,7 +125,7 @@ export default function Loader() {
       // Starting states are applied above; only now show the stage.
       gsap.set(q(".ld-stage"), { visibility: "visible" });
     },
-    { scope: root }
+    { scope: root, dependencies: [ready] }
   );
 
   // Hold page scroll while the intro plays.
@@ -154,7 +157,7 @@ export default function Loader() {
         </div>
         <p className="ld-word">
           <span className="ld-chars">
-            {HERO.hello.split("").map((c, i) => (
+            {(t.splitChars ? Array.from(t.hero.hello) : [t.hero.hello]).map((c, i) => (
               <span key={i} className="ld-char">
                 {c}
               </span>
@@ -162,7 +165,7 @@ export default function Loader() {
           </span>
           <span className="ld-wave">{HERO.wave}</span>
         </p>
-        <p className="mono ld-label ld-label--bl">{HERO.kicker}</p>
+        <p className="mono ld-label ld-label--bl">{t.hero.kicker}</p>
         <p className="mono ld-label ld-label--br">
           <span className="ld-count">000</span>
         </p>
