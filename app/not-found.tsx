@@ -1,17 +1,22 @@
-import Link from "next/link";
+import TLink from "@/components/motion/TLink";
+import Arrow from "@/components/ui/Arrow";
 
 export default function NotFound() {
   return (
     <section className="lost">
-      <div className="wrap">
-        <p className="label">( 404 )</p>
+      <div>
+        <p className="mono" style={{ color: "var(--muted)" }}>
+          (404)
+        </p>
         <h1>
-          This page <span className="serif">wandered off.</span>
+          Hello <span className="serif">👋🏾</span>
         </h1>
-        <p>The work is still here, though.</p>
-        <Link href="/#work" className="btn btn--primary">
-          See the work
-        </Link>
+        <TLink href="/" className="btn btn--ink">
+          Home
+          <span className="btn__icon">
+            <Arrow />
+          </span>
+        </TLink>
       </div>
     </section>
   );

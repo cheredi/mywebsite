@@ -1,13 +1,10 @@
-import { renderOg, OG_SIZE } from "@/lib/og";
+import { OG_SIZE, renderOg } from "@/lib/og";
+import { HERO, PERSON } from "@/content/site";
 
-export const alt = "Tatyana Amugo — AI Product Builder";
+export const alt = `${PERSON.name} — Product & AI Builder`;
 export const size = OG_SIZE;
 export const contentType = "image/png";
 
 export default function Image() {
-  return renderOg({
-    eyebrow: "AI Product Builder · Toronto, Canada",
-    title: "Tatyana Amugo",
-    subtitle: "Find the problem. Build the fix. Prove it worked.",
-  });
+  return renderOg({ eyebrow: HERO.kicker, title: PERSON.name, subtitle: HERO.summary });
 }
