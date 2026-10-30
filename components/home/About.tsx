@@ -9,7 +9,6 @@ import Reveal from "@/components/motion/Reveal";
 
 // Small photos tucked between Tatyana's own phrases (the words are unchanged).
 const BREAKS = [
-  { after: "I identify problems,", src: "/images/tatyana-closeup.jpg", alt: "Tatyana" },
   { after: "build solutions,", src: "/images/work/ona.webp", alt: "ONA" },
   { after: "and measure whether they worked.", src: "/images/work/shipping.webp", alt: "Shipping Setup Assistant" },
 ];

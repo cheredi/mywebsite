@@ -5,6 +5,7 @@ import { PROJECT_MEDIA } from "@/content/media";
 import { PERSON } from "@/content/site";
 import { JsonLd, PERSON_ID, absolute, breadcrumbs } from "@/lib/seo";
 import SplitHeading from "@/components/motion/SplitHeading";
+import Specimen from "@/components/motion/Specimen";
 import Reveal from "@/components/motion/Reveal";
 import TLink from "@/components/motion/TLink";
 import ParallaxImage from "@/components/ui/ParallaxImage";
@@ -68,9 +69,9 @@ export default async function ProjectPage({ params }: Props) {
           <span aria-hidden="true">/</span>
           <TLink href="/#projects">Featured Projects</TLink>
         </nav>
-        <SplitHeading as="h1" className="ph__title">
+        <Specimen as="h1" className="ph__title" weight={[100, 500]}>
           {project.title}
-        </SplitHeading>
+        </Specimen>
         {project.badge ? (
           <Reveal as="p" delay={0.3}>
             <span className="mono ph__badge">{project.badge}</span>

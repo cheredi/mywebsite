@@ -62,18 +62,31 @@ export default function Shell({ children }: { children: ReactNode }) {
     (hash: string, immediate = false) => {
       const el = hash ? document.querySelector<HTMLElement>(hash) : null;
       if (!el) return;
-      if (lenis) lenis.scrollTo(el, { offset: NAV_OFFSET, immediate, duration: 1.6 });
-      else el.scrollIntoView({ behavior: immediate ? "auto" : "smooth" });
+      if (lenis) {
+        // Lenis caches the page height; re-measure so a fresh page isn't clamped to the old one.
+        lenis.resize();
+        lenis.scrollTo(el, { offset: NAV_OFFSET, immediate, duration: 1.6, force: true });
+      }
+      else window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY + NAV_OFFSET, behavior: immediate ? "auto" : "smooth" });
     },
     [lenis]
   );
+
+  // Opening a link like /#contact directly: go there once the intro is done.
+  const arrivedWithHash = useRef(false);
+  useEffect(() => {
+    if (!introDone || arrivedWithHash.current) return;
+    arrivedWithHash.current = true;
+    const { hash } = window.location;
+    if (hash.length > 1) window.setTimeout(() => scrollToHash(hash), 300);
+  }, [introDone, scrollToHash]);
 
   const navigate = useCallback(
     (href: string, nextLabel = "") => {
       const url = new URL(href, window.location.href);
       if (url.pathname === window.location.pathname) {
         if (url.hash) scrollToHash(url.hash);
-        else if (lenis) lenis.scrollTo(0, { duration: 1.6 });
+        else if (lenis) lenis.scrollTo(0, { duration: 1.6, force: true });
         else window.scrollTo({ top: 0, behavior: "smooth" });
         return;
       }
@@ -89,7 +102,9 @@ export default function Shell({ children }: { children: ReactNode }) {
         .timeline()
         .set(el, { visibility: "visible", y: 0 })
         .fromTo(el, { yPercent: 100 }, { yPercent: 0, duration: 0.75, ease: EASE })
-        .fromTo(el.querySelectorAll(".pt__label span"), { yPercent: 110 }, { yPercent: 0, duration: 0.6, ease: EASE }, "-=0.45")
+        .fromTo(el.querySelectorAll(".pt__line"), { scaleX: 0 }, { scaleX: 1, duration: 0.8, ease: EASE, stagger: 0.06 }, "-=0.5")
+        .fromTo(el.querySelectorAll(".pt__label span"), { yPercent: 110 }, { yPercent: 0, duration: 0.6, ease: EASE }, "-=0.7")
+        .fromTo(el.querySelectorAll(".pt__meta"), { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.4 }, "<")
         .call(() => router.push(url.pathname, { scroll: false }));
     },
     [lenis, router, scrollToHash]
@@ -99,30 +114,45 @@ export default function Shell({ children }: { children: ReactNode }) {
   useEffect(() => {
     const el = overlay.current;
     const job = pending.current;
-    if (!el || !job) return;
+    if (!el || !job) {
+      // Back/forward navigation: just re-measure scroll-driven animations.
+      requestAnimationFrame(() => ScrollTrigger.refresh());
+      return;
+    }
     pending.current = null;
     window.scrollTo(0, 0);
+    lenis?.resize();
     lenis?.scrollTo(0, { immediate: true, force: true });
-    requestAnimationFrame(() => {
+    // Give the new page two frames (and its fonts) to lay out before measuring.
+    const settle = document.fonts?.ready ?? Promise.resolve();
+    settle.then(() => requestAnimationFrame(() => requestAnimationFrame(() => {
       ScrollTrigger.refresh();
       if (job.hash) scrollToHash(job.hash, true);
       gsap
         .timeline({
-          delay: 0.15,
+          delay: 0.1,
           onComplete: () => {
             gsap.set(el, { visibility: "hidden" });
             lenis?.start();
           },
         })
         .to(el.querySelectorAll(".pt__label span"), { yPercent: -110, duration: 0.5, ease: "power3.in" })
+        .to(el.querySelectorAll(".pt__meta"), { autoAlpha: 0, duration: 0.3 }, "<")
         .to(el, { yPercent: -100, duration: 0.85, ease: EASE }, "-=0.2");
-    });
+    })));
   }, [pathname, lenis, scrollToHash]);
 
   return (
     <ShellContext.Provider value={{ lenis, introDone, finishIntro, navigate }}>
       {children}
       <div ref={overlay} className="pt" aria-hidden="true">
+        <div className="pt__guides">
+          <i className="pt__line" />
+          <i className="pt__line" />
+          <i className="pt__line" />
+        </div>
+        <p className="mono pt__meta pt__meta--tl">Tatyana Amugo</p>
+        <p className="mono pt__meta pt__meta--tr">Instrument Serif — Italic</p>
         <p className="pt__label">
           <span>{label}</span>
         </p>

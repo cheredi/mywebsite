@@ -5,7 +5,7 @@ export const SITE_URL = "https://tatyanaamugo.com";
 
 export const PERSON = {
   name: "Tatyana Amugo",
-  email: "t_amugo@fanshaweonline.ca",
+  email: "tatyanaamugo@gmail.com",
   city: "Toronto",
   timeZone: "America/Toronto",
 };
@@ -13,6 +13,8 @@ export const PERSON = {
 export const HERO = {
   hello: "Hello",
   wave: "👋🏾",
+  /** After the intro says "Hello", the hero introduces her: "I'm Tatyana Amugo". */
+  im: "I'm",
   kicker: "PRODUCT · AI BUILDER · CUSTOMER CENTRIC",
   summary: "Product & AI Builder — I ship things that solve real problems and measure whether they worked.",
   sub: "I'm targeting product management, strategy, and AI-forward roles where I can work on hard problems, ship fast, and keep learning.",

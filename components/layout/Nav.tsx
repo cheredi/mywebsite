@@ -15,6 +15,13 @@ export default function Nav() {
   const menu = useRef<HTMLDivElement>(null);
   const tl = useRef<gsap.core.Timeline | null>(null);
 
+  // Resume scrolling *before* a menu link navigates: restarting Lenis later
+  // would cancel the scroll that link just started.
+  const closeMenu = () => {
+    lenis?.start();
+    setOpen(false);
+  };
+
   // Pill drops in once the intro has finished.
   useGSAP(
     () => {
@@ -70,7 +77,7 @@ export default function Nav() {
             <path d="m3 5.5 7 5.5 7-5.5" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" />
           </svg>
         </a>
-        <TLink href="/" className="nav__brand" aria-label={`${PERSON.name}, home`} onClick={() => setOpen(false)}>
+        <TLink href="/" className="nav__brand" aria-label={`${PERSON.name}, home`} onClick={closeMenu}>
           <Image src="/images/monogram-light.png" alt="" width={105} height={96} priority />
         </TLink>
         <button
@@ -96,7 +103,7 @@ export default function Nav() {
                 className="menu__link"
                 transitionLabel={item.label}
                 tabIndex={open ? 0 : -1}
-                onClick={() => setOpen(false)}
+                onClick={closeMenu}
               >
                 {item.label}
               </TLink>

@@ -26,9 +26,11 @@ export const viewport: Viewport = {
   themeColor: "#f1ece4",
 };
 
-// Runs before paint: marks JS as available, and skips the intro if it already
-// played this session or the visitor prefers reduced motion.
-const BOOT = `(function(){var d=document.documentElement;d.classList.add('js');try{if(sessionStorage.getItem('ta-intro')||matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('no-intro')}}catch(e){d.classList.add('no-intro')}})();`;
+// Runs before paint. Marks JS as available and picks the intro:
+//  full  — first visit this session
+//  short — home page, already seen this session (just the portrait curtain)
+//  none  — reduced motion, or another page already seen this session
+const BOOT = `(function(){var d=document.documentElement;d.classList.add('js');try{var rm=matchMedia('(prefers-reduced-motion: reduce)').matches;var seen=sessionStorage.getItem('ta-intro');if(rm){d.classList.add('no-intro')}else if(seen){d.classList.add(location.pathname==='/'?'intro-short':'no-intro')}}catch(e){d.classList.add('no-intro')}})();`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

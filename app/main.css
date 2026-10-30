@@ -123,6 +123,12 @@ h4 {
   outline-offset: 3px;
 }
 
+/* Specimen guide lines run past the edges; clip them here (clip, unlike hidden,
+   keeps position: sticky working and doesn't make the page scroll sideways). */
+main {
+  overflow-x: clip;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -208,6 +214,81 @@ h4 {
 
 .on-dark .section-head__index {
   color: var(--on-dark-muted);
+}
+
+/* Specimen title: guide lines + labels behind a heading (echoes the intro) */
+.spec {
+  position: relative;
+}
+
+.spec__text {
+  position: relative;
+  font: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  text-transform: inherit;
+  color: inherit;
+}
+
+.spec__guides {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.spec__line {
+  position: absolute;
+  left: -100vw;
+  right: -100vw;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.12;
+  transform-origin: left center;
+}
+
+/* Inter metrics at line-height 0.92: cap height, x-height, baseline */
+.spec__line:nth-child(1) { top: 0.1em; }
+.spec__line:nth-child(2) { top: 0.28em; }
+.spec__line:nth-child(3) { top: 0.82em; }
+
+/* Positioned in the heading's em (inherited), label text set small inside */
+.spec__tag {
+  position: absolute;
+  right: 0;
+  line-height: 0;
+  font-weight: 400;
+}
+
+.spec__tag span {
+  display: block;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 500;
+  font-style: normal;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  line-height: 1;
+  opacity: 0.45;
+  transform: translateY(-140%);
+}
+
+.spec__tag:nth-of-type(1) { top: 0.1em; }
+.spec__tag:nth-of-type(2) { top: 0.82em; }
+
+.section-head__readout {
+  display: block;
+  margin-top: 6px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Masks clip vertically only, so heavier glyphs can widen freely */
+.spec .split-mask {
+  overflow: visible !important;
+  clip-path: inset(-0.1em -50vw -0.16em -50vw);
+}
+
+.spec .split-line {
+  white-space: nowrap;
 }
 
 /* Buttons */
@@ -373,6 +454,50 @@ h4 {
   display: none;
 }
 
+/* Full-screen portrait that slides into the hero panel */
+.ld-curtain {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100svh;
+  z-index: 2;
+  overflow: hidden;
+  visibility: hidden;
+  background:
+    radial-gradient(120% 70% at 50% 0%, rgba(226, 69, 127, 0.28), transparent 60%),
+    var(--berry);
+  will-change: left, top, width, height;
+}
+
+.ld-curtain__portrait {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 93%;
+  display: flex;
+  justify-content: center;
+  transform-origin: 50% 100%;
+}
+
+.ld-curtain__portrait img {
+  height: 100%;
+  width: auto;
+  max-width: none;
+}
+
+/* Return visits to the home page: start on the full-screen portrait */
+.intro-short .ld-half,
+.intro-short .ld-stage,
+.intro-short .ld-slit {
+  display: none;
+}
+
+.intro-short .ld-curtain {
+  visibility: visible;
+}
+
 .ld-half {
   position: absolute;
   left: 0;
@@ -500,7 +625,40 @@ h4 {
   will-change: transform;
 }
 
+.pt__guides {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: clamp(120px, 16vw, 220px);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.pt__line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--line-dark);
+  transform-origin: left center;
+}
+
+.pt__line:nth-child(1) { top: 12%; }
+.pt__line:nth-child(2) { top: 40%; }
+.pt__line:nth-child(3) { top: 80%; }
+
+.pt__meta {
+  position: absolute;
+  top: clamp(20px, 3vw, 40px);
+  color: var(--on-dark-muted);
+}
+
+.pt__meta--tl { left: clamp(20px, 3vw, 40px); }
+.pt__meta--tr { right: clamp(20px, 3vw, 40px); }
+
 .pt__label {
+  position: relative;
   font-family: var(--serif);
   font-style: italic;
   font-size: clamp(2.5rem, 7vw, 6rem);
@@ -703,7 +861,13 @@ h4 {
   margin-bottom: clamp(16px, 2vw, 28px);
 }
 
-.hero__hello {
+.hero__title {
+  display: block;
+  font: inherit;
+  letter-spacing: normal;
+}
+
+.hero__im {
   display: flex;
   align-items: baseline;
   gap: 0.1em;
@@ -716,7 +880,7 @@ h4 {
   margin-left: -0.04em;
 }
 
-.hero__hello .chars {
+.hero__im .chars {
   display: inline-flex;
   overflow: clip;
   padding: 0 0.06em 0.1em 0;
@@ -726,20 +890,19 @@ h4 {
   display: inline-block;
 }
 
-.hero__wave {
-  display: inline-block;
-  font-style: normal;
-  font-size: 0.5em;
-  transform-origin: 70% 75%;
-}
-
 .hero__name {
+  display: block;
   font-size: clamp(2.6rem, min(7.2vw, 10.8vh), 8rem);
   font-weight: 600;
   letter-spacing: -0.055em;
   line-height: 0.95;
   text-transform: uppercase;
-  margin-top: clamp(12px, 1.6vw, 24px);
+  margin-top: clamp(8px, 1.2vw, 18px);
+}
+
+/* One word per line, so the weight sweep never re-wraps the name */
+.hero__name > span {
+  display: block;
 }
 
 .hero__name .word {
@@ -1263,20 +1426,19 @@ h4 {
 
 /* ================= Substack ================= */
 .writing__marquee {
-  overflow: clip;
   margin-bottom: clamp(40px, 6vw, 80px);
 }
 
+/* Sized so "Lipgloss & LLMS" spans the container without being cut off */
 .writing__brand {
   display: block;
   white-space: nowrap;
   font-family: var(--serif);
   font-style: italic;
-  font-size: clamp(5rem, 17vw, 17rem);
+  font-size: min(15.2vw, 14.5rem);
   line-height: 0.95;
   letter-spacing: -0.03em;
   color: var(--berry);
-  will-change: transform;
 }
 
 .writing__head {
@@ -1606,10 +1768,11 @@ h4 {
 
 .curtain__grid {
   margin-top: clamp(48px, 6vw, 88px);
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
-  gap: clamp(32px, 6vw, 96px);
-  align-items: start;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 32px 64px;
 }
 
 .curtain__socials {
@@ -1620,66 +1783,17 @@ h4 {
 
 .curtain__email {
   display: inline-block;
-  margin-top: 32px;
-  font-size: clamp(1.25rem, 2.2vw, 1.875rem);
-  letter-spacing: -0.03em;
+  font-size: clamp(1.75rem, 4.4vw, 4rem);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 1.05;
+  overflow-wrap: anywhere;
 }
 
-.form {
-  display: grid;
-  gap: 4px;
-}
-
-.form input,
-.form textarea {
-  width: 100%;
-  padding: 18px 0;
-  border: 0;
-  border-bottom: 1px solid var(--line-dark);
-  background: transparent;
-  color: var(--cream);
-  font-size: clamp(1.125rem, 1.6vw, 1.375rem);
-  letter-spacing: -0.02em;
-  border-radius: 0;
-  transition: border-color 0.4s var(--ease);
-}
-
-.form textarea {
-  resize: vertical;
-  min-height: 120px;
-}
-
-.form input::placeholder,
-.form textarea::placeholder {
+.curtain__label {
+  display: block;
+  margin-bottom: 16px;
   color: var(--on-dark-muted);
-}
-
-.form input:focus,
-.form textarea:focus {
-  outline: none;
-  border-color: var(--cream);
-}
-
-.form__foot {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 16px;
-  margin-top: 24px;
-}
-
-.form__msg {
-  font-size: 15px;
-  color: var(--on-dark-muted);
-}
-
-.form__msg a {
-  text-decoration: underline;
-}
-
-.honeypot {
-  position: absolute;
-  left: -9999px;
 }
 
 .curtain__base {
@@ -1950,7 +2064,8 @@ h4 {
   }
 
   .curtain__grid {
-    grid-template-columns: 1fr;
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
 

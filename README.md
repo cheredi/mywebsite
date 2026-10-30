@@ -35,8 +35,9 @@ All copy is Tatyana's own and lives in `content/` — edit it there, not in comp
 Animated elements are only hidden when JavaScript runs (`.js` on `<html>`), so the page is fully
 readable without it.
 
-## Contact form
+## Contact
 
-Netlify Forms. `public/__forms.html` is the hidden copy Netlify reads at deploy time; the real form
-in `components/layout/Connect.tsx` posts to it. Keep field names in sync. Submissions appear under
-**Forms** in Netlify.
+
+
+
+Contact is by email (`PERSON.email` in `content/site.ts`) and her social links; there is no form.

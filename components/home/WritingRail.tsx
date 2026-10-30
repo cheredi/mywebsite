@@ -6,6 +6,7 @@ import type { SubstackPost } from "@/lib/substack";
 import { LINKS, SECTIONS } from "@/content/site";
 import { EASE, gsap, reducedMotion, useGSAP } from "@/lib/motion";
 import SplitHeading from "@/components/motion/SplitHeading";
+import Specimen from "@/components/motion/Specimen";
 import Arrow from "@/components/ui/Arrow";
 
 function formatDate(value: string) {
@@ -33,11 +34,6 @@ export default function WritingRail({ posts, status }: { posts: SubstackPost[]; 
           scrollTrigger: { trigger: items[0], start: "top 88%", once: true },
         });
       }
-      gsap.fromTo(
-        root.current.querySelector(".writing__brand"),
-        { xPercent: 6 },
-        { xPercent: -18, ease: "none", scrollTrigger: { trigger: root.current, start: "top bottom", end: "bottom top", scrub: true } }
-      );
     },
     { scope: root }
   );
@@ -62,14 +58,16 @@ export default function WritingRail({ posts, status }: { posts: SubstackPost[]; 
 
   return (
     <section ref={root} id="writing" className="section" aria-labelledby="writing-title">
-      <div className="writing__marquee" aria-hidden="true">
-        <span className="writing__brand">{SECTIONS.substack} — {SECTIONS.substack}</span>
+      <div className="container writing__marquee">
+        <Specimen as="h2" id="writing-title" className="writing__brand">
+          {SECTIONS.substack}
+        </Specimen>
       </div>
       <div className="container">
         <div className="writing__head">
           <p className="mono section-head__index">(06)</p>
           <div>
-            <SplitHeading as="h2" id="writing-title" className="writing__intro">
+            <SplitHeading as="p" className="writing__intro">
               {SECTIONS.substackIntro}
             </SplitHeading>
             <p className="mono writing__status">{status}</p>

@@ -41,6 +41,12 @@ export default function Momentum() {
           },
           scrollTrigger: { trigger: el, start: "top 82%", once: true },
         });
+        // Weight sweeps up with the count, like the intro specimen.
+        gsap.fromTo(
+          node.parentElement,
+          { fontWeight: 100 },
+          { fontWeight: 500, duration: 2.2, ease: "power2.inOut", scrollTrigger: { trigger: el, start: "top 82%", once: true } }
+        );
       });
       gsap.from(el.children, {
         y: 60,

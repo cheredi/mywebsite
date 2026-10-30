@@ -5,7 +5,7 @@ import { skillCategories } from "@/content/skills";
 import { projects } from "@/content/projects";
 import { HERO, LINKS, PERSON, SECTIONS, SITE_URL } from "@/content/site";
 import { JsonLd, PERSON_ID, absolute, breadcrumbs } from "@/lib/seo";
-import SplitHeading from "@/components/motion/SplitHeading";
+import Specimen from "@/components/motion/Specimen";
 import Reveal from "@/components/motion/Reveal";
 import TLink from "@/components/motion/TLink";
 import PrintButton from "@/components/ui/PrintButton";
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   title: "Resume",
   description: `${PERSON.name} — ${HERO.summary} Experience, projects, education and skills.`,
   alternates: { canonical: "/resume" },
-  openGraph: { title: `Resume — ${PERSON.name}`, url: "/resume" },
+  openGraph: { title: `Resume — ${PERSON.name}`, url: "/resume", images: ["/opengraph-image"] },
 };
 
 const host = (url: string) => url.replace(/^https?:\/\//, "");
@@ -36,9 +36,9 @@ export default function ResumePage() {
           <p className="mono" style={{ color: "var(--muted)", marginBottom: 16 }}>
             {HERO.kicker}
           </p>
-          <SplitHeading as="h1" className="resume__name">
+          <Specimen as="h1" className="resume__name" weight={[100, 500]}>
             {PERSON.name}
-          </SplitHeading>
+          </Specimen>
           <p className="resume__summary">{HERO.summary}</p>
         </div>
         <Reveal className="resume__contact" delay={0.2}>
