@@ -1,6 +1,7 @@
 # tatyanaamugo.com
 
-Personal portfolio for Tatyana Amugo. Next.js (App Router) + TypeScript, deployed on Netlify.
+Tatyana Amugo's portfolio. Next.js (App Router) + TypeScript, deployed on Netlify. Every page is
+statically generated; the home page refreshes every 6 hours to pick up new Substack posts.
 
 ## Develop
 
@@ -12,24 +13,40 @@ npm run typecheck
 npm run build
 ```
 
-## Where things live
+## Editing content
 
-| What | Where |
+Almost everything lives in `content/` — no component changes needed:
+
+| File | What it holds |
 | --- | --- |
-| Page content (projects, experience, skills, education, stats) | `data/*.ts` |
-| Site URL, social links, contact email, nav | `lib/constants.ts` |
-| Sections | `components/sections/` |
-| All styles (tokens at the top) | `app/main.css` |
-| Substack feed | `lib/substack.ts` — the home page is cached and refreshed every 6 hours |
+| `content/site.ts` | Name, role, location, email, social links, nav, roles she's open to |
+| `content/profile.ts` | Hero headline, proof numbers, "I am a…" strip, approach, experience, education, toolkit, About copy |
+| `content/work.ts` | Case studies (one page each at `/work/<slug>`) |
 
-Most content edits only touch `data/` or `lib/constants.ts`.
+Rules of thumb: keep every claim something Tatyana can speak to in an interview, and keep the About
+quote verbatim.
+
+## Pages
+
+- `/` — home
+- `/work/<slug>` — case studies, generated from `content/work.ts`
+- `/resume` — printable HTML résumé ("Download PDF" uses the browser's print-to-PDF)
+- `/arcade` — Interview Arcade mini-game
+
+Social preview images are generated at build time (`opengraph-image.tsx` files, shared layout in
+`lib/og.tsx`). Structured data (Person, WebSite, ProfilePage, CreativeWork, BreadcrumbList) is in
+`lib/seo.tsx`.
+
+## Images
+
+- `public/images/tatyana-portrait.webp` — hero portrait, background removed and un-mirrored
+- `public/images/tatyana-closeup.jpg` — About section
+- `public/images/monogram.png` — TCA monogram (nav/footer), recoloured from `app/icon.png`
+- `public/images/work/*` — project screenshots
+- `assets/og-portrait.png` — portrait used inside social preview images
 
 ## Contact form
 
-Uses Netlify Forms. `public/__forms.html` is a hidden copy of the form that
-Netlify reads at deploy time; the real form in
-`components/sections/ContactSection.tsx` posts to it. If you add or rename a
-field, change it in both places. Submissions appear under **Forms** in the
-Netlify dashboard, where you can turn on email notifications.
-
-The form only works on Netlify; locally it shows the fallback error message.
+Netlify Forms. `public/__forms.html` is a hidden copy of the form Netlify reads at deploy time; the
+real form in `components/home/Contact.tsx` posts to it. Change field names in both places.
+Submissions appear under **Forms** in the Netlify dashboard (turn on email notifications there).
